@@ -7,6 +7,7 @@ import ResumeComponent from '../components/ResumeComponent.vue'
 
 const routes = [
   { path: '/', component: HomeComponent },
+  { path: '/ahmad-jamil/', component: HomeComponent },
   { path: '/projects', component: ProjectsComponent },
   { path: '/contact', component: ContactComponent },
   { path: '/resume', component: ResumeComponent },
