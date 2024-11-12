@@ -1,0 +1,89 @@
+{
+    "phonePrefix": "+357", 
+    "mobileNumber": "99 142840",
+    "email": "tzamil1991@gmail.com",
+    "country": "Cyprus",
+    "city": "Nicosia",
+    "aboutMe": "I'm a dedicated Software Engineer with 3+ years of experience in building and scaling distributed microservices using a diverse set of programming languages and technologies. I excel in collaborating with cross-functional teams to deliver impactful projects, and have led small developer teams with a focus on code quality, system design, and effective planning. Skilled in Agile methodologies, I actively contribute to Scrum processes and am committed to delivering robust, efficient solutions to complex challenges.",
+    "experiences": [
+        {
+            "jobTitle": "Intermidiate Software Enginner",
+            "companyName": "Achievers", 
+            "startDate": "Feb 2022",
+            "endDate": "Present",
+            "summary": "Design, develop, and maintain Python micro-services, integrating seamlessly with PHP applications. Collaborate on new project planning and feature implementation, solve production issues, and ensure reliability through rigorous unit and functional testing."
+        },
+        {
+            "jobTitle": "Junior Software Enginner",
+            "companyName": "Achievers", 
+            "startDate": "Dec 2020",
+            "endDate": "Feb 2022",
+            "summary": "Assist in integrating Python micro-services with PHP applications and developing tools for library monitoring and micro-service communication. Enhance existing tools and ensure application quality through unit and functional testing."
+        },
+        {
+            "jobTitle": "Web Developer",
+            "companyName": "Ekkotek", 
+            "startDate": "Jul 2019",
+            "endDate": "Aug 2020",
+            "summary": "Responsible for developing and maintaining the website's front end (HTML, CSS, JavaScript), identifying and fixing bugs, optimizing UI, and implementing chart interfaces to enhance user experience."
+        }
+    ],
+    "education": [
+        {
+            "university": "Frederick University Of Nicosia",
+            "degree": "Bachelor Of Computer Science",
+            "date": "2015 - 2019"
+        }
+    ], 
+    "languages": [
+        {
+            "name": "Arabic",
+            "level": "Native"
+        }, 
+        {
+            "name": "English",
+            "level": "Proficient"
+        },
+        {
+            "name": "Greek",
+            "level": "bigginer"
+        }
+    ],
+    "skills": [
+        {
+            "languages": [
+                "PHP",
+                "Python",
+                "JavaScript",
+                "GoLang"
+            ]
+        },
+        {
+            "frameWorks": [
+                "React Js",
+                "Vue Js",
+                "Laravel",
+                "Codigniter"
+            ]
+        },
+        {
+            "technologies": [
+                "Docker",
+                "Kubernetes",
+                "GCP",
+                "Git",
+                "Github"
+            ]
+        },
+        {
+            "skills": [
+                "API Development",
+                "Backend Web Development",
+                "Software Development",
+                "Problem Solving",
+                "Team Work & Motivation"
+            ]
+        }
+    ],
+    "certificates": []
+}
