@@ -51,7 +51,7 @@
     ],
     "skills": [
         {
-            "languages": [
+            "programming_languages": [
                 "PHP",
                 "Python",
                 "JavaScript",
@@ -59,7 +59,7 @@
             ]
         },
         {
-            "frameWorks": [
+            "frame_works": [
                 "React Js",
                 "Vue Js",
                 "Laravel",
@@ -76,7 +76,7 @@
             ]
         },
         {
-            "skills": [
+            "technical_skills": [
                 "API Development",
                 "Backend Web Development",
                 "Software Development",
