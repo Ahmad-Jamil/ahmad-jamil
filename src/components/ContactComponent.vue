@@ -47,5 +47,32 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+const senderName = ref('');
+const message = ref('');
+const sendMessage = async () => {
+    const newMessage = {
+        name: senderName.value,
+        message: message.value,
+        datetime: new Date().toISOString().slice(0, 19).replace('T', ' ')
+    };
 
+    try {
+        const response = await fetch('http://localhost:3000/api/messages',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newMessage),
+            });
+        if (response.ok) {
+            console.log('Message saved successfully!');
+        } else {
+            console.log('Error saving message.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
 </script>
