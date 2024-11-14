@@ -4,6 +4,7 @@ import ProjectsComponent from '../components/ProjectsComponent.vue'
 import ContactComponent from '../components/ContactComponent.vue'
 import ReferencesComponent from '../components//ReferencesComponent.vue'
 import ResumeComponent from '../components/ResumeComponent.vue'
+import ReadMessagesComponent from '@/components/ReadMessagesComponent.vue'
 
 const routes = [
   { path: '/', component: HomeComponent },
@@ -12,6 +13,7 @@ const routes = [
   { path: '/contact', component: ContactComponent },
   { path: '/resume', component: ResumeComponent },
   { path: '/references', component: ReferencesComponent },
+  { path: '/messages', component: ReadMessagesComponent },
 ];
 
 const router = createRouter({ 

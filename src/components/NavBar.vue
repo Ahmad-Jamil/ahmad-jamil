@@ -4,7 +4,8 @@ const routes = [
   { path: '/projects', label: 'Projects' },
   { path: '/contact', label: 'Contact' },
   { path: '/resume', label: 'Resume' },
-  { path: '/references', label: 'References' }
+  { path: '/references', label: 'References' },
+  { path: '/messages', label: 'Messages' }
 ]
 </script>
 
