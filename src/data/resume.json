@@ -1,45 +1,45 @@
 {
-    "phonePrefix": "+357", 
+    "phonePrefix": "+357",
     "mobileNumber": "99 142840",
     "email": "tzamil1991@gmail.com",
     "country": "Cyprus",
     "city": "Nicosia",
-    "aboutMe": "I'm a dedicated Software Engineer with 3+ years of experience in building and scaling distributed microservices using a diverse set of programming languages and technologies. I excel in collaborating with cross-functional teams to deliver impactful projects, and have led small developer teams with a focus on code quality, system design, and effective planning. Skilled in Agile methodologies, I actively contribute to Scrum processes and am committed to delivering robust, efficient solutions to complex challenges.",
+    "aboutMe": "I am a passionate Software Engineer with over three years of experience in architecting and scaling distributed microservices. My expertise spans various programming languages and technologies, allowing me to create robust and efficient solutions.\nI excel in collaborating with cross-functional teams to deliver impactful projects and have successfully led small developer teams with a focus on code quality, system design, and strategic planning. My hands-on experience with Agile methodologies enables me to contribute actively to Scrum processes, ensuring timely and efficient project delivery.\nMy commitment to excellence drives me to continuously improve and adapt, tackling complex challenges with innovative solutions. Whether it's designing microservices, integrating diverse systems, or optimizing code, I bring a blend of technical skill and collaborative spirit to every project I undertake.",
     "experiences": [
         {
-            "jobTitle": "Intermidiate Software Enginner",
-            "companyName": "Achievers", 
+            "jobTitle": "Intermediate Software Engineer",
+            "companyName": "Achievers",
             "startDate": "Feb 2022",
             "endDate": "Present",
-            "summary": "Design, develop, and maintain Python micro-services, integrating seamlessly with PHP applications. Collaborate on new project planning and feature implementation, solve production issues, and ensure reliability through rigorous unit and functional testing."
+            "summary": "Design, develop, and maintain robust Python microservices that seamlessly integrate with PHP applications, enhancing overall system functionality. Lead the architectural design and implementation of new features, ensuring they align with project requirements and business goals. Conduct thorough code reviews and collaborate with cross-functional teams to refine project scope, estimate timelines, and identify potential risks. Proactively troubleshoot and resolve production issues, minimizing downtime and ensuring smooth system operations. Develop and execute rigorous unit and functional test cases to validate the reliability and performance of microservices. Implement monitoring and alerting solutions to preemptively identify and address potential issues. Foster a culture of continuous improvement by mentoring junior developers, sharing best practices, and promoting a collaborative team environment. Actively contribute to Agile processes, including sprint planning, daily stand-ups, and retrospectives, to ensure timely and efficient project delivery."
         },
         {
-            "jobTitle": "Junior Software Enginner",
-            "companyName": "Achievers", 
+            "jobTitle": "Junior Software Engineer",
+            "companyName": "Achievers",
             "startDate": "Dec 2020",
             "endDate": "Feb 2022",
-            "summary": "Assist in integrating Python micro-services with PHP applications and developing tools for library monitoring and micro-service communication. Enhance existing tools and ensure application quality through unit and functional testing."
+            "summary": "Contributed to the integration of Python microservices with PHP applications, ensuring smooth interoperability and efficient communication between services. Developed monitoring tools to oversee library performance and ensure seamless microservice interactions. Played a key role in optimizing existing tools to enhance functionality and user experience. Conducted thorough testing to maintain high standards of application quality and reliability. Collaborated closely with team members to identify and implement improvements, fostering a culture of continuous enhancement and innovation."
         },
         {
             "jobTitle": "Web Developer",
-            "companyName": "Ekkotek", 
+            "companyName": "Ekkotek",
             "startDate": "Jul 2019",
             "endDate": "Aug 2020",
-            "summary": "Responsible for developing and maintaining the website's front end (HTML, CSS, JavaScript), identifying and fixing bugs, optimizing UI, and implementing chart interfaces to enhance user experience."
+            "summary": "Spearheaded the development and maintenance of the website's front end using HTML, CSS, and JavaScript, ensuring a visually appealing and user-friendly interface. Diagnosed and resolved bugs swiftly to maintain a seamless user experience. Conducted performance optimization to enhance the responsiveness and efficiency of the UI. Designed and implemented interactive chart interfaces, significantly improving data visualization and user engagement. Collaborated closely with designers and backend developers to align front-end components with overall project goals and deliver a cohesive product."
         }
     ],
     "education": [
         {
             "university": "Frederick University Of Nicosia",
-            "degree": "Bachelor Of Computer Science",
+            "degree": "Bachelor of Computer Science",
             "date": "2015 - 2019"
         }
-    ], 
+    ],
     "languages": [
         {
             "name": "Arabic",
             "level": "Native"
-        }, 
+        },
         {
             "name": "English",
             "level": "Proficient"
@@ -55,13 +55,13 @@
                 "PHP",
                 "Python",
                 "JavaScript",
-                "GoLang"
+                "Go"
             ]
         },
         {
-            "frame_works": [
-                "React Js",
-                "Vue Js",
+            "frameworks": [
+                "React.js",
+                "Vue.js",
                 "Laravel",
                 "CodeIgniter"
             ]
@@ -72,7 +72,7 @@
                 "Kubernetes",
                 "GCP",
                 "Git",
-                "Github"
+                "GitHub"
             ]
         },
         {
@@ -81,7 +81,7 @@
                 "Backend Web Development",
                 "Software Development",
                 "Problem Solving",
-                "Team Work & Motivation"
+                "Teamwork & Motivation"
             ]
         }
     ],

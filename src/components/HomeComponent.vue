@@ -1,171 +1,150 @@
 <template>
-    <div class="w-3/5 m-5 p-8 bg-[#f7f5eb] rounded-lg shadow-lg font-serif text-gray-800">
-        <!-- Profile Picture and Header -->
-        <div class="items-center mb-10 grid grid-cols-4">
-            <div class="col-span-2 p-2 m-2 flex justify-center">
-                <img :src="profileImage" alt="Profile Picture" class="object-cover shadow-md mb-4 rounded-full"
-                    style="border-radius: 0 30% 0 30%;" />
-            </div>
-            <div class="col-span-2 flex flex-col justify-start items-start">
-                <h1 class="font-serif text-5xl font-bold tracking-wider mb-10">AHMAD JAMIL</h1>
-                <h2 class="font-serif text-2xl font-bold tracking-wider mb-2">ABOUT ME</h2>
-                <p class="text-start text-gray-600 text-s leading-relaxed max-w-lg">
-                    I'm a dedicated Software Engineer with 3+ years of experience in building and scaling distributed microservices using 
-                    a diverse set of programming languages and technologies. I excel in collaborating with cross-functional 
-                    teams to deliver impactful projects, and have led small developer teams with a focus on code quality, system design, 
-                    and effective planning. Skilled in Agile methodologies, I actively contribute to Scrum processes and am committed 
-                    to delivering robust, efficient solutions to complex challenges.
-                </p>
-            </div>
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8">
+        <div class="max-w-6xl mx-auto p-8 bg-white rounded-2xl shadow-xl">
+            <!-- Profile Section -->
+            <div class="grid md:grid-cols-12 gap-12 mb-16">
+                <!-- Profile Picture and Header -->
+                <div class="md:col-span-5 space-y-6">
+                    <div class="relative group">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[40px] blur opacity-25 group-hover:opacity-40 transition duration-200"></div>
+                        <img :src="profileImage" alt="Profile Picture" 
+                             class="relative w-full h-80 object-cover rounded-[36px] shadow-lg" />
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 tracking-tight">
+                        AHMAD JAMIL
+                        <!-- AHMAD <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">JAMIL</span> -->
+                    </h1>
+                </div>
 
-        </div>
-
-        <!-- Profile Section Heading -->
-        <h3 class="font-serif text-6xl font-bold text-center mb-10 tracking-widest">MY PROFILE</h3>
-
-        <!-- Content Grid Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <!-- Education Section -->
-            <div>
-                <h4 class="font-serif text-xl mb-4 tracking-wide font-bold">EDUCATION</h4>
-                <ul class="space-y-3">
-                    <li>
-                        <span class="font-serif font-bold text-lg">Frederick University Of Nicosia</span> <br />
-                        <span class="text-gray-600 text-s">2015 - 2019</span> <br />
-                        <span class="text-gray-600 text-s ">Bachelor Of Computer Science</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Work Experience Section -->
-            <div>
-                <h4 class="text-xl font-bold font-serif mb-4 tracking-wide">WORK EXPERIENCE</h4>
-                <div class="space-y-5">
-                    <div>
-                        <h5 class="font-semibold text-lg">Intermidiate Software Engineer</h5>
-                        <p class="text-s text-gray-600">
-                            Achievers. / Feb 2022 - Present <br />
-                            Design, develop, and maintain Python micro-services, integrating seamlessly with PHP
-                            applications.
-                            Collaborate on new project planning and feature implementation, solve production issues, and
-                            ensure
-                            reliability through rigorous unit and functional testing.
+                <!-- About Me Section -->
+                <div class="md:col-span-7 space-y-8">
+                    <div class="space-y-4">
+                        <h2 class="text-2xl font-bold text-gray-800 tracking-tight">About Me</h2>
+                        <p class="text-gray-600 leading-relaxed">
+                            I'm a dedicated Software Engineer with 3+ years of experience in building and scaling distributed microservices using 
+                            a diverse set of programming languages and technologies. I excel in collaborating with cross-functional 
+                            teams to deliver impactful projects, and have led small developer teams with a focus on code quality, system design, 
+                            and effective planning.
                         </p>
                     </div>
-                    <div>
-                        <h5 class="font-semibold text-lg">Junior Software Engineer</h5>
-                        <p class="text-s text-gray-600">
-                            Achievers / Dec 2020 - Feb 2022 <br />
-                            Assist in integrating Python micro-services with PHP applications and developing tools for
-                            library monitoring
-                            and micro-service communication. Enhance existing tools and ensure application quality
-                            through unit and functional testing.
-                        </p>
-                    </div>
-                    <div>
-                        <h5 class="font-semibold text-lg">Web Developer</h5>
-                        <p class="text-s text-gray-600">
-                            Ekkotek / Jul 2019 - Aug 2020 <br />
-                            Responsible for developing and maintaining the website's front end (HTML, CSS, JavaScript),
-                            identifying and fixing bugs,
-                            optimizing UI, and implementing chart interfaces to enhance user experience.
-                        </p>
+
+                    <!-- Quick Info Cards -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-gray-50 rounded-xl">
+                            <p class="text-sm text-gray-500">Experience</p>
+                            <p class="text-lg font-semibold text-gray-800">4 Years</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-xl" hidden>
+                            <p class="text-sm text-gray-500">Projects</p>
+                            <p class="text-lg font-semibold text-gray-800">20+ Completed</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Programming Languages -->
-            <div>
-                <h4 class="text-xl font-serif font-bold mb-4 tracking-wide">Programming Language</h4>
-                <ul class="flex flex-wrap gap-3">
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="skill-icons:php-light" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="vscode-icons:file-type-python" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="skill-icons:golang" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="skill-icons:javascript" />
-                    </li>
-                </ul>
-            </div>
+            <!-- Main Content -->
+            <div class="space-y-16">
+                <!-- Education & Experience Grid -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Education Section -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-gray-800 tracking-tight">Education</h3>
+                        <div class="p-6 bg-gray-50 rounded-xl space-y-3 hover:shadow-md transition duration-300">
+                            <h4 class="font-bold text-lg text-gray-800">Frederick University Of Nicosia</h4>
+                            <p class="text-gray-600 text-sm">2015 - 2019</p>
+                            <p class="text-gray-600">Bachelor Of Computer Science</p>
+                        </div>
+                    </div>
 
-            <!-- Frame Works -->
-            <div>
-                <h4 class="text-xl font-serif font-bold mb-4 tracking-wide">FrameWorks</h4>
-                <ul class="flex flex-wrap gap-3">
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="logos:codeigniter-icon" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="skill-icons:laravel-light" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="devicon:vuejs" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="vscode-icons:file-type-reactjs" />
-                    </li>
-                </ul>
-            </div>
+                    <!-- Work Experience Section -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-gray-800 tracking-tight">Work Experience</h3>
+                        <div class="space-y-4">
+                            <div class="p-6 bg-gray-50 rounded-xl hover:shadow-md transition duration-300">
+                                <h4 class="font-bold text-lg text-gray-800">Intermediate Software Engineer</h4>
+                                <p class="text-blue-600 text-sm mb-2">Achievers / Feb 2022 - Present</p>
+                                <p class="text-gray-600 text-sm">Design, develop, and maintain Python micro-services, integrating with PHP applications.</p>
+                            </div>
+                            <div class="p-6 bg-gray-50 rounded-xl hover:shadow-md transition duration-300">
+                                <h4 class="font-bold text-lg text-gray-800">Junior Software Engineer</h4>
+                                <p class="text-blue-600 text-sm mb-2">Achievers / Dec 2020 - Feb 2022</p>
+                                <p class="text-gray-600 text-sm">Assist in integrating Python micro-services with PHP applications.</p>
+                            </div>
+                            <div class="p-6 bg-gray-50 rounded-xl hover:shadow-md transition duration-300">
+                                <h4 class="font-bold text-lg text-gray-800">Web Developer</h4>
+                                <p class="text-blue-600 text-sm mb-2">Ekkotek / Jul 2019 - Aug 2020</p>
+                                <p class="text-gray-600 text-sm">Developing and maintaining the website's frontend, identifying and fixing bugs, optimizing UI, and implementing chart interfaces to enhance user experience</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Technologies -->
-            <div>
-                <h4 class="text-xl font-serif font-bold mb-4 tracking-wide">Technologies</h4>
-                <ul class="flex flex-wrap gap-3">
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="logos:kubernetes" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="skill-icons:docker" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="skill-icons:mysql-dark" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="simple-icons:googlebigquery" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="skill-icons:git" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="formkit:github" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="bi:kanban" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="file-icons:tilt" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="skill-icons:gcp-light" />
-                    </li>
-                </ul>
-            </div>
+                <!-- Skills Sections -->
+                <div class="space-y-12">
+                    <!-- Programming Languages -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-gray-800 tracking-tight">Programming Languages</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <div v-for="icon in ['skill-icons:php-light', 'vscode-icons:file-type-python', 'skill-icons:golang', 'skill-icons:javascript']" 
+                                 :key="icon"
+                                 class="p-4 bg-gray-50 rounded-xl hover:shadow-md transition duration-300">
+                                <Icon :icon="icon" class="text-3xl" />
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Skills Section -->
-            <div>
-                <h4 class="text-xl font-serif font-bold mb-4 tracking-wide">SKILLS</h4>
-                <ul class="flex flex-wrap gap-3">
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-lg">
-                        API Development
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-lg">
-                        Backend Web Development
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-lg">
-                        Software Development
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-lg">
-                        Problem Solving
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-lg">
-                        Team Work & Motivation
-                    </li>
-                </ul>
+                    <!-- Frameworks -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-gray-800 tracking-tight">Frameworks</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <div v-for="icon in ['logos:codeigniter-icon', 'skill-icons:laravel-light', 'devicon:vuejs', 'vscode-icons:file-type-reactjs']" 
+                                 :key="icon"
+                                 class="p-4 bg-gray-50 rounded-xl hover:shadow-md transition duration-300">
+                                <Icon :icon="icon" class="text-3xl" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-gray-800 tracking-tight">Technologies</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <div v-for="icon in [
+                                'logos:kubernetes', 
+                                'skill-icons:docker', 
+                                'devicon:mysql',
+                                'simple-icons:googlebigquery',
+                                'skill-icons:git',
+                                'formkit:github',
+                                'bi:kanban',
+                                'file-icons:tilt',
+                                'skill-icons:gcp-light'
+                            ]" 
+                                 :key="icon"
+                                 class="p-4 bg-gray-50 rounded-xl hover:shadow-md transition duration-300">
+                                <Icon :icon="icon" class="text-3xl" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-gray-800 tracking-tight">Skills</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span v-for="skill in [
+                                'API Development',
+                                'Backend Web Development',
+                                'Software Development',
+                                'Problem Solving',
+                                'Team Work & Motivation'
+                            ]" 
+                                  :key="skill"
+                                  class="px-4 py-2 bg-gray-50 rounded-full text-gray-700 text-sm hover:shadow-md transition duration-300">
+                                {{ skill }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -174,12 +153,6 @@
 <script setup>
 import { computed } from 'vue';
 import { Icon } from '@iconify/vue';
+
 const profileImage = computed(() => require('@/assets/images/personal/ahmad.jpeg'));
 </script>
-
-<style>
-/* Custom beige background to match the example */
-.bg-[#f7f5eb] {
-    background-color: #f7f5eb;
-}
-</style>
