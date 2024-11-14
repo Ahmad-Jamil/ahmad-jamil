@@ -79,17 +79,11 @@
                 <h4 class="text-xl font-serif font-bold mb-4 tracking-wide">Programming Language</h4>
                 <ul class="flex flex-wrap gap-3">
                     <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="logos:php" />
+                        <Icon icon="skill-icons:php-light" />
                     </li>
                     <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
                         <Icon icon="vscode-icons:file-type-python" />
                     </li>
-                    <!-- <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="devicon:vuejs" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="vscode-icons:file-type-reactjs" />
-                    </li> -->
                     <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
                         <Icon icon="skill-icons:golang" />
                     </li>
