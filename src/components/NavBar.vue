@@ -2,10 +2,10 @@
 const routes = [
   { path: '/', label: 'Home' },
   { path: '/projects', label: 'Projects' },
-  { path: '/contact', label: 'Contact' },
   { path: '/resume', label: 'Resume' },
   { path: '/references', label: 'References' },
-  { path: '/messages', label: 'Messages' }
+  { path: '/contact', label: 'Contact' },
+  // { path: '/messages', label: 'Messages' }
 ]
 </script>
 

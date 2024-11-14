@@ -46,7 +46,7 @@
         },
         {
             "name": "Greek",
-            "level": "bigginer"
+            "level": "Beginner"
         }
     ],
     "skills": [
@@ -63,7 +63,7 @@
                 "React Js",
                 "Vue Js",
                 "Laravel",
-                "Codigniter"
+                "CodeIgniter"
             ]
         },
         {

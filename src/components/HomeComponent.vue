@@ -9,7 +9,7 @@
             <div class="col-span-2 flex flex-col justify-start items-start">
                 <h1 class="font-serif text-5xl font-bold tracking-wider mb-10">AHMAD JAMIL</h1>
                 <h2 class="font-serif text-2xl font-bold tracking-wider mb-2">ABOUT ME</h2>
-                <p class="text-start text-gray-600 text-xs leading-relaxed max-w-lg">
+                <p class="text-start text-gray-600 text-s leading-relaxed max-w-lg">
                     I'm a dedicated Software Engineer with 3+ years of experience in building and scaling distributed microservices using 
                     a diverse set of programming languages and technologies. I excel in collaborating with cross-functional 
                     teams to deliver impactful projects, and have led small developer teams with a focus on code quality, system design, 
@@ -30,9 +30,9 @@
                 <h4 class="font-serif text-xl mb-4 tracking-wide font-bold">EDUCATION</h4>
                 <ul class="space-y-3">
                     <li>
-                        <span class="font-serif font-bold">Frederick University Of Nicosia</span> <br />
-                        <span class="text-gray-600">2015 - 2019</span> <br />
-                        <span class="text-gray-600">Bachelor Of Computer Science</span>
+                        <span class="font-serif font-bold text-lg">Frederick University Of Nicosia</span> <br />
+                        <span class="text-gray-600 text-s">2015 - 2019</span> <br />
+                        <span class="text-gray-600 text-s ">Bachelor Of Computer Science</span>
                     </li>
                 </ul>
             </div>
@@ -42,8 +42,8 @@
                 <h4 class="text-xl font-bold font-serif mb-4 tracking-wide">WORK EXPERIENCE</h4>
                 <div class="space-y-5">
                     <div>
-                        <h5 class="font-semibold">Intermidiate Software Engineer</h5>
-                        <p class="text-sm text-gray-600">
+                        <h5 class="font-semibold text-lg">Intermidiate Software Engineer</h5>
+                        <p class="text-s text-gray-600">
                             Achievers. / Feb 2022 - Present <br />
                             Design, develop, and maintain Python micro-services, integrating seamlessly with PHP
                             applications.
@@ -53,8 +53,8 @@
                         </p>
                     </div>
                     <div>
-                        <h5 class="font-semibold">Junior Software Engineer</h5>
-                        <p class="text-sm text-gray-600">
+                        <h5 class="font-semibold text-lg">Junior Software Engineer</h5>
+                        <p class="text-s text-gray-600">
                             Achievers / Dec 2020 - Feb 2022 <br />
                             Assist in integrating Python micro-services with PHP applications and developing tools for
                             library monitoring
@@ -63,8 +63,8 @@
                         </p>
                     </div>
                     <div>
-                        <h5 class="font-semibold">Web Developer</h5>
-                        <p class="text-sm text-gray-600">
+                        <h5 class="font-semibold text-lg">Web Developer</h5>
+                        <p class="text-s text-gray-600">
                             Ekkotek / Jul 2019 - Aug 2020 <br />
                             Responsible for developing and maintaining the website's front end (HTML, CSS, JavaScript),
                             identifying and fixing bugs,
@@ -84,14 +84,36 @@
                     <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
                         <Icon icon="vscode-icons:file-type-python" />
                     </li>
+                    <!-- <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
+                        <Icon icon="devicon:vuejs" />
+                    </li>
+                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
+                        <Icon icon="vscode-icons:file-type-reactjs" />
+                    </li> -->
+                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
+                        <Icon icon="skill-icons:golang" />
+                    </li>
+                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
+                        <Icon icon="skill-icons:javascript" />
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Frame Works -->
+            <div>
+                <h4 class="text-xl font-serif font-bold mb-4 tracking-wide">FrameWorks</h4>
+                <ul class="flex flex-wrap gap-3">
+                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
+                        <Icon icon="logos:codeigniter-icon" />
+                    </li>
+                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
+                        <Icon icon="skill-icons:laravel-light" />
+                    </li>
                     <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
                         <Icon icon="devicon:vuejs" />
                     </li>
                     <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
                         <Icon icon="vscode-icons:file-type-reactjs" />
-                    </li>
-                    <li class="bg-gray-100 px-4 py-2 rounded-full text-gray-700 text-2xl">
-                        <Icon icon="skill-icons:golang" />
                     </li>
                 </ul>
             </div>
