@@ -8,14 +8,14 @@
             </div>
             <div class="grid md:grid-cols-3 gap-3 text-sm">
                 <div class="flex items-center gap-2">
-                    <span><span class="font-bold">Phone</span>: {{ resume.phonePrefix }} - {{ resume.mobileNumber
+                    <span><strong>Phone</strong>: {{ resume.phonePrefix }} - {{ resume.mobileNumber
                         }}</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span><span class="font-bold">Email</span>: {{ resume.email }}</span>
+                    <span><strong>Email</strong>: {{ resume.email }}</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span><span class="font-bold">Location</span>: {{ resume.country }} - {{ resume.city }}</span>
+                    <span><strong>Location</strong>: {{ resume.country }} - {{ resume.city }}</span>
                 </div>
             </div>
         </header>
@@ -119,7 +119,7 @@
 <script setup>
 import resume from '@/data/resume';
 import { ref } from 'vue';
-//import html2pdf from 'html2pdf.js';
+import jsPDF from 'jspdf';
 
 const resumeContent = ref(null);
 const skills = resume.skills
@@ -132,16 +132,18 @@ const getCategoryName = (category) => {
 const getCategoryItems = (category) => Object.values(category)[0]
 
 const downloadPDF = () => {
-    // const element = resumeContent.value;
-    // const options = {
-    //     margin: 0.5,
-    //     filename: 'Ahmad_Jamil.pdf',
-    //     image: { type: 'jpeg', quality: 0.98 },
-    //     html2canvas: { scale: 2 },
-    //     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-    // };
-
-    // html2pdf().set(options).from(element).save();
-};
-
+    const doc = new jsPDF();
+    const content = resumeContent.value.innerText;
+    const lines = doc.splitTextToSize(content, 180);
+    let cursorY = 10;
+    for (let i = 0; i < lines.length; i++) {
+        if (cursorY > 280) {
+            doc.addPage();
+            cursorY = 10;
+        }
+        doc.text(lines[i], 10, cursorY);
+        cursorY += 10;
+    }
+    doc.save('resume.pdf');
+}
 </script>

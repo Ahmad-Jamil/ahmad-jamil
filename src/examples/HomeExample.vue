@@ -91,6 +91,46 @@
 import { computed } from 'vue';
 
 const profileImage = computed(() => require('@/assets/images/personal/ahmad.jpeg'));
+const downloadPDF = async () => {
+    const resumeDiv = resumeContent.value;
+
+    if (!resumeDiv) {
+        console.error('Resume contents not found.');
+        return;
+    }
+
+    try {
+        // Capture the div as a canvas
+        const canvas = await html2canvas(resumeDiv);
+        const imgData = canvas.toDataURL('image/png');
+
+        // Create a new PDF document
+        const pdf = new jsPDF();
+        const imgWidth = 190; // Adjust width as needed
+        const pageHeight = pdf.internal.pageSize.height;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+
+        let position = 0;
+
+        // Add image to PDF and handle page breaks
+        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+        }
+
+        // Save the PDF
+        pdf.save('resume.pdf');
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+    }
+};
+
 </script>
 
 <style>
