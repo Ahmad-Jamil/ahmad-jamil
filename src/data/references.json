@@ -1,0 +1,28 @@
+[
+    {
+        "company": "Ekkotek",
+        "Manager": "Yiannis Laouris",
+        "reference": "I have known Mr. Ahmad Jamil since July 2019, in my capacity as Senior Scientist & Systems Analyst at Ekkotek Ltd. Ahmad joined the company as a Junior Programmer, and within 6 months he had two promotions. Ahmad’s work in our Company has been instrumental to the development of at least two large-scale projects. He has a natural talent and passion for programming. He works long hours, and is 100% committed and focused in what he is doing. He can deal simultaneously with multiple tasks with high level of efficiency and effectiveness. One of his most important attributes is his perseverance to resolve any technical challenge presented to him, even when this requires learning new language and becoming proficient in a new programming environment. He is proficient with all contemporary IT tools including GIT, Task Management Systems, Project Management, as well as with several programming environments including in particular mySQL/Php, SCC, html 5, NET5/C#, JavaScript & JavaScript Joint, API Development, Front- and Backend programming. On a personal level, I have come to know Ahmad as a man of great integrity. He is passionate, diligent and fair in all his endeavors. He is always willing to help colleagues offering daily IT assistance, solutions and consultation. Ahmad is an exceptional young man who is committed to his goals and dreams. I have no hesitation in providing the highest recommendation for Ahmad. I believe that he will be an outstanding employee and will contribute a great deal to your company.",
+        "skills": [
+            "GIT",
+            "Task Management",
+            "Project Management",
+            "MySQL",
+            "PHP",
+            "HTML5",
+            "NET5/C#",
+            "JavaScript",
+            "API Development",
+            "Frontend",
+            "Backend"
+        ],
+        "keyPoints": [
+            "Natural talent and passion for programming",
+            "100% committed and focused",
+            "High level of efficiency and effectiveness",
+            "Perseverance to resolve technical challenges",
+            "Great integrity and willingness to help colleagues",
+            "Outstanding employee potential"
+        ]
+    }
+]
