@@ -1,0 +1,92 @@
+[
+    {
+        "company": "Achievers",
+        "projects": [
+            {
+                "title": "Members Report",
+                "description": "In this project, I integrated the base report microservice within the user microservice. The objective was to implement a report query that retrieves data from BigQuery and ensures that the new report matches the data from the previous reports. The project entailed creating BigQuery tables, populating them with data migrated from MySQL, and crafting a complex query comprised of subqueries known as entities. To ensure accuracy, I meticulously tested the report to verify that all data outputs were as expected.",
+                "tags": [
+                    "BigQuery",
+                    "Microservice",
+                    "GCS",
+                    "Python"
+                ]
+            },
+            {
+                "title": "User Microservice Integration in Monolith PHP Application",
+                "description": "In this project, I integrated a User microservice into a monolith PHP application. The process involved thorough investigation and integration at all points where user data was updated. During this integration, I encountered challenges related to complex database transactions. To address these, I implemented a sub-project called Outbox, ensuring seamless data flow through database operations instead of direct pub/sub publishing. Additionally, I implemented comprehensive unit tests to ensure the reliability and accuracy of the integration.",
+                "tags": [
+                    "CodeIgniter",
+                    "PHP",
+                    "Python",
+                    "GCP",
+                    "Microservice"
+                ]
+            },
+            {
+                "title": "Ongoing Technical Support, Maintenance, and Feature Development",
+                "description": "In this role, I continuously addressed technical support tickets from clients, ensuring our application met their needs by resolving bugs and issues. I maintained and enhanced the codebase, integrating it with the latest technologies and cutting-edge tools for improved performance and functionality. Additionally, I implemented new features to assist different teams with their daily tasks, facilitating a more efficient and productive workflow.",
+                "tags": [
+                    "CodeIgniter",
+                    "PHP",
+                    "Python",
+                    "Microservice"
+                ]
+            },
+            {
+                "title": "HRIS Flow Improvement and Migration to Microservices",
+                "description": "In this role, I continuously enhanced the HRIS flow to ensure smooth operation and prevent issues during the import of client user data. I participated in various sub-projects to migrate the HRIS flow from a monolith application to a microservices architecture, significantly improving performance and reducing execution time. This migration involved transitioning from PHP code to a GoLang microservice and implementing necessary features to support the new architecture.",
+                "tags": [
+                    "CodeIgniter",
+                    "PHP",
+                    "GoLang",
+                    "AirFlow",
+                    "Microservice"
+                ]
+            }
+        ]
+    },
+    {
+        "company": "Ekkotek",
+        "projects": [
+            {
+                "title": "Data Analysis and Visualization Flow with jsPDF",
+                "description": "I implemented a comprehensive flow for analyzing data and displaying it as charts in the frontend using jsPDF. To meet all project requirements and features, I developed a custom library that enabled users to visualize data interactively. The project allowed users to generate and download the visualized data as a PDF file. This involved creating dynamic charts and ensuring that the data presentation was both clear and visually appealing.",
+                "tags": [
+                    "JavaScript",
+                    "PHP",
+                    "CSS",
+                    "HTML"
+                ]
+            }
+        ]
+    },
+    {
+        "company": "Personal",
+        "projects": [
+            {
+                "title": "My Portfolio Web",
+                "description": "I developed a personal portfolio website using Vue.js, showcasing my work experience and professional history. This interactive platform allows visitors to communicate with me directly and explore detailed information about my projects, skills, and achievements. The website also includes the functionality to download my resume for potential opportunities. I implemented the site from scratch, handling both the front-end and back-end development, and deployed it on GitHub Pages for accessibility and convenience.",
+                "tags": [
+                    "JavaScript",
+                    "Vue JS",
+                    "jsPDF",
+                    "GitHub",
+                    "TailWind"
+                ]
+            },
+            {
+                "title": "JobBank - Portfolio and Job Search Platform",
+                "description": "I am currently working on a personal project called JobBank, designed to help users create their portfolios and generate resumes that are compatible with ATS (Applicant Tracking System). Users will be able to search for jobs using custom filters tailored to their preferences. Additionally, the platform will enable companies and recruiters to perform reliable searches for candidates that meet job requirements, facilitate communication with potential hires, and offer more advanced features. This project is currently under construction and in the implementation phase.",
+                "tags": [
+                    "Laravel",
+                    "PHP",
+                    "JavaScript",
+                    "Vue JS",
+                    "jsPDF",
+                    "TailWind"
+                ]
+            }
+        ]
+    }
+]

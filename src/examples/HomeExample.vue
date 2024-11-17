@@ -79,10 +79,6 @@
               </ul>
           </div>
 
-          <!-- Contact Info -->
-          <!-- <div class="text-center text-gray-500 mt-8 md:mt-0">
-              <p class="text-sm">+123-456-7890 | hello@reallygreatsite.com | reallygreatsite.com</p>
-          </div> -->
       </div>
   </div>
 </template>
