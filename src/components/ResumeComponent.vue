@@ -1,125 +1,102 @@
 <template>
-    <div ref="resumeContent" class="max-w-4xl mx-auto p-8 bg-white leading-relaxed">
-        <!-- Header Section -->
-        <header class="mb-10 border-b border-gray-200 pb-6">
-            <div class="text-center md:text-left">
-                <h1 class="text-4xl font-bold text-gray-800 mb-2">Ahmad Jamil</h1>
-                <h2 class="text-2xl text-gray-600 mb-4">Software Engineer</h2>
-            </div>
-            <div class="grid md:grid-cols-3 gap-3 text-sm">
-                <div class="flex items-center gap-2">
-                    <span><strong>Phone</strong>: {{ resume.phonePrefix }} - {{ resume.mobileNumber
-                        }}</span>
+    <div ref="resumeContent" class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+        <div class="max-w-4xl w-full bg-white shadow-2xl rounded-2xl overflow-hidden grid grid-cols-3 gap-6 p-8">
+            <!-- Sidebar -->
+            <div class="col-span-1 bg-blue-600 text-white p-6 space-y-6">
+                <div class="text-center">
+                    <h1 class="text-2xl font-bold">Ahmad Jamil
+                    </h1>
+                    <p class="text-blue-100">Software Engineer</p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span><strong>Email</strong>: {{ resume.email }}</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span><strong>Location</strong>: {{ resume.country }} - {{ resume.city }}</span>
-                </div>
-            </div>
-        </header>
 
-        <!-- Professional Summary -->
-        <section class="mb-8" aria-label="Professional Summary">
-            <p class="text-gray-700 leading-relaxed">{{ resume.aboutMe }}</p>
-        </section>
-
-        <!-- Experience Section -->
-        <section class="mb-8" aria-label="Work Experience">
-            <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">
-                Professional Experience
-            </h2>
-            <div v-for="(experience, index) in resume.experiences" :key="index" class="mb-6 last:mb-0">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
+                <div class="space-y-4">
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-800">{{ experience.jobTitle }}</h3>
-                        <div class="text-gray-600">{{ experience.companyName }}</div>
+                        <h3 class="font-semibold text-lg border-b pb-2">Contact</h3>
+                        <p class="mt-2">{{ resume.phonePrefix }} {{ resume.mobileNumber }}</p>
+                        <p>{{ resume.email }}</p>
+                        <p>{{ resume.city }}, {{ resume.country }}</p>
                     </div>
-                    <div class="text-sm text-gray-600 mt-1 md:mt-0">
-                        {{ experience.startDate }} - {{ experience.endDate }}
-                    </div>
-                </div>
-                <p class="text-gray-700 mt-2">{{ experience.summary }}</p>
-            </div>
-        </section>
 
-        <!-- Education Section -->
-        <section v-if="resume.education" class="mb-8" aria-label="Education">
-            <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">
-                Education
-            </h2>
-            <div v-for="(edu, index) in resume.education" :key="index" class="mb-4 last:mb-0">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-baseline">
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-800">{{ edu.university }}</h3>
-                        <div class="text-gray-600">{{ edu.degree }}</div>
+                        <h3 class="font-semibold text-lg border-b pb-2">Languages</h3>
+                        <div class="space-y-2 mt-2">
+                            <div v-for="(lang, index) in resume.languages" :key="index" class="flex justify-between">
+                                <span>{{ lang.name }}</span>
+                                <span class="text-blue-200">{{ lang.level }}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text-sm text-gray-600 mt-1 md:mt-0">{{ edu.date }}</div>
+
+                    <div>
+                        <h3 class="font-semibold text-lg border-b pb-2">Skills</h3>
+                        <div class="mt-2 space-y-4">
+                            <div v-for="(category, index) in skills" :key="index">
+                                <p class="font-medium">{{ getCategoryName(category) }}</p>
+                                <div class="flex flex-wrap gap-2 mt-1">
+                                    <span v-for="(skill, skillIndex) in getCategoryItems(category)" :key="skillIndex"
+                                        class="bg-blue-500 text-white px-2 py-1 rounded-full text-xs">
+                                        {{ skill }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Certificates Section -->
-        <section v-if="resume.certificates.length" class="mb-8" aria-label="Certifications">
-            <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">
-                Certifications
-            </h2>
-            <div v-for="(cert, index) in certificates" :key="index" class="mb-2 last:mb-0">
-                <div class="flex justify-between items-baseline">
-                    <span class="text-gray-700">{{ cert.name }}</span>
-                    <span class="text-sm text-gray-600">{{ cert.year }}</span>
+            <!-- Main Content -->
+            <div class="col-span-2 p-6 space-y-6">
+                <section>
+                    <h2 class="text-2xl font-bold text-gray-800 border-b-4 border-blue-600 pb-2 mb-4">
+                        Professional Summary
+                    </h2>
+                    <p class="text-gray-600">{{ resume.aboutMe }}</p>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-bold text-gray-800 border-b-4 border-blue-600 pb-2 mb-4">
+                        Work Experience
+                    </h2>
+                    <div class="space-y-6">
+                        <div v-for="(exp, index) in resume.experiences" :key="index" class="bg-gray-50 p-4 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-xl font-semibold">{{ exp.jobTitle }}</h3>
+                                <span class="text-gray-500 text-sm">{{ exp.startDate }} - {{ exp.endDate }}</span>
+                            </div>
+                            <p class="text-gray-600 mb-2">{{ exp.companyName }}</p>
+                            <p class="text-gray-700">{{ exp.summary }}</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-bold text-gray-800 border-b-4 border-blue-600 pb-2 mb-4">
+                        Education
+                    </h2>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="text-xl font-semibold">{{ resume.education[0].degree }}</h3>
+                        <p class="text-gray-600">{{ resume.education[0].university }}</p>
+                        <p class="text-gray-500 text-sm">{{ resume.education[0].date }}</p>
+                    </div>
+                </section>
+
+                <!-- PDF Download Button -->
+                <div class="text-center mt-6">
+                    <button @click="downloadPDF"
+                        class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition duration-300">
+                        Download PDF
+                    </button>
                 </div>
             </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section class="mb-8" aria-label="Technical Skills">
-            <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">
-                Technical Skills
-            </h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div v-for="(category, index) in skills" :key="index" class="mb-4 last:mb-0">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-2">
-                        {{ getCategoryName(category) }}
-                    </h3>
-                    <ul class="list-disc list-inside space-y-1">
-                        <li v-for="item in getCategoryItems(category)" :key="item" class="text-gray-700">
-                            {{ item }}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Languages Section -->
-        <section aria-label="Languages">
-            <h2 class="text-xl font-bold text-gray-800 mb-4 pb-2 border-b border-gray-200">
-                Languages
-            </h2>
-            <div class="grid md:grid-cols-2 gap-4">
-                <div v-for="(language, index) in resume.languages" :key="index"
-                    class="flex justify-between items-center">
-                    <span class="font-medium text-gray-800">{{ language.name }}</span>
-                    <span class="text-gray-600">{{ language.level }}</span>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Download Button -->
-    <div class="text-center my-8">
-        <button @click="downloadPDF"
-            class="px-6 py-2.5 bg-gray-800 text-white rounded hover:bg-gray-700 transition-colors duration-200">
-            Download PDF
-        </button>
+        </div>
     </div>
 </template>
 
 <script setup>
 import resume from '@/data/resume';
 import { ref } from 'vue';
-import jsPDF from 'jspdf';
+//import jsPDF from 'jspdf';
+import createResumePDF from '../js/resumePDFGenerator';
 
 const resumeContent = ref(null);
 const skills = resume.skills
@@ -131,19 +108,22 @@ const getCategoryName = (category) => {
 };
 const getCategoryItems = (category) => Object.values(category)[0]
 
-const downloadPDF = () => {
-    const doc = new jsPDF();
-    const content = resumeContent.value.innerText;
-    const lines = doc.splitTextToSize(content, 180);
-    let cursorY = 10;
-    for (let i = 0; i < lines.length; i++) {
-        if (cursorY > 280) {
-            doc.addPage();
-            cursorY = 10;
-        }
-        doc.text(lines[i], 10, cursorY);
-        cursorY += 10;
-    }
-    doc.save('resume.pdf');
+// const downloadPDF = () => {
+//     const doc = new jsPDF();
+//     const content = resumeContent.value.innerText;
+//     const lines = doc.splitTextToSize(content, 180);
+//     let cursorY = 10;
+//     for (let i = 0; i < lines.length; i++) {
+//         if (cursorY > 280) {
+//             doc.addPage();
+//             cursorY = 10;
+//         }
+//         doc.text(lines[i], 10, cursorY);
+//         cursorY += 10;
+//     }
+//     doc.save('resume.pdf');
+// }
+const downloadPDF = async () => {
+    createResumePDF(resume);
 }
 </script>
