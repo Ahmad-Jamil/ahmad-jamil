@@ -59,13 +59,14 @@ function generateResumePDF(resumeData) {
     // Contact Info
     doc.setFontSize(10);
     doc.setFont('helvetica', '');
-    const contactInfo = `${resumeData.phonePrefix} ${resumeData.mobileNumber} | ${resumeData.email} | ${resumeData.city}, ${resumeData.country}`;
+    const contactInfo = `Phone: ${resumeData.phonePrefix} ${resumeData.mobileNumber} | Email: ${resumeData.email} | Location: ${resumeData.city}, ${resumeData.country}`;
     doc.text(contactInfo, margin, currentY);
     currentY += 8;
 
     // Profile / About Me
     addSectionHeader('Profile');
     addText(resumeData.aboutMe, 10);
+    currentY += 8
 
     // Work Experience
     addSectionHeader('Work Experience');
@@ -84,7 +85,7 @@ function generateResumePDF(resumeData) {
 
         // Summary
         addText(exp.summary, 10);
-        currentY += 4;
+        currentY += 6;
     });
 
     // Education
