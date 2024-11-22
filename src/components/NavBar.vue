@@ -78,6 +78,7 @@ const routes = [
   { path: '/projects', label: 'Projects' },
   { path: '/resume', label: 'Resume' },
   { path: '/references', label: 'References' },
+  { path: '/messages', label: 'Messages' },
 ]
 
 const isOpen = ref(false)
