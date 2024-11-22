@@ -1,6 +1,6 @@
 <template>
-    <main class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+    <main class="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-16 px-4">
+      <div class="max-w-6xl mx-auto space-y-16">
         <!-- Hero Section -->
         <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-900/90 to-purple-900/90 backdrop-blur-xl">
           <div class="absolute inset-0">
@@ -128,10 +128,6 @@
                 <div class="flex flex-col items-center gap-4">
                   <Icon :icon="lang.icon" class="h-12 w-12 text-gray-300 group-hover:text-white transition-colors" />
                   <span class="text-gray-300 group-hover:text-white font-medium">{{ lang.name }}</span>
-                  <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500"
-                         :style="{ width: `${lang.proficiency}%` }"></div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -152,10 +148,6 @@
                 <div class="flex flex-col items-center gap-4">
                   <Icon :icon="framework.icon" class="h-12 w-12 text-gray-300 group-hover:text-white transition-colors" />
                   <span class="text-gray-300 group-hover:text-white font-medium">{{ framework.name }}</span>
-                  <div class="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500"
-                         :style="{ width: `${framework.proficiency}%` }"></div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -228,7 +220,7 @@ const frameworks = [
 const technologies = [
     { name: 'Kubernetes', icon: 'logos:kubernetes' },
     { name: 'Docker', icon: 'skill-icons:docker' },
-    { name: 'MySQL', icon: 'devicon:mysql' },
+    { name: 'MySQL', icon: 'skill-icons:mysql-light' },
     { name: 'BigQuery', icon: 'simple-icons:googlebigquery' },
     { name: 'Git', icon: 'skill-icons:git' },
     { name: 'GitHub', icon: 'formkit:github' },

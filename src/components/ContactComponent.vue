@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-16 px-4">
-      <div class="max-w-6xl mx-auto">
+      <div class="max-w-6xl mx-auto space-y-16">
         <!-- Header Section -->
         <div class="text-center mb-16 space-y-4">
           <h1 class="text-4xl md:text-6xl font-black">
