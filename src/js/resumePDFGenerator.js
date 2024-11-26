@@ -52,7 +52,7 @@ function generateResumePDF(resumeData) {
     // Header (Name)
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    const fullName = "Tamer Zamil"; // You can modify this or extract from the JSON
+    const fullName = "Ahmad Jamil"; // You can modify this or extract from the JSON
     doc.text(fullName, margin, currentY);
     currentY += 10;
 
