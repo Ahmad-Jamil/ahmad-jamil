@@ -131,7 +131,7 @@ function generateResumePDF(resumeData) {
     });
 
     // Save the PDF
-    doc.save('resume.pdf');
+    doc.save('Ahmad_Jamil_CV.pdf');
 }
 
 // Usage example
