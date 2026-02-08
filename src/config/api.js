@@ -13,7 +13,7 @@ const getApiBaseUrl = () => {
   // Example: 'https://your-project-name.vercel.app'
   // See GITHUB_VERCEL_DEPLOYMENT.md for deployment instructions
   
-  return process.env.VUE_APP_API_URL || 'https://your-project-name.vercel.app';
+  return process.env.VUE_APP_API_URL || 'https://https://ahmad-jamil.vercel.app/';
 };
 
 export const API_BASE_URL = getApiBaseUrl();
