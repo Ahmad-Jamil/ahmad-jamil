@@ -1,0 +1,52 @@
+// Example: Using Vercel KV for persistent storage
+// This is an example file showing how to use Vercel KV instead of file system
+// To use this:
+// 1. Install @vercel/kv: npm install @vercel/kv
+// 2. Set up Vercel KV in your Vercel project dashboard
+// 3. Rename this file to messages.js (or create a new one)
+// 4. Update vercel.json if needed
+
+const { kv } = require('@vercel/kv');
+
+module.exports = async (req, res) => {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  const MESSAGES_KEY = 'portfolio_messages';
+
+  try {
+    // GET - Retrieve all messages
+    if (req.method === 'GET') {
+      const messages = await kv.get(MESSAGES_KEY) || [];
+      return res.status(200).json(messages);
+    }
+
+    // POST - Save a new message
+    if (req.method === 'POST') {
+      const newMessage = req.body;
+      
+      // Get existing messages
+      let messages = await kv.get(MESSAGES_KEY) || [];
+      
+      // Add new message
+      messages.push(newMessage);
+      
+      // Save back to KV
+      await kv.set(MESSAGES_KEY, messages);
+      
+      return res.status(200).json({ message: 'Message saved successfully' });
+    }
+
+    return res.status(405).json({ message: 'Method not allowed' });
+  } catch (error) {
+    console.error('Messages error:', error);
+    return res.status(500).json({ message: 'Error processing request' });
+  }
+};
+

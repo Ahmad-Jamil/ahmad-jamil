@@ -22,4 +22,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-src/backend/data/*.json
+# Backend data files - only ignore receivedMessages.json (user data)
+# authentication.json should be committed for Vercel deployment
+src/backend/data/receivedMessages.json
