@@ -8,11 +8,15 @@ const getApiBaseUrl = () => {
     return 'http://localhost:3000';
   }
   
-  // For production, use your deployed backend URL
-  // After deploying to Vercel, replace with your Vercel URL
-  // Example: 'https://your-project-name.vercel.app'
-  // See GITHUB_VERCEL_DEPLOYMENT.md for deployment instructions
+  // If on Vercel, use same domain (relative paths work)
+  // This allows frontend and backend on same Vercel deployment
+  if (window.location.hostname.includes('vercel.app') || 
+      window.location.hostname.includes('vercel.com')) {
+    return ''; // Empty string = same origin (relative paths)
+  }
   
+  // For GitHub Pages or other deployments, use environment variable or default
+  // If frontend is on GitHub Pages and backend on Vercel, use Vercel URL
   return process.env.VUE_APP_API_URL || 'https://ahmad-jamil.vercel.app';
 };
 
