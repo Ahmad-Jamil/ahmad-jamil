@@ -108,6 +108,8 @@
 
 <script setup>
 import { ref } from 'vue';
+import { API_ENDPOINTS } from '@/config/api';
+
 const senderName = ref('');
 const message = ref('');
 const successMessage = ref('');
@@ -120,7 +122,7 @@ const sendMessage = async () => {
     };
 
     try {
-        const response = await fetch('http://localhost:3000/api/messages',
+        const response = await fetch(API_ENDPOINTS.MESSAGES,
             {
                 method: 'POST',
                 headers: {
@@ -132,11 +134,19 @@ const sendMessage = async () => {
             senderName.value = ''
             message.value = ''
             successMessage.value = 'Thanks You! I will respond to your message as soon as possible.'
+            errorMessage.value = ''
         } else {
             errorMessage.value = 'Oops! Something went wrong, please try again.'
+            successMessage.value = ''
         }
     } catch (error) {
         console.error('Error:', error);
+        if (error.message === 'Failed to fetch' || error.code === 'ERR_NETWORK' || error.name === 'TypeError') {
+            errorMessage.value = 'Cannot connect to server. Please check your connection or contact support.'
+        } else {
+            errorMessage.value = 'Oops! Something went wrong, please try again.'
+        }
+        successMessage.value = ''
     }
 };
 </script>

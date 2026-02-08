@@ -83,6 +83,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { API_ENDPOINTS } from '@/config/api';
 
 const credentials = ref({ username: '', password: '' });
 const authError = ref('');
@@ -91,14 +92,19 @@ const messages = ref([]);
 
 const authenticateUser = async () => {
   try {
-    const response = await fetch('http://localhost:3000/api/auth', {
+    const response = await fetch(API_ENDPOINTS.AUTH, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials.value),
     });
 
     if (!response.ok) {
-      throw new Error('Authentication failed');
+      if (response.status === 401) {
+        authError.value = 'Invalid username or password.';
+      } else {
+        throw new Error('Authentication failed');
+      }
+      return;
     }
 
     isAuthenticated.value = true;
@@ -106,20 +112,27 @@ const authenticateUser = async () => {
     await fetchMessages();
   } catch (error) {
     console.error('Authentication error:', error);
-    authError.value = 'Invalid username or password.';
+    if (error.message === 'Failed to fetch' || error.code === 'ERR_NETWORK' || error.name === 'TypeError') {
+      authError.value = 'Cannot connect to server. Please check your connection or contact support.';
+    } else {
+      authError.value = 'Invalid username or password.';
+    }
   }
 };
 
 const fetchMessages = async () => {
   try {
-    const response = await fetch('http://localhost:3000/api/messages');
+    const response = await fetch(API_ENDPOINTS.MESSAGES);
     if (response.ok) {
       messages.value = await response.json();
     } else {
       console.error('Error fetching messages.');
+      authError.value = 'Failed to fetch messages. Please try again.';
     }
   } catch (error) {
     console.error('Error:', error);
+    authError.value = 'Cannot connect to server. Please check your connection or contact support.';
+    isAuthenticated.value = false;
   }
 };
 
