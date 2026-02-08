@@ -4,8 +4,11 @@ const { defineConfig } = require('@vue/cli-service')
 // For Vercel: use root path '/'
 // For GitHub Pages: use '/ahmad-jamil/'
 const getPublicPath = () => {
-  // If deploying to Vercel, use root path
-  if (process.env.VERCEL === '1' || process.env.VUE_APP_DEPLOY_TARGET === 'vercel') {
+  // Check for Vercel environment variables (Vercel sets these automatically)
+  if (process.env.VERCEL === '1' || 
+      process.env.VERCEL_ENV || 
+      process.env.VERCEL_URL ||
+      process.env.VUE_APP_DEPLOY_TARGET === 'vercel') {
     return '/'
   }
   // For GitHub Pages, use repository name
