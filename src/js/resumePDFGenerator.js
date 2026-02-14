@@ -2,90 +2,84 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
 function generateResumePDF(resumeData) {
-    // Create a new jsPDF instance
     const doc = new jsPDF();
-    
-    // Set margins
-    const margin = 10;
-    let currentY = margin;
+    const margin = 15;
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-    const contentWidth = pageWidth - (2 * margin);
+    let currentY = margin;
+    const contentWidth = pageWidth - 2 * margin;
 
-    // Helper function to add text with auto page break
-    const addText = (text, fontSize, style = '', maxWidth = contentWidth) => {
+    const lineHeight = 6;
+
+    const addText = (text, fontSize = 10, style = '') => {
         doc.setFontSize(fontSize);
         doc.setFont('helvetica', style);
-        
-        const lines = doc.splitTextToSize(text, maxWidth);
-        
-        // Check if we need a new page
-        if (currentY + (lines.length * fontSize * 0.352778) > pageHeight - margin) {
+        const lines = doc.splitTextToSize(text, contentWidth);
+
+        // Simple page break if needed
+        if (currentY + lines.length * lineHeight > pageHeight - margin) {
             doc.addPage();
             currentY = margin;
         }
-        
+
         doc.text(lines, margin, currentY);
-        currentY += lines.length * fontSize * 0.352778 + 2; // Line height calculation
-        return currentY;
+        currentY += lines.length * lineHeight + 2;
     };
 
-    // Helper function to add section header
-    const addSectionHeader = (text) => {
-        doc.setFontSize(14);
+    const addSectionHeader = (title) => {
+        const headerSize = 14;
+        doc.setFontSize(headerSize);
         doc.setFont('helvetica', 'bold');
-        doc.setTextColor(0, 0, 0);
-        
-        // Check for new page
-        if (currentY + 10 > pageHeight - margin) {
+
+        if (currentY + headerSize + lineHeight > pageHeight - margin) {
             doc.addPage();
             currentY = margin;
         }
-        
-        doc.text(text, margin, currentY);
+
+        doc.text(title, margin, currentY);
         doc.setLineWidth(0.5);
         doc.line(margin, currentY + 2, pageWidth - margin, currentY + 2);
-        currentY += 8;
-        doc.setTextColor(0, 0, 0);
+        currentY += lineHeight + 2;
     };
 
-    // Header (Name)
+    // Header: Name
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    const fullName = "Ahmad Jamil"; // You can modify this or extract from the JSON
+    const fullName = `${resumeData.firstName || 'Ahmad'} ${resumeData.lastName || 'Jamil'}`;
     doc.text(fullName, margin, currentY);
     currentY += 10;
 
-    // Contact Info
+    // Contact info
     doc.setFontSize(10);
     doc.setFont('helvetica', '');
-    const contactInfo = `Phone: ${resumeData.phonePrefix} ${resumeData.mobileNumber} | Email: ${resumeData.email} | Location: ${resumeData.city}, ${resumeData.country}`;
-    doc.text(contactInfo, margin, currentY);
-    currentY += 8;
+    addText(`Phone: ${resumeData.phonePrefix} ${resumeData.mobileNumber} | Email: ${resumeData.email} | Location: ${resumeData.city}, ${resumeData.country}`);
 
-    // Profile / About Me
+    // About Me
     addSectionHeader('Profile');
     addText(resumeData.aboutMe, 10);
-    currentY += 8
 
     // Work Experience
     addSectionHeader('Work Experience');
     resumeData.experiences.forEach(exp => {
-        // Job Title and Company
+        // Check if next block fits in page
+        const estimatedHeight = lineHeight * (3 + Math.ceil(exp.summary.length / 90));
+        if (currentY + estimatedHeight > pageHeight - margin) {
+            doc.addPage();
+            currentY = margin;
+        }
+
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
         doc.text(`${exp.jobTitle}, ${exp.companyName}`, margin, currentY);
-        currentY += 6;
+        currentY += lineHeight;
 
-        // Date
         doc.setFontSize(10);
         doc.setFont('helvetica', '');
         doc.text(`${exp.startDate} - ${exp.endDate}`, margin, currentY);
-        currentY += 6;
+        currentY += lineHeight;
 
-        // Summary
         addText(exp.summary, 10);
-        currentY += 6;
+        currentY += 2;
     });
 
     // Education
@@ -94,47 +88,35 @@ function generateResumePDF(resumeData) {
         doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
         doc.text(edu.university, margin, currentY);
-        currentY += 6;
+        currentY += lineHeight;
 
         doc.setFontSize(10);
         doc.setFont('helvetica', '');
-        doc.text(`${edu.degree} | ${edu.date}`, margin, currentY);
-        currentY += 8;
+        addText(`${edu.degree} | ${edu.date}`);
+        currentY += 2;
     });
 
     // Skills
     addSectionHeader('Skills');
-    const skillCategories = [
-        { name: 'Programming Languages', skills: resumeData.skills[0].programming_languages },
-        { name: 'Frameworks', skills: resumeData.skills[1].frameworks },
-        { name: 'Technologies', skills: resumeData.skills[2].technologies },
-        { name: 'Technical Skills', skills: resumeData.skills[3].technical_skills }
-    ];
-
-    skillCategories.forEach(category => {
-        doc.setFontSize(10);
+    resumeData.skills.forEach(category => {
+        const catName = Object.keys(category)[0].replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
         doc.setFont('helvetica', 'bold');
-        doc.text(category.name + ':', margin, currentY);
-        currentY += 6;
+        addText(catName + ':');
 
         doc.setFont('helvetica', '');
-        doc.text(category.skills.join(', '), margin, currentY);
-        currentY += 8;
+        addText(category[Object.keys(category)[0]].join(', '));
+        currentY += 2;
     });
 
     // Languages
     addSectionHeader('Languages');
     resumeData.languages.forEach(lang => {
-        doc.setFontSize(10);
-        doc.text(`${lang.name}: ${lang.level}`, margin, currentY);
-        currentY += 6;
+        addText(`${lang.name}: ${lang.level}`);
     });
 
-    // Save the PDF
-    doc.save('Ahmad_Jamil_CV.pdf');
+    doc.save(`${fullName.replace(' ', '_')}_CV.pdf`);
 }
 
-// Usage example
 export default function createResumePDF(resumeData) {
     generateResumePDF(resumeData);
 }

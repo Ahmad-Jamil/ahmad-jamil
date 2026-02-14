@@ -104,12 +104,14 @@
 
 <script setup>
 import resume from '@/data/resume';
-import createResumePDF from '../js/resumePDFGenerator';
+// import createResumePDF from '../js/resumePDFGenerator';
+import createResumePDFODFLib from '../js/resumePDFGeneratorODFLib';
 import { Icon } from '@iconify/vue';
 
 const skills = resume.skills
 const getCategoryName = (category) => Object.keys(category)[0].replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 const getCategoryItems = (category) => Object.values(category)[0]
 
-const downloadPDF = () => createResumePDF(resume);
+// const downloadPDF = () => createResumePDF(resume);
+const downloadPDF = () => createResumePDFODFLib(resume);
 </script>
