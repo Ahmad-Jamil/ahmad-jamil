@@ -29,7 +29,7 @@
               <div class="grid grid-cols-2 gap-4">
                 <div class="group p-4 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
                   <div class="text-sm font-medium text-gray-400">Experience</div>
-                  <div class="text-2xl font-bold text-white">5 Years</div>
+                  <div class="text-2xl font-bold text-white">{{ years }} Years</div>
                 </div>
                 <div class="group p-4 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
                   <div class="text-sm font-medium text-gray-400">Projects</div>
@@ -236,4 +236,21 @@ const skills = [
     { name: 'Problem Solving', icon: 'carbon:solution' },
     { name: 'Team Leadership', icon: 'carbon:group' }
 ];
+
+const start = new Date('2019-07-01')
+const now = new Date()
+
+let years = now.getFullYear() - start.getFullYear()
+
+// Check if the anniversary has happened this year
+const hasHadAnniversary =
+  now.getMonth() > start.getMonth() ||
+  (now.getMonth() === start.getMonth() && now.getDate() >= start.getDate())
+
+if (!hasHadAnniversary) {
+  years--
+}
+
+console.log(years)
+
 </script>
