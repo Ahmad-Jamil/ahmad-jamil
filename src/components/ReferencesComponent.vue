@@ -1,92 +1,111 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-16 px-4">
-      <div class="max-w-6xl mx-auto">
-        <!-- Header Section -->
-        <div class="text-center mb-16 space-y-4">
-          <h1 class="text-4xl md:text-6xl font-black">
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
-              Professional References
-            </span>
-          </h1>
-          <p class="text-gray-300 text-lg max-w-2xl mx-auto">
-            Testimonials from industry professionals who have witnessed my work ethic, skills, and dedication firsthand.
-          </p>
-        </div>
-  
-        <!-- Testimonials Section -->
-        <div class="space-y-12">
-          <div v-for="(reference, index) in references" :key="index" 
-               class="relative group">
-            <!-- Decorative Elements -->
-            <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-            
-            <!-- Card Content -->
-            <div class="relative p-8 bg-gray-900 rounded-xl backdrop-blur-xl border border-white/10">
-              <!-- Company Info -->
-              <div class="flex items-center justify-between mb-8">
-                <div class="space-y-2">
-                  <h2 class="text-2xl font-bold text-white">{{ reference.company }}</h2>
-                  <div class="flex items-center space-x-2 text-gray-400">
-                    <Icon icon="mdi:account-tie" class="w-5 h-5" />
-                    <span>{{ reference.Manager }}</span>
-                  </div>
-                </div>
-                <div class="h-16 w-16 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                  <Icon icon="mdi:format-quote-close" class="w-8 h-8 text-blue-400" />
-                </div>
-              </div>
-  
-              <!-- Reference Text -->
-              <div class="space-y-6">
-                <!-- Skills Highlights -->
-                <div class="flex flex-wrap gap-2">
-                  <div v-for="skill in extractSkills(reference)" :key="skill"
-                       class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300">
-                    {{ skill }}
-                  </div>
-                </div>
-  
-                <!-- Main Text -->
-                <div class="relative">
-                  <div class="absolute -left-4 top-0 text-6xl text-blue-500/20">"</div>
-                  <p class="text-gray-300 leading-relaxed text-lg pl-6">
-                    {{ formatReference(reference.reference) }}
-                  </p>
-                </div>
-  
-                <!-- Key Points -->
-                <div class="grid md:grid-cols-2 gap-4 mt-8">
-                  <div v-for="point in extractKeyPoints(reference)" :key="point"
-                       class="flex items-start space-x-3 p-4 rounded-lg bg-white/5 backdrop-blur-sm">
-                    <Icon icon="mdi:check-circle" class="w-6 h-6 text-emerald-400 flex-shrink-0 mt-1" />
-                    <p class="text-gray-300">{{ point }}</p>
-                  </div>
-                </div>
+  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
+    <div class="max-w-5xl mx-auto space-y-24">
+
+      <!-- Header -->
+      <section class="text-center space-y-6">
+        <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-gray-900">
+          Professional References
+        </h1>
+
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Testimonials from professionals who have worked closely with me
+          across engineering teams and production systems.
+        </p>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="space-y-16">
+
+        <div
+          v-for="(reference, index) in references"
+          :key="index"
+          class="p-10 bg-white border border-gray-200
+                 rounded-3xl shadow-sm hover:shadow-lg
+                 transition duration-300"
+        >
+
+          <!-- Header -->
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+
+            <div>
+              <h2 class="text-2xl font-semibold text-gray-900">
+                {{ reference.company }}
+              </h2>
+
+              <div class="flex items-center gap-2 text-gray-600 mt-2">
+                <Icon icon="mdi:account-tie" class="w-5 h-5" />
+                <span>{{ reference.Manager }}</span>
               </div>
             </div>
+
+            <div class="h-14 w-14 rounded-2xl bg-gray-100
+                        flex items-center justify-center">
+              <Icon icon="mdi:format-quote-close"
+                    class="w-7 h-7 text-gray-500" />
+            </div>
+
           </div>
+
+          <!-- Skills Highlight -->
+          <div class="flex flex-wrap gap-3 mb-8">
+            <span
+              v-for="skill in extractSkills(reference)"
+              :key="skill"
+              class="px-4 py-1.5 text-sm rounded-full
+                     bg-gray-100 text-gray-700
+                     border border-gray-200"
+            >
+              {{ skill }}
+            </span>
+          </div>
+
+          <!-- Main Reference -->
+          <blockquote class="text-gray-700 leading-relaxed text-lg whitespace-pre-line border-l-4 border-gray-300 pl-6">
+            {{ formatReference(reference.reference) }}
+          </blockquote>
+
+          <!-- Key Points -->
+          <div class="grid md:grid-cols-2 gap-6 mt-10">
+            <div
+              v-for="point in extractKeyPoints(reference)"
+              :key="point"
+              class="flex items-start gap-4 p-5
+                     bg-gray-50 border border-gray-200
+                     rounded-2xl"
+            >
+              <Icon icon="mdi:check-circle"
+                    class="w-6 h-6 text-emerald-500 mt-1" />
+              <p class="text-gray-700">
+                {{ point }}
+              </p>
+            </div>
+          </div>
+
         </div>
-      </div>
+
+      </section>
+
     </div>
-  </template>
-  
-  <script setup>
-  import { Icon } from '@iconify/vue';
-  import references from '@/data/references.json';
- 
-  // Helper function to extract skills from reference text
-  const extractSkills = (reference) => {
-    const skills = reference.skills;
-    return skills.filter(skill => reference.reference.toLowerCase().includes(skill.toLowerCase()));
-  };
-  
-  // Helper function to extract key points from reference
-  const extractKeyPoints = (reference) => {
-    return reference.keyPoints;
-  };
-  
-  // Helper function to format reference text
-  const formatReference = (text) => {
-    return text.replace(/\. /g, '.\n\n');
-  };
-  </script>
+  </main>
+</template>
+
+<script setup>
+import { Icon } from '@iconify/vue'
+import references from '@/data/references.json'
+
+const extractSkills = (reference) => {
+  const skills = reference.skills
+  return skills.filter(skill =>
+    reference.reference.toLowerCase().includes(skill.toLowerCase())
+  )
+}
+
+const extractKeyPoints = (reference) => {
+  return reference.keyPoints
+}
+
+const formatReference = (text) => {
+  return text.replace(/\. /g, '.\n\n')
+}
+</script>

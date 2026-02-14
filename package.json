@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@iconify/vue": "^4.1.2",
+    "@pdf-lib/fontkit": "^1.1.1",
     "axios": "^1.7.7",
     "body-parser": "^1.20.3",
     "core-js": "^3.8.3",
@@ -24,6 +25,7 @@
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
     "path": "^0.12.7",
+    "pdf-lib": "^1.17.1",
     "tailwindcss": "^3.4.14",
     "vue": "^3.2.13",
     "vue-router": "^4.4.5"

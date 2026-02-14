@@ -1,201 +1,185 @@
 <template>
-    <main class="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-16 px-4">
-      <div class="max-w-6xl mx-auto space-y-16">
-        <!-- Hero Section -->
-        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-900/90 to-purple-900/90 backdrop-blur-xl">
-          <div class="absolute inset-0">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20"></div>
-            <div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/50"></div>
-          </div>
-          
-          <div class="relative grid lg:grid-cols-2 gap-8 p-8 items-center">
-            <!-- Profile Info -->
-            <div class="space-y-8">
-              <div class="space-y-4">
-                <h1 class="text-5xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient">
-                  AHMAD JAMIL
-                </h1>
-                <p class="text-xl text-gray-300 font-medium">
-                  Software Engineer | Backend Developer
-                </p>
-              </div>
-              
-              <p class="text-gray-300 text-lg leading-relaxed">
-                I'm a dedicated Software Engineer with 5 years of experience in building and scaling
-                distributed microservices using a diverse set of programming languages and technologies.
-              </p>
-              
-              <!-- Quick Stats -->
-              <div class="grid grid-cols-2 gap-4">
-                <div class="group p-4 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
-                  <div class="text-sm font-medium text-gray-400">Experience</div>
-                  <div class="text-2xl font-bold text-white">5 Years</div>
-                </div>
-                <div class="group p-4 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
-                  <div class="text-sm font-medium text-gray-400">Projects</div>
-                  <div class="text-2xl font-bold text-white">5</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Profile Image -->
-            <div class="relative group">
-              <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-75 blur-lg group-hover:opacity-100 transition duration-1000 group-hover:duration-300"></div>
-              <img :src="profileImage" alt="Ahmad Jamil" class="relative rounded-full w-full aspect-square object-cover border-2 border-white/20 group-hover:border-white/40 transition-all duration-300" />
-            </div>
-          </div>
-        </div>
-  
-        <!-- Experience & Education -->
-        <div class="mt-8 grid lg:grid-cols-2 gap-8">
-          <!-- Experience -->
-          <div class="space-y-6">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
-                <Icon icon="mdi:briefcase" class="h-6 w-6 text-white" />
-              </div>
-              <h2 class="text-2xl font-bold text-white">Work Experience</h2>
-            </div>
-  
-            <div class="space-y-4">
-              <div v-for="(job, index) in [
-                { title: 'Intermediate Software Engineer', company: 'Achievers', period: 'Feb 2022 - Present' },
-                { title: 'Junior Software Engineer', company: 'Achievers', period: 'Dec 2020 - Feb 2022' },
-                { title: 'Web Developer', company: 'Ekkotek', period: 'Jul 2019 - Aug 2020' }
-              ]" :key="index" class="group p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
-                <div class="flex justify-between items-start">
-                  <div class="space-y-2">
-                    <h3 class="text-xl font-bold text-white">{{ job.title }}</h3>
-                    <div class="flex items-center gap-2 text-gray-400">
-                      <Icon icon="mdi:office-building" class="h-4 w-4" />
-                      <span>{{ job.company }}</span>
-                      <span class="text-gray-600">•</span>
-                      <span>{{ job.period }}</span>
-                    </div>
-                  </div>
-                  <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                    <Icon icon="mdi:code-braces" class="h-5 w-5 text-blue-400" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          <!-- Education -->
-          <div class="space-y-6">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
-                <Icon icon="mdi:school" class="h-6 w-6 text-white" />
-              </div>
-              <h2 class="text-2xl font-bold text-white">Education</h2>
-            </div>
-  
-            <div class="p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
-              <div class="flex justify-between items-start">
-                <div class="space-y-2">
-                  <h3 class="text-xl font-bold text-white">Frederick University Of Nicosia</h3>
-                  <div class="flex items-center gap-2 text-gray-400">
-                    <Icon icon="mdi:calendar" class="h-4 w-4" />
-                    <span>2015 - 2019</span>
-                  </div>
-                  <div class="flex items-center gap-2 text-gray-300 mt-2">
-                    <Icon icon="mdi:book-education" class="h-5 w-5 text-blue-400" />
-                    <span>Bachelor Of Computer Science</span>
-                  </div>
-                </div>
-                <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                  <Icon icon="mdi:certificate" class="h-5 w-5 text-blue-400" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Skills Section -->
-        <div class="mt-16 space-y-16">
-          <!-- Programming Languages -->
-          <div class="space-y-6">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
-                <Icon icon="mdi:code" class="h-6 w-6 text-white" />
-              </div>
-              <h2 class="text-2xl font-bold text-white">Programming Languages</h2>
-            </div>
-  
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div v-for="lang in programmingLanguages" :key="lang.name" 
-                   class="group p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
-                <div class="flex flex-col items-center gap-4">
-                  <Icon :icon="lang.icon" class="h-12 w-12 text-gray-300 group-hover:text-white transition-colors" />
-                  <span class="text-gray-300 group-hover:text-white font-medium">{{ lang.name }}</span>
-                </div>
-              </div>
-            </div>
+  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
+    <div class="max-w-6xl mx-auto space-y-28">
+
+      <!-- HERO -->
+      <section class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <div class="space-y-8">
+          <div class="space-y-4">
+            <h1 class="text-5xl sm:text-6xl font-bold tracking-tight text-gray-900">
+              Ahmad Jamil
+            </h1>
+            <p class="text-xl text-gray-600 font-medium">
+              Software Engineer · Backend Developer
+            </p>
           </div>
 
-          <!-- FrameWorks Languages -->
-          <div class="space-y-6">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
-                <Icon icon="mdi:code" class="h-6 w-6 text-white" />
+          <p class="text-lg text-gray-600 leading-relaxed max-w-xl">
+            I build scalable distributed systems and cloud-native microservices,
+            focusing on clean architecture and long-term maintainability.
+          </p>
+
+          <div class="flex gap-10 pt-4">
+            <div>
+              <div class="text-3xl font-bold text-gray-900">
+                {{ years }}+
               </div>
-              <h2 class="text-2xl font-bold text-white">FrameWorks</h2>
+              <div class="text-sm text-gray-500">Years Experience</div>
             </div>
-  
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div v-for="framework in frameworks" :key="framework.name" 
-                   class="group p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
-                <div class="flex flex-col items-center gap-4">
-                  <Icon :icon="framework.icon" class="h-12 w-12 text-gray-300 group-hover:text-white transition-colors" />
-                  <span class="text-gray-300 group-hover:text-white font-medium">{{ framework.name }}</span>
-                </div>
+
+            <div>
+              <div class="text-3xl font-bold text-gray-900">
+                5+
               </div>
-            </div>
-          </div>
-  
-          <!-- Technologies -->
-          <div class="space-y-6">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
-                <Icon icon="mdi:tools" class="h-6 w-6 text-white" />
-              </div>
-              <h2 class="text-2xl font-bold text-white">Technologies & Tools</h2>
-            </div>
-  
-            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
-              <div v-for="tech in technologies" :key="tech.name" 
-                   class="group p-4 rounded-xl bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
-                <div class="flex flex-col items-center gap-3">
-                  <Icon :icon="tech.icon" class="h-8 w-8 text-gray-300 group-hover:text-white transition-colors" />
-                  <span class="text-sm text-gray-400 group-hover:text-white text-center font-medium">{{ tech.name }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          <!-- Professional Skills -->
-          <div class="space-y-6">
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
-                <Icon icon="mdi:star" class="h-6 w-6 text-white" />
-              </div>
-              <h2 class="text-2xl font-bold text-white">Professional Skills</h2>
-            </div>
-  
-            <div class="flex flex-wrap gap-4">
-              <div v-for="skill in skills" :key="skill.name" 
-                   class="group px-6 py-3 rounded-full bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
-                <div class="flex items-center gap-3">
-                  <Icon :icon="skill.icon" class="h-5 w-5 text-gray-400 group-hover:text-white" />
-                  <span class="text-gray-300 group-hover:text-white font-medium">{{ skill.name }}</span>
-                </div>
-              </div>
+              <div class="text-sm text-gray-500">Major Projects</div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
-  </template>
+
+        <div class="flex justify-center lg:justify-end">
+          <img
+            :src="profileImage"
+            class="w-80 rounded-3xl shadow-xl object-cover"
+            alt="Ahmad"
+          />
+        </div>
+
+      </section>
+
+      <!-- EXPERIENCE & EDUCATION -->
+      <section class="grid lg:grid-cols-2 gap-16">
+
+        <!-- Work -->
+        <div class="space-y-10">
+          <h2 class="text-3xl font-bold text-gray-900">Work Experience</h2>
+
+          <div
+            v-for="(job, index) in jobs"
+            :key="index"
+            class="p-8 bg-white border border-gray-200 rounded-2xl
+                   hover:shadow-lg transition duration-300"
+          >
+            <h3 class="text-xl font-semibold text-gray-900">
+              {{ job.title }}
+            </h3>
+            <p class="text-gray-600 mt-1">
+              {{ job.company }}
+            </p>
+            <p class="text-sm text-gray-400 mt-2">
+              {{ job.period }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="space-y-10">
+          <h2 class="text-3xl font-bold text-gray-900">Education</h2>
+
+          <div
+            class="p-8 bg-white border border-gray-200 rounded-2xl
+                   hover:shadow-lg transition duration-300"
+          >
+            <h3 class="text-xl font-semibold text-gray-900">
+              Frederick University Of Nicosia
+            </h3>
+
+            <p class="text-gray-600 mt-1">
+              Bachelor of Computer Science
+            </p>
+
+            <p class="text-sm text-gray-400 mt-2">
+              2015 – 2019
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- PROGRAMMING LANGUAGES -->
+      <section class="space-y-12">
+        <h2 class="text-3xl font-bold text-gray-900">
+          Programming Languages
+        </h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div
+            v-for="lang in programmingLanguages"
+            :key="lang.name"
+            class="p-8 bg-white border border-gray-200 rounded-2xl
+                   text-center hover:shadow-md transition"
+          >
+            <Icon :icon="lang.icon" class="h-12 w-12 mx-auto text-gray-700" />
+            <div class="mt-4 font-medium text-gray-800">
+              {{ lang.name }}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FRAMEWORKS -->
+      <section class="space-y-12">
+        <h2 class="text-3xl font-bold text-gray-900">
+          Frameworks
+        </h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div
+            v-for="framework in frameworks"
+            :key="framework.name"
+            class="p-8 bg-white border border-gray-200 rounded-2xl
+                   text-center hover:shadow-md transition"
+          >
+            <Icon :icon="framework.icon" class="h-12 w-12 mx-auto text-gray-700" />
+            <div class="mt-4 font-medium text-gray-800">
+              {{ framework.name }}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TECHNOLOGIES -->
+      <section class="space-y-12">
+        <h2 class="text-3xl font-bold text-gray-900">
+          Technologies & Tools
+        </h2>
+
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6">
+          <div
+            v-for="tech in technologies"
+            :key="tech.name"
+            class="p-6 bg-white border border-gray-200 rounded-xl
+                   text-center hover:shadow-md transition"
+          >
+            <Icon :icon="tech.icon" class="h-8 w-8 mx-auto text-gray-700" />
+            <div class="mt-3 text-sm text-gray-600">
+              {{ tech.name }}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROFESSIONAL SKILLS -->
+      <section class="space-y-12">
+        <h2 class="text-3xl font-bold text-gray-900">
+          Professional Skills
+        </h2>
+
+        <div class="flex flex-wrap gap-4">
+          <div
+            v-for="skill in skills"
+            :key="skill.name"
+            class="px-6 py-3 rounded-full bg-white border border-gray-200
+                   text-gray-700 hover:shadow-sm transition"
+          >
+            {{ skill.name }}
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</template>
 
 <script setup>
 import { computed } from 'vue';
@@ -209,6 +193,23 @@ const programmingLanguages = [
     { name: 'Golang', icon: 'skill-icons:golang', proficiency: 75 },
     { name: 'JavaScript', icon: 'skill-icons:javascript', proficiency: 80 }
 ];
+const jobs = [
+  {
+    title: 'Intermediate Software Engineer',
+    company: 'Achievers',
+    period: 'Feb 2022 - Present'
+  },
+  {
+    title: 'Junior Software Engineer',
+    company: 'Achievers',
+    period: 'Dec 2020 - Feb 2022'
+  },
+  {
+    title: 'Web Developer',
+    company: 'Ekkotek',
+    period: 'Jul 2019 - Aug 2020'
+  }
+]
 
 const frameworks = [
     { name: 'CodeIgniter', icon: 'logos:codeigniter-icon' },
@@ -236,4 +237,18 @@ const skills = [
     { name: 'Problem Solving', icon: 'carbon:solution' },
     { name: 'Team Leadership', icon: 'carbon:group' }
 ];
+
+const start = new Date('2019-07-01')
+const now = new Date()
+
+let years = now.getFullYear() - start.getFullYear()
+
+// Check if the anniversary has happened this year
+const hasHadAnniversary =
+  now.getMonth() > start.getMonth() ||
+  (now.getMonth() === start.getMonth() && now.getDate() >= start.getDate())
+
+if (!hasHadAnniversary) {
+  years--
+}
 </script>
