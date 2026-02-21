@@ -7,18 +7,18 @@
              rounded-2xl transition-all duration-300"
       :class="{ 'shadow-[0_12px_40px_rgba(0,0,0,0.1)] scale-[0.98]': scrolled }"
     >
-
-      <!-- Logo -->
-      <router-link
-        to="/"
-        class="text-base font-semibold tracking-tight text-gray-900"
-      >
-        Ahmad Jamil
+    <div class="flex items-center">
+     <router-link to="/" class="flex items-center group">
+        <img
+          :src="icon"
+          class="h-28 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+          alt="Ahmad Jamil"
+        />
       </router-link>
+    </div>
 
       <!-- Desktop Nav -->
       <div class="hidden md:flex relative items-center bg-gray-100/60 p-1 rounded-full">
-
         <!-- Active Sliding Background -->
         <div
           class="absolute top-1 bottom-1 bg-white rounded-full shadow-sm transition-all duration-300"
@@ -28,7 +28,7 @@
         <router-link
           v-for="(route, index) in routes"
           :key="route.path"
-          :ref="el => linkRefs[index] = el"
+          :ref="el => { if (el) linkRefs[index] = el }"
           :to="route.path"
           class="relative z-10 px-5 py-2 text-sm font-medium text-gray-600
                  hover:text-gray-900 transition-colors duration-200"
@@ -53,6 +53,7 @@
       <button
         @click="isOpen = !isOpen"
         class="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
+        aria-label="Toggle menu"
       >
         <svg
           class="h-6 w-6 transition-transform duration-300"
@@ -65,7 +66,6 @@
             d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
-
     </div>
 
     <!-- Mobile Menu -->
@@ -113,6 +113,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import iconImage from '@/assets/images/personal/ajIcon.png'
+
+const icon = ref(iconImage)
 
 const routes = [
   { path: '/', label: 'Home' },
@@ -125,13 +128,13 @@ const routes = [
 const route = useRoute()
 const isOpen = ref(false)
 const scrolled = ref(false)
-const linkRefs = []
+const linkRefs = ref([])
 const activeStyle = ref({})
 
 const updateActive = async () => {
   await nextTick()
   const index = routes.findIndex(r => r.path === route.path)
-  const el = linkRefs[index]
+  const el = linkRefs.value[index]
   if (!el) return
 
   activeStyle.value = {
@@ -140,14 +143,18 @@ const updateActive = async () => {
   }
 }
 
+const handleScroll = () => {
+  scrolled.value = window.scrollY > 20
+}
+
 watch(() => route.path, updateActive)
+
 onMounted(() => {
   updateActive()
-  window.addEventListener('scroll', () => {
-    scrolled.value = window.scrollY > 20
-  })
+  window.addEventListener('scroll', handleScroll)
 })
+
 onUnmounted(() => {
-  window.removeEventListener('scroll', () => {})
+  window.removeEventListener('scroll', handleScroll)
 })
 </script>
