@@ -1,4 +1,5 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
+
 import HomeComponent from '../components/HomeComponent.vue'
 import ProjectsComponent from '../components/ProjectsComponent.vue'
 import ContactComponent from '../components/ContactComponent.vue'
@@ -8,7 +9,6 @@ import ReadMessagesComponent from '@/components/ReadMessagesComponent.vue'
 
 const routes = [
   { path: '/', component: HomeComponent },
-  { path: '/ahmad-jamil/', component: HomeComponent },
   { path: '/projects', component: ProjectsComponent },
   { path: '/contact', component: ContactComponent },
   { path: '/resume', component: ResumeComponent },
@@ -16,8 +16,9 @@ const routes = [
   { path: '/messages', component: ReadMessagesComponent },
 ];
 
-const router = createRouter({ 
-    history: createWebHashHistory(), 
-    routes, 
-}); 
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
 export default router;
