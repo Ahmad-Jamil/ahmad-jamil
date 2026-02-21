@@ -13,7 +13,7 @@
         to="/"
         class="text-base font-semibold tracking-tight text-gray-900"
       >
-        Ahmad
+        Ahmad Jamil
       </router-link>
 
       <!-- Desktop Nav -->
