@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
   try {
     // Read authentication file
     // In Vercel, files are read from the project root
-    const filePath = path.join(process.cwd(), 'src', 'backend', 'data', 'authentication.json');
+    const filePath = path.join(process.cwd(), 'api', 'data', 'authentication.json');
     
     // Check if file exists
     if (!fs.existsSync(filePath)) {
