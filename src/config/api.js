@@ -14,10 +14,10 @@ const getApiBaseUrl = () => {
       window.location.hostname.includes('vercel.com')) {
     return ''; // Empty string = same origin (relative paths)
   }
-  
-  // For GitHub Pages or other deployments, use environment variable or default
-  // If frontend is on GitHub Pages and backend on Vercel, use Vercel URL
-  return process.env.VUE_APP_API_URL || 'https://ahmad-jamil.vercel.app';
+
+  // GitHub Pages (or any non-Vercel domain): you MUST set VUE_APP_API_URL
+  // because same-origin APIs won't exist there.
+  return process.env.VUE_APP_API_URL || '';
 };
 
 export const API_BASE_URL = getApiBaseUrl();
@@ -26,5 +26,6 @@ export const API_BASE_URL = getApiBaseUrl();
 export const API_ENDPOINTS = {
   AUTH: `${API_BASE_URL}/api/auth`,
   MESSAGES: `${API_BASE_URL}/api/messages`,
+  RESUME: `${API_BASE_URL}/api/resume`,
 };
 
