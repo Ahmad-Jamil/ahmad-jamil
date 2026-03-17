@@ -8,6 +8,7 @@ require("dotenv").config();
 
 const connectDB = require("./api/db");
 const Message = require("./api/models/Messages");
+const Resume = require("./api/models/Resume");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -53,6 +54,28 @@ app.get("/api/messages", async (req, res) => {
     res.status(200).json(messages);
   } catch (err) {
     console.error("MongoDB read error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/api/resume", async (req, res) => {
+  try {
+    await connectDB();
+    const resumeObject = await Resume.findOne().sort({ _id: -1 });
+    res.status(200).json(resumeObject || {});
+  } catch (err) {
+    console.error("MongoDB read error (resume):", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/api/resume", async (req, res) => {
+  try {
+    await connectDB();
+    const resumeObject = await Resume.create(req.body);
+    res.status(201).json({ message: "Resume saved to MongoDB", data: resumeObject });
+  } catch (err) {
+    console.error("MongoDB insert error (resume):", err);
     res.status(500).json({ error: err.message });
   }
 });

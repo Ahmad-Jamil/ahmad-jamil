@@ -64,11 +64,11 @@ export default async function createResumePDFODFLib(resumeData) {
     y -= lineHeight / 2; // spacing after paragraph
   };
 
-  // Add section header with spacing before & after
+  // Add section header
   const addSectionHeader = (text) => {
-    y -= 12; // space BEFORE section
+    y -= 12;
     addText(text, 14, { font: fontBold, color: rgb(0, 0, 0) });
-    y -= 6; // space AFTER section title
+    y -= 6;
   };
 
   // ----- PDF Content -----
@@ -93,7 +93,7 @@ export default async function createResumePDFODFLib(resumeData) {
     addText(`${exp.jobTitle}, ${exp.companyName}`, 12, { font: fontBold });
     addText(`${exp.startDate} - ${exp.endDate}`, 10, { color: rgb(0.3, 0.3, 0.3) });
     addText(exp.summary, 11);
-    y -= 6; // small gap between jobs
+    y -= 6;
   });
 
   // Education
@@ -104,11 +104,15 @@ export default async function createResumePDFODFLib(resumeData) {
     y -= 6;
   });
 
-  // Skills
+  // Skills (FIXED)
   addSectionHeader('Skills');
   resumeData.skills.forEach(category => {
-    const key = Object.keys(category)[0];
-    addText(`${key.replace(/_/g, ' ')}: ${category[key].join(', ')}`, 11);
+    const title = category.category.replace(/_/g, ' ');
+    const items = Array.isArray(category.skills)
+      ? category.skills.join(', ')
+      : '';
+
+    addText(`${title}: ${items}`, 11);
   });
 
   // Languages
@@ -117,7 +121,7 @@ export default async function createResumePDFODFLib(resumeData) {
     addText(`${lang.name}: ${lang.level}`, 11);
   });
 
-  // ----- Save PDF -----
+  // Save PDF
   const pdfBytes = await pdfDoc.save();
   const blob = new Blob([pdfBytes], { type: 'application/pdf' });
   const link = document.createElement('a');
