@@ -91,8 +91,28 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue'
 import { Icon } from '@iconify/vue'
-import references from '@/data/references.json'
+import { API_ENDPOINTS } from '@/config/api'
+
+const references = ref([])
+
+const fetchReferences = async () => {
+  try {
+    const response = await fetch(API_ENDPOINTS.REFERENCES)
+    if (!response.ok) {
+      console.error('Failed to fetch references.', {
+        url: API_ENDPOINTS.REFERENCES,
+        status: response.status,
+        statusText: response.statusText,
+      })
+      return
+    }
+    references.value = await response.json()
+  } catch (error) {
+    console.error('Failed to fetch references (network error).', { url: API_ENDPOINTS.REFERENCES, error })
+  }
+}
 
 const extractSkills = (reference) => {
   const skills = reference.skills
@@ -108,4 +128,6 @@ const extractKeyPoints = (reference) => {
 const formatReference = (text) => {
   return text.replace(/\. /g, '.\n\n')
 }
+
+onMounted(fetchReferences)
 </script>
