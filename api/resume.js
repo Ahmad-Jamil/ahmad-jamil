@@ -36,8 +36,27 @@ module.exports = async (req, res) => {
 
   try {
     if (req.method === "GET") {
-      const resumeObject = await Resume.findOne().sort({ _id: -1 });
-      return res.status(200).json(resumeObject || {});
+      const forcedId = req.query?.resumeId || process.env.RESUME_DOCUMENT_ID;
+      if (forcedId) {
+        const forcedDoc = await Resume.findById(forcedId);
+        if (forcedDoc) {
+          return res.status(200).json(forcedDoc);
+        }
+      }
+
+      const resumes = await Resume.find().sort({ _id: -1 });
+      const hasNonEmptySkills = (doc) =>
+        Array.isArray(doc?.skills) &&
+        doc.skills.some((entry) => {
+          if (!entry || typeof entry !== "object") return false;
+          if (Array.isArray(entry.skills) && entry.skills.length > 0) return true;
+          return Object.keys(entry).some(
+            (key) => key !== "_id" && key !== "category" && Array.isArray(entry[key]) && entry[key].length > 0
+          );
+        });
+
+      const resumeObject = resumes.find(hasNonEmptySkills) || resumes[0] || {};
+      return res.status(200).json(resumeObject);
     }
 
     if (req.method === "POST") {

@@ -127,35 +127,19 @@ const fetchResume = async () => {
 
     if (response.ok) {
       const data = await response.json();
-
+      console.log("FULL API RESPONSE:", data);
       // Handle array or single object
       const resume = Array.isArray(data) ? (data[0] || {}) : (data || {});
 
-      // Normalize skills for both shapes:
-      // 1) { category: "frontend", skills: ["Vue"] }
-      // 2) { frontend: ["Vue"] }
-      if (Array.isArray(resume.skills)) {
-        resume.skills = resume.skills.map((item) => {
-          if (!item || typeof item !== 'object') {
-            return { category: '', skills: [] };
-          }
-
-          if ('category' in item) {
-            return {
-              category: item.category || '',
-              skills: Array.isArray(item.skills) ? item.skills : [],
-            };
-          }
-
-          const categoryKey = Object.keys(item).find((key) => key !== '_id');
-          return {
-            category: categoryKey || '',
-            skills: categoryKey && Array.isArray(item[categoryKey]) ? item[categoryKey] : [],
-          };
-        });
-      }
+      // Keep critical fields available even if older documents use different keys.
+      resume.email = resume.email || resume.emailAddress || resume.mail || '';
+      resume.languages = Array.isArray(resume.languages) ? resume.languages : [];
+      resume.experiences = Array.isArray(resume.experiences) ? resume.experiences : [];
+      resume.education = Array.isArray(resume.education) ? resume.education : [];
+      resume.skills = normalizeSkills(resume.skills);
 
       resumeObject.value = resume;
+      console.log("RAW API SKILLS:", resume.skills);
 
     } else {
       console.error('Failed to fetch resume.', {
@@ -172,6 +156,53 @@ const fetchResume = async () => {
 onMounted(fetchResume);
 
 const skills = computed(() => resumeObject.value?.skills || []);
+const normalizeSkillItems = (raw) => {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map((s) => {
+      if (typeof s === 'string') return s.trim();
+      if (s && typeof s === 'object') return String(s.name || s.skill || '').trim();
+      return '';
+    })
+    .filter(Boolean);
+};
+
+const normalizeSkills = (rawSkills) => {
+  if (!Array.isArray(rawSkills)) return [];
+  return rawSkills
+    .map((item) => {
+      if (!item || typeof item !== 'object') return null;
+
+      if ('category' in item) {
+        // Some legacy/broken records may keep useful keys besides category/skills.
+        // If category is the placeholder "skills" and list is empty, try recovery.
+        const directSkills = normalizeSkillItems(item.skills);
+        if (String(item.category || '').trim().toLowerCase() === 'skills' && directSkills.length === 0) {
+          const backupKey = Object.keys(item).find(
+            (k) => !['_id', 'category', 'skills', '__v'].includes(k) && Array.isArray(item[k])
+          );
+          if (backupKey) {
+            return {
+              category: String(backupKey).trim(),
+              skills: normalizeSkillItems(item[backupKey]),
+            };
+          }
+        }
+        return {
+          category: String(item.category || '').trim(),
+          skills: directSkills,
+        };
+      }
+
+      const categoryKey = Object.keys(item).find((key) => key !== '_id');
+      if (!categoryKey) return null;
+      return {
+        category: String(categoryKey).trim(),
+        skills: normalizeSkillItems(item[categoryKey]),
+      };
+    })
+    .filter((x) => x && x.category && Array.isArray(x.skills) && x.skills.length > 0);
+};
 
 const formatCategoryName = (name) =>
   String(name || '')

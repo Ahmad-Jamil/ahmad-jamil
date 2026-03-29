@@ -63,8 +63,27 @@ app.get("/api/messages", async (req, res) => {
 app.get("/api/resume", async (req, res) => {
   try {
     await connectDB();
-    const resumeObject = await Resume.findOne().sort({ _id: -1 });
-    res.status(200).json(resumeObject || {});
+    const forcedId = req.query.resumeId || process.env.RESUME_DOCUMENT_ID;
+    if (forcedId) {
+      const forcedDoc = await Resume.findById(forcedId);
+      if (forcedDoc) {
+        return res.status(200).json(forcedDoc);
+      }
+    }
+
+    const resumes = await Resume.find().sort({ _id: -1 });
+    const hasNonEmptySkills = (doc) =>
+      Array.isArray(doc?.skills) &&
+      doc.skills.some((entry) => {
+        if (!entry || typeof entry !== "object") return false;
+        if (Array.isArray(entry.skills) && entry.skills.length > 0) return true;
+        return Object.keys(entry).some(
+          (key) => key !== "_id" && key !== "category" && Array.isArray(entry[key]) && entry[key].length > 0
+        );
+      });
+
+    const resumeObject = resumes.find(hasNonEmptySkills) || resumes[0] || {};
+    res.status(200).json(resumeObject);
   } catch (err) {
     console.error("MongoDB read error (resume):", err);
     res.status(500).json({ error: err.message });

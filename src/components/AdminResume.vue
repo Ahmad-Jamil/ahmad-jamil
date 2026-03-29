@@ -167,18 +167,57 @@ const form = ref({
   certificates: [],
 })
 
+const normalizeSkillItems = (raw) => {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map((s) => {
+      if (typeof s === 'string') return s.trim();
+      if (s && typeof s === 'object') return String(s.name || s.skill || '').trim();
+      return '';
+    })
+    .filter(Boolean);
+}
+
+const normalizeSkills = (rawSkills) => {
+  if (!Array.isArray(rawSkills)) return [];
+  return rawSkills
+    .map((s) => {
+      if (!s || typeof s !== 'object') return null;
+      if ('category' in s) {
+        const directSkills = normalizeSkillItems(s.skills);
+        if (String(s.category || '').trim().toLowerCase() === 'skills' && directSkills.length === 0) {
+          const backupKey = Object.keys(s).find(
+            (k) => !['_id', 'category', 'skills', '__v'].includes(k) && Array.isArray(s[k])
+          );
+          if (backupKey) {
+            return { category: backupKey, skills: normalizeSkillItems(s[backupKey]) };
+          }
+        }
+        return { category: s.category || '', skills: directSkills };
+      }
+      const categoryKey = Object.keys(s).find((k) => k !== '_id');
+      if (!categoryKey) return null;
+      return { category: categoryKey, skills: normalizeSkillItems(s[categoryKey]) };
+    })
+    .filter((x) => x && x.category);
+}
+
 const normalizeResume = (data = {}) => ({
   _id: data?._id,
   phonePrefix: data?.phonePrefix || '',
   mobileNumber: data?.mobileNumber || '',
-  email: data?.email || '',
+  email: data?.email || data?.emailAddress || data?.mail || '',
   country: data?.country || '',
   city: data?.city || '',
   aboutMe: data?.aboutMe || '',
   languages: (Array.isArray(data?.languages) ? data.languages : []).map((l) => ({ _key: key(), name: l?.name || '', level: l?.level || '' })),
   experiences: (Array.isArray(data?.experiences) ? data.experiences : []).map((e) => ({ _key: key(), jobTitle: e?.jobTitle || '', companyName: e?.companyName || '', startDate: e?.startDate || '', endDate: e?.endDate || '', summary: e?.summary || '' })),
   education: (Array.isArray(data?.education) ? data.education : []).map((e) => ({ _key: key(), university: e?.university || '', degree: e?.degree || '', date: e?.date || '' })),
-  skills: (Array.isArray(data?.skills) ? data.skills : []).map((s) => ({ _key: key(), category: s?.category || '', _skillsCsv: Array.isArray(s?.skills) ? s.skills.join(', ') : '' })),
+  skills: normalizeSkills(data?.skills).map((s) => ({
+    _key: key(),
+    category: s.category || '',
+    _skillsCsv: Array.isArray(s.skills) ? s.skills.join(', ') : '',
+  })),
   certificates: (Array.isArray(data?.certificates) ? data.certificates : []).map((c) => ({ _key: key(), name: c?.name || '', date: c?.date || '' })),
 })
 
@@ -252,7 +291,7 @@ const save = async () => {
     skills: form.value.skills.map((s) => ({
       category: s.category,
       skills: String(s._skillsCsv || '').split(',').map((x) => x.trim()).filter(Boolean),
-    })),
+    })).filter((s) => s.category && s.skills.length > 0),
     certificates: form.value.certificates.map((c) => ({ name: c.name, date: c.date })),
   }
 
