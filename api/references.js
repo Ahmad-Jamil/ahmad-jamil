@@ -39,13 +39,33 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: "Expected { company, Manager, reference, skills?, keyPoints? }" });
     }
 
-    const doc = await Reference.create({
-      company: body.company,
-      Manager: body.Manager,
-      reference: body.reference,
-      skills: Array.isArray(body.skills) ? body.skills : [],
-      keyPoints: Array.isArray(body.keyPoints) ? body.keyPoints : [],
-    });
+    let doc;
+    if (body._id) {
+      doc = await Reference.findByIdAndUpdate(
+        body._id,
+        {
+          $set: {
+            company: body.company,
+            Manager: body.Manager,
+            reference: body.reference,
+            skills: Array.isArray(body.skills) ? body.skills : [],
+            keyPoints: Array.isArray(body.keyPoints) ? body.keyPoints : [],
+          },
+        },
+        { new: true }
+      );
+      if (!doc) {
+        return res.status(404).json({ error: "Reference not found for update" });
+      }
+    } else {
+      doc = await Reference.create({
+        company: body.company,
+        Manager: body.Manager,
+        reference: body.reference,
+        skills: Array.isArray(body.skills) ? body.skills : [],
+        keyPoints: Array.isArray(body.keyPoints) ? body.keyPoints : [],
+      });
+    }
 
     return res.status(201).json({ message: "Reference saved to MongoDB", data: doc });
   } catch (err) {

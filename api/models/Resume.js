@@ -8,6 +8,7 @@ const ResumeSchema = new mongoose.Schema(
     country: String,
     city: String,
     aboutMe: String,
+
     experiences: [
       {
         jobTitle: String,
@@ -17,6 +18,7 @@ const ResumeSchema = new mongoose.Schema(
         summary: String
       }
     ],
+
     education: [
       {
         university: String,
@@ -24,18 +26,23 @@ const ResumeSchema = new mongoose.Schema(
         date: String
       }
     ],
+
     languages: [
       {
         name: String,
         level: String
       }
     ],
+
+    // FIXED SKILLS SCHEMA
     skills: [
       {
-        category: String,
-        skills: [String]
+        // dynamic category name (e.g. programming_languages)
+        type: Object,
+        required: true
       }
     ],
+
     certificates: [
       {
         name: String,

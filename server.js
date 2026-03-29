@@ -63,8 +63,27 @@ app.get("/api/messages", async (req, res) => {
 app.get("/api/resume", async (req, res) => {
   try {
     await connectDB();
-    const resumeObject = await Resume.findOne().sort({ _id: -1 });
-    res.status(200).json(resumeObject || {});
+    const forcedId = req.query.resumeId || process.env.RESUME_DOCUMENT_ID;
+    if (forcedId) {
+      const forcedDoc = await Resume.findById(forcedId);
+      if (forcedDoc) {
+        return res.status(200).json(forcedDoc);
+      }
+    }
+
+    const resumes = await Resume.find().sort({ _id: -1 });
+    const hasNonEmptySkills = (doc) =>
+      Array.isArray(doc?.skills) &&
+      doc.skills.some((entry) => {
+        if (!entry || typeof entry !== "object") return false;
+        if (Array.isArray(entry.skills) && entry.skills.length > 0) return true;
+        return Object.keys(entry).some(
+          (key) => key !== "_id" && key !== "category" && Array.isArray(entry[key]) && entry[key].length > 0
+        );
+      });
+
+    const resumeObject = resumes.find(hasNonEmptySkills) || resumes[0] || {};
+    res.status(200).json(resumeObject);
   } catch (err) {
     console.error("MongoDB read error (resume):", err);
     res.status(500).json({ error: err.message });
@@ -74,7 +93,19 @@ app.get("/api/resume", async (req, res) => {
 app.post("/api/resume", async (req, res) => {
   try {
     await connectDB();
-    const resumeObject = await Resume.create(req.body);
+    let resumeObject;
+    if (req.body && req.body._id) {
+      resumeObject = await Resume.findByIdAndUpdate(
+        req.body._id,
+        { $set: { ...req.body, _id: undefined } },
+        { new: true }
+      );
+      if (!resumeObject) {
+        return res.status(404).json({ error: "Resume not found for update" });
+      }
+    } else {
+      resumeObject = await Resume.create(req.body);
+    }
     res.status(201).json({ message: "Resume saved to MongoDB", data: resumeObject });
   } catch (err) {
     console.error("MongoDB insert error (resume):", err);
@@ -101,11 +132,23 @@ app.post("/api/projects", async (req, res) => {
       return res.status(400).json({ error: "Expected { company: string, projects: [] }" });
     }
 
-    const doc = await CompanyProjects.findOneAndUpdate(
-      { company: body.company },
-      { $set: { company: body.company, projects: body.projects } },
-      { new: true, upsert: true }
-    );
+    let doc;
+    if (body._id) {
+      doc = await CompanyProjects.findByIdAndUpdate(
+        body._id,
+        { $set: { company: body.company, projects: body.projects } },
+        { new: true }
+      );
+      if (!doc) {
+        return res.status(404).json({ error: "Project company not found for update" });
+      }
+    } else {
+      doc = await CompanyProjects.findOneAndUpdate(
+        { company: body.company },
+        { $set: { company: body.company, projects: body.projects } },
+        { new: true, upsert: true }
+      );
+    }
 
     res.status(201).json({ message: "Projects saved to MongoDB", data: doc });
   } catch (err) {
@@ -132,13 +175,33 @@ app.post("/api/references", async (req, res) => {
     if (!body || !body.company || !body.Manager || !body.reference) {
       return res.status(400).json({ error: "Expected { company, Manager, reference, skills?, keyPoints? }" });
     }
-    const doc = await Reference.create({
-      company: body.company,
-      Manager: body.Manager,
-      reference: body.reference,
-      skills: Array.isArray(body.skills) ? body.skills : [],
-      keyPoints: Array.isArray(body.keyPoints) ? body.keyPoints : [],
-    });
+    let doc;
+    if (body._id) {
+      doc = await Reference.findByIdAndUpdate(
+        body._id,
+        {
+          $set: {
+            company: body.company,
+            Manager: body.Manager,
+            reference: body.reference,
+            skills: Array.isArray(body.skills) ? body.skills : [],
+            keyPoints: Array.isArray(body.keyPoints) ? body.keyPoints : [],
+          },
+        },
+        { new: true }
+      );
+      if (!doc) {
+        return res.status(404).json({ error: "Reference not found for update" });
+      }
+    } else {
+      doc = await Reference.create({
+        company: body.company,
+        Manager: body.Manager,
+        reference: body.reference,
+        skills: Array.isArray(body.skills) ? body.skills : [],
+        keyPoints: Array.isArray(body.keyPoints) ? body.keyPoints : [],
+      });
+    }
     res.status(201).json({ message: "Reference saved to MongoDB", data: doc });
   } catch (err) {
     console.error("MongoDB insert error (references):", err);

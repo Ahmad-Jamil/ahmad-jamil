@@ -39,12 +39,24 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: "Expected { company: string, projects: [] }" });
     }
 
-    // Upsert by company name for convenience
-    const doc = await CompanyProjects.findOneAndUpdate(
-      { company: body.company },
-      { $set: { company: body.company, projects: body.projects } },
-      { new: true, upsert: true }
-    );
+    let doc;
+    if (body._id) {
+      doc = await CompanyProjects.findByIdAndUpdate(
+        body._id,
+        { $set: { company: body.company, projects: body.projects } },
+        { new: true }
+      );
+      if (!doc) {
+        return res.status(404).json({ error: "Project company not found for update" });
+      }
+    } else {
+      // Create or upsert by company only when this is a new item without _id
+      doc = await CompanyProjects.findOneAndUpdate(
+        { company: body.company },
+        { $set: { company: body.company, projects: body.projects } },
+        { new: true, upsert: true }
+      );
+    }
 
     return res.status(201).json({ message: "Projects saved to MongoDB", data: doc });
   } catch (err) {
