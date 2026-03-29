@@ -131,16 +131,26 @@ const fetchResume = async () => {
       // Handle array or single object
       const resume = Array.isArray(data) ? (data[0] || {}) : (data || {});
 
-      // Normalize skills structure
-      if (resume.skills && Array.isArray(resume.skills)) {
+      // Normalize skills for both shapes:
+      // 1) { category: "frontend", skills: ["Vue"] }
+      // 2) { frontend: ["Vue"] }
+      if (Array.isArray(resume.skills)) {
         resume.skills = resume.skills.map((item) => {
-          const categoryKey = Object.keys(item).find(
-            (key) => key !== "_id" && key !== "skills"
-          );
+          if (!item || typeof item !== 'object') {
+            return { category: '', skills: [] };
+          }
 
+          if ('category' in item) {
+            return {
+              category: item.category || '',
+              skills: Array.isArray(item.skills) ? item.skills : [],
+            };
+          }
+
+          const categoryKey = Object.keys(item).find((key) => key !== '_id');
           return {
-            category: categoryKey,
-            skills: Array.isArray(item[categoryKey]) ? item[categoryKey] : []
+            category: categoryKey || '',
+            skills: categoryKey && Array.isArray(item[categoryKey]) ? item[categoryKey] : [],
           };
         });
       }
@@ -161,7 +171,6 @@ const fetchResume = async () => {
 
 onMounted(fetchResume);
 
-// Computed skills (now always normalized)
 const skills = computed(() => resumeObject.value?.skills || []);
 
 const formatCategoryName = (name) =>

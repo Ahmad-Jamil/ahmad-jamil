@@ -45,7 +45,20 @@ module.exports = async (req, res) => {
       if (!body || (!body.phonePrefix && !body.mobileNumber && !body.email && !body.country && !body.city && !body.aboutMe && !body.experiences && !body.education && !body.languages && !body.skills && !body.certificates)) {
         return res.status(400).json({ error: "phonePrefix, mobileNumber, email, country, city, aboutMe, experiences, education, languages, skills, and certificates are required" });
       }
-      const resumeObject = await Resume.create(body);
+
+      let resumeObject;
+      if (body._id) {
+        resumeObject = await Resume.findByIdAndUpdate(
+          body._id,
+          { $set: { ...body, _id: undefined } },
+          { new: true }
+        );
+        if (!resumeObject) {
+          return res.status(404).json({ error: "Resume not found for update" });
+        }
+      } else {
+        resumeObject = await Resume.create(body);
+      }
       return res.status(201).json({ resume: "Resume saved to MongoDB", data: resumeObject });
     }
   } catch (err) {

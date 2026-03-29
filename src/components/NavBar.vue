@@ -123,6 +123,9 @@ const routes = [
   { path: '/resume', label: 'Resume' },
   { path: '/references', label: 'References' },
   { path: '/messages', label: 'Messages' },
+  { path: '/admin/projects', label: 'Edit Projects' },
+  { path: '/admin/resume', label: 'Edit Resume' },
+  { path: '/admin/references', label: 'Edit References' },
 ]
 
 const route = useRoute()
