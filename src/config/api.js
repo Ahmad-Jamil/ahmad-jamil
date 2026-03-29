@@ -27,5 +27,7 @@ export const API_ENDPOINTS = {
   AUTH: `${API_BASE_URL}/api/auth`,
   MESSAGES: `${API_BASE_URL}/api/messages`,
   RESUME: `${API_BASE_URL}/api/resume`,
+  PROJECTS: `${API_BASE_URL}/api/projects`,
+  REFERENCES: `${API_BASE_URL}/api/references`,
 };
 

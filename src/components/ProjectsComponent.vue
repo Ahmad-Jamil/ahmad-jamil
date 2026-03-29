@@ -85,6 +85,28 @@
 </template>
 
 <script setup>
-import projects from '@/data/projects.json'
+import { onMounted, ref } from 'vue'
+import { API_ENDPOINTS } from '@/config/api'
 import { Icon } from '@iconify/vue'
+
+const projects = ref([])
+
+const fetchProjects = async () => {
+  try {
+    const response = await fetch(API_ENDPOINTS.PROJECTS)
+    if (!response.ok) {
+      console.error('Failed to fetch projects.', {
+        url: API_ENDPOINTS.PROJECTS,
+        status: response.status,
+        statusText: response.statusText,
+      })
+      return
+    }
+    projects.value = await response.json()
+  } catch (error) {
+    console.error('Failed to fetch projects (network error).', { url: API_ENDPOINTS.PROJECTS, error })
+  }
+}
+
+onMounted(fetchProjects)
 </script>
