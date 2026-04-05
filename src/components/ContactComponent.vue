@@ -1,95 +1,124 @@
 <template>
-  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
-    <div class="max-w-6xl mx-auto space-y-16">
+  <main class="bg-white min-h-screen pt-12 pb-24 px-6 animate-fade-in-up">
+    <div class="max-w-6xl mx-auto space-y-24">
 
       <!-- Header Section -->
-      <section class="text-center space-y-4">
-        <h1 class="text-4xl md:text-6xl font-bold text-gray-900">
-          Get In Touch
+      <section class="text-center space-y-6">
+        <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-600 text-sm font-bold tracking-wide">
+          Communication
+        </div>
+        <h1 class="text-5xl md:text-7xl font-black text-gray-900 leading-tight">
+          Get In <span class="text-indigo-600">Touch</span>
         </h1>
-        <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-          I am open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free
-          to reach out!
+        <p class="text-xl text-gray-500 font-medium max-w-2xl mx-auto">
+          Open to discussing engineering leadership, cloud architecture, or backend opportunities.
         </p>
       </section>
 
-      <!-- Contact Details -->
-      <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Phone -->
-        <div class="p-6 bg-white border border-gray-200 rounded-2xl hover:shadow-xl flex items-center space-x-4 transition duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-          </svg>
-          <span class="text-gray-900 font-medium">+357 99 142840</span>
-        </div>
+      <!-- Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
 
-        <!-- Email -->
-        <div class="p-6 bg-white border border-gray-200 rounded-2xl hover:shadow-xl flex items-center space-x-4 transition duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-          <a href="mailto:tzamil1991@gmail.com" class="text-gray-900 font-medium hover:text-blue-500 transition">
-            tzamil1991@gmail.com
-          </a>
-        </div>
-      </section>
+        <!-- Info Sidebar -->
+        <div class="lg:col-span-4 space-y-12">
+          <div class="p-10 bg-gray-50 border border-transparent rounded-[40px] space-y-8 hover:bg-white hover:border-indigo-100 hover:shadow-2xl hover:shadow-indigo-50/50 transition duration-500 group">
+            <h3 class="text-2xl font-black text-gray-900 mb-8 tracking-tight">Direct Channels</h3>
 
-      <!-- Message Form -->
-      <section>
-        <div class="p-8 bg-white border border-gray-200 rounded-2xl hover:shadow-xl transition duration-300">
-          <h2 class="text-2xl font-bold mb-6 text-gray-900 text-center">Leave A Message</h2>
+            <div class="space-y-10">
+              <!-- Phone -->
+              <div class="flex items-center space-x-6">
+                <div class="h-14 w-14 bg-white rounded-2xl flex items-center justify-center shadow-lg group-hover:bg-indigo-600 transition duration-500">
+                  <Icon icon="ph:phone-duotone" class="h-7 w-7 text-indigo-600 group-hover:text-white transition" />
+                </div>
+                <div>
+                  <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Call Me</p>
+                  <p class="text-gray-900 font-bold text-lg">+357 99 142840</p>
+                </div>
+              </div>
 
-          <p v-if="successMessage" class="text-sm text-center text-green-500">{{ successMessage }}</p>
-          <p v-if="errorMessage" class="text-sm text-center text-red-500">{{ errorMessage }}</p>
-
-          <form class="space-y-6">
-            <!-- Name -->
-            <div>
-              <label for="senderName" class="block text-gray-700 font-medium mb-2">Name</label>
-              <input
-                v-model="senderName"
-                id="senderName"
-                type="text"
-                placeholder="Your Name"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-400 outline-none transition"
-                required
-              />
-            </div>
-
-            <!-- Message -->
-            <div>
-              <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
-              <textarea
-                v-model="message"
-                id="message"
-                placeholder="Your Message"
-                rows="6"
-                maxlength="300"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-400 outline-none transition resize-none"
-                required
-              ></textarea>
-              <div class="flex justify-end">
-                <span class="text-sm text-gray-500">{{ message.length }}/300 characters</span>
+              <!-- Email -->
+              <div class="flex items-center space-x-6">
+                <div class="h-14 w-14 bg-white rounded-2xl flex items-center justify-center shadow-lg group-hover:bg-indigo-600 transition duration-500">
+                  <Icon icon="ph:paper-plane-tilt-duotone" class="h-7 w-7 text-indigo-600 group-hover:text-white transition" />
+                </div>
+                <div>
+                  <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Email Me</p>
+                  <a href="mailto:tzamil1991@gmail.com" class="text-gray-900 font-bold text-lg hover:text-indigo-600 transition">
+                    tzamil1991@gmail.com
+                  </a>
+                </div>
               </div>
             </div>
-
-            <!-- Submit -->
-            <button
-              @click.prevent="sendMessage"
-              class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg font-medium text-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-200 transition flex items-center justify-center space-x-2"
-            >
-              <span>Send Message</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
-            </button>
-          </form>
+          </div>
         </div>
-      </section>
+
+        <!-- Message Form -->
+        <div class="lg:col-span-8">
+          <div class="p-10 md:p-16 bg-white border border-gray-100 rounded-[48px] shadow-2xl shadow-indigo-100/30">
+            <h2 class="text-3xl font-black mb-10 text-gray-900">Send a Brief</h2>
+
+            <transition name="fade">
+              <div v-if="successMessage" class="mb-8 p-6 bg-emerald-50 border border-emerald-100 rounded-3xl text-emerald-700 font-bold flex items-center gap-4 animate-fade-in-up">
+                <Icon icon="ph:check-circle-fill" class="text-2xl shrink-0" />
+                {{ successMessage }}
+              </div>
+            </transition>
+
+            <transition name="fade">
+              <div v-if="errorMessage" class="mb-8 p-6 bg-rose-50 border border-rose-100 rounded-3xl text-rose-700 font-bold flex items-center gap-4 animate-fade-in-up">
+                <Icon icon="ph:warning-circle-fill" class="text-2xl shrink-0" />
+                {{ errorMessage }}
+              </div>
+            </transition>
+
+            <form class="space-y-10">
+              <!-- Name -->
+              <div class="space-y-3">
+                <label for="senderName" class="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Your Name</label>
+                <input
+                  v-model="senderName"
+                  id="senderName"
+                  type="text"
+                  placeholder="Full Name"
+                  class="w-full px-8 py-5 bg-gray-50 border border-transparent rounded-2xl text-gray-900 font-bold focus:bg-white focus:ring-4 focus:ring-indigo-50 focus:border-indigo-200 outline-none transition-all duration-300"
+                  required
+                />
+              </div>
+
+              <!-- Message -->
+              <div class="space-y-3">
+                <label for="message" class="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">Your Message</label>
+                <textarea
+                  v-model="message"
+                  id="message"
+                  placeholder="How can I help you today?"
+                  rows="6"
+                  maxlength="300"
+                  class="w-full px-8 py-5 bg-gray-50 border border-transparent rounded-2xl text-gray-900 font-bold focus:bg-white focus:ring-4 focus:ring-indigo-50 focus:border-indigo-200 outline-none transition-all duration-300 resize-none"
+                  required
+                ></textarea>
+                <div class="flex justify-end pr-1">
+                  <span class="text-xs font-black text-gray-400 uppercase tracking-[0.2em]">{{ message.length }}/300</span>
+                </div>
+              </div>
+
+              <!-- Submit -->
+              <button
+                @click.prevent="sendMessage"
+                class="group w-full bg-indigo-600 text-white py-6 px-10 rounded-2xl font-black text-lg hover:bg-gray-900 focus:ring-8 focus:ring-indigo-50 transition-all duration-500 flex items-center justify-center space-x-4 shadow-xl shadow-indigo-100"
+              >
+                <span>Dispatch Message</span>
+                <Icon icon="ph:paper-plane-right-fill" class="h-6 w-6 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" />
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
 
     </div>
   </main>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';

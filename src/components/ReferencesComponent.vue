@@ -1,82 +1,95 @@
 <template>
-  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
+  <main class="bg-white min-h-screen pt-12 pb-24 px-6 animate-fade-in-up">
     <div class="max-w-5xl mx-auto space-y-24">
 
       <!-- Header -->
       <section class="text-center space-y-6">
-        <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-gray-900">
-          Professional References
+        <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-600 text-sm font-bold tracking-wide">
+          Endorsements
+        </div>
+        <h1 class="text-5xl md:text-7xl font-black tracking-tight text-gray-900 leading-tight">
+          Professional <span class="text-indigo-600">References</span>
         </h1>
 
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Testimonials from professionals who have worked closely with me
-          across engineering teams and production systems.
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto font-medium">
+          Voices from leadership and peers regarding my contributions to complex engineering projects.
         </p>
       </section>
 
       <!-- Testimonials -->
-      <section class="space-y-16">
+      <section class="space-y-24">
 
         <div
           v-for="(reference, index) in references"
           :key="index"
-          class="p-10 bg-white border border-gray-200
-                 rounded-3xl shadow-sm hover:shadow-lg
-                 transition duration-300"
+          class="relative p-12 bg-gray-50 border border-transparent
+                 rounded-[48px] hover:bg-white hover:border-indigo-100
+                 hover:shadow-2xl hover:shadow-indigo-100/50
+                 transition-all duration-500"
         >
 
-          <!-- Header -->
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+          <!-- Floating Icon -->
+          <div class="absolute -top-6 left-12 h-14 w-14 rounded-2xl bg-indigo-600
+                        flex items-center justify-center shadow-xl shadow-indigo-200">
+              <Icon icon="ph:quotes-fill"
+                    class="w-7 h-7 text-white" />
+          </div>
 
-            <div>
-              <h2 class="text-2xl font-semibold text-gray-900">
+          <!-- Header -->
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-12">
+
+            <div class="space-y-4">
+              <h2 class="text-3xl font-black text-gray-900 tracking-tight">
                 {{ reference.company }}
               </h2>
 
-              <div class="flex items-center gap-2 text-gray-600 mt-2">
-                <Icon icon="mdi:account-tie" class="w-5 h-5" />
-                <span>{{ reference.Manager }}</span>
+              <div class="flex items-center gap-3">
+                 <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                    <Icon icon="ph:user-bold" class="w-5 h-5 text-indigo-600" />
+                 </div>
+                 <div>
+                    <p class="text-xs font-black text-gray-400 uppercase tracking-widest">Endorsed By</p>
+                    <p class="text-gray-900 font-bold leading-none">{{ reference.Manager }}</p>
+                 </div>
               </div>
             </div>
 
-            <div class="h-14 w-14 rounded-2xl bg-gray-100
-                        flex items-center justify-center">
-              <Icon icon="mdi:format-quote-close"
-                    class="w-7 h-7 text-gray-500" />
+            <!-- Skills Highlight -->
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="skill in extractSkills(reference)"
+                :key="skill"
+                class="px-4 py-2 text-xs font-black rounded-xl
+                       bg-white text-indigo-600
+                       border border-indigo-50 shadow-sm"
+              >
+                {{ skill }}
+              </span>
             </div>
 
           </div>
 
-          <!-- Skills Highlight -->
-          <div class="flex flex-wrap gap-3 mb-8">
-            <span
-              v-for="skill in extractSkills(reference)"
-              :key="skill"
-              class="px-4 py-1.5 text-sm rounded-full
-                     bg-gray-100 text-gray-700
-                     border border-gray-200"
-            >
-              {{ skill }}
-            </span>
+          <!-- Main Reference -->
+          <div class="relative">
+            <blockquote class="text-gray-700 leading-relaxed text-xl font-medium whitespace-pre-line italic">
+              "{{ formatReference(reference.reference) }}"
+            </blockquote>
           </div>
 
-          <!-- Main Reference -->
-          <blockquote class="text-gray-700 leading-relaxed text-lg whitespace-pre-line border-l-4 border-gray-300 pl-6">
-            {{ formatReference(reference.reference) }}
-          </blockquote>
-
           <!-- Key Points -->
-          <div class="grid md:grid-cols-2 gap-6 mt-10">
+          <div class="grid md:grid-cols-2 gap-6 mt-12 pt-12 border-t border-gray-100">
             <div
               v-for="point in extractKeyPoints(reference)"
               :key="point"
-              class="flex items-start gap-4 p-5
-                     bg-gray-50 border border-gray-200
-                     rounded-2xl"
+              class="flex items-start gap-4 p-6
+                     bg-white/50 border border-white
+                     rounded-3xl hover:border-indigo-100 transition"
             >
-              <Icon icon="mdi:check-circle"
-                    class="w-6 h-6 text-emerald-500 mt-1" />
-              <p class="text-gray-700">
+              <div class="h-8 w-8 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
+                <Icon icon="ph:check-circle-bold"
+                    class="w-5 h-5 text-emerald-500" />
+              </div>
+              <p class="text-gray-600 font-bold text-sm leading-relaxed">
                 {{ point }}
               </p>
             </div>
