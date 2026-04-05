@@ -1,10 +1,12 @@
 <template>
-  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
-    <div class="max-w-6xl w-full mx-auto space-y-24">
+  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-4">
+    <div class="w-full max-w-6xl mx-auto px-6 space-y-24">
+
       <!-- Authentication Modal -->
       <div v-if="!isAuthenticated" class="flex justify-center items-center min-h-screen">
         <div class="w-full max-w-md p-8 bg-white border border-gray-200 rounded-2xl shadow-lg transition duration-300">
           <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Admin Login</h3>
+
           <form @submit.prevent="authenticateUser" class="space-y-4">
             <div>
               <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
@@ -16,6 +18,7 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 text-gray-900"
               />
             </div>
+
             <div>
               <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
               <input
@@ -26,6 +29,7 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 text-gray-900"
               />
             </div>
+
             <div class="flex justify-end">
               <button
                 type="submit"
@@ -35,16 +39,21 @@
               </button>
             </div>
           </form>
+
           <p v-if="authError" class="text-red-500 text-center mt-4">{{ authError }}</p>
         </div>
       </div>
 
+      <!-- ADMIN CONTENT -->
       <div v-else class="space-y-24 w-full">
+
+        <!-- Header -->
         <section class="text-center space-y-6">
           <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Admin References</h1>
           <p class="text-gray-600">Add or update references stored in MongoDB.</p>
         </section>
 
+        <!-- Buttons -->
         <div class="flex items-center justify-between gap-4">
           <button
             @click="addNew"
@@ -52,6 +61,7 @@
           >
             Add Reference
           </button>
+
           <button
             @click="refresh"
             class="px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
@@ -63,16 +73,18 @@
         <p v-if="pageError" class="text-red-600 text-sm">{{ pageError }}</p>
         <p v-if="pageSuccess" class="text-emerald-600 text-sm">{{ pageSuccess }}</p>
 
-        <div class="w-full grid grid-cols-1 gap-8">
+        <!-- References Grid -->
+        <div class="w-full grid grid-cols-1 gap-10">
           <div
             v-for="refItem in references"
             :key="refItem._id || refItem._key"
-            class="w-full p-8 bg-white border border-gray-200 rounded-2xl space-y-5"
+            class="w-full p-8 bg-white border border-gray-200 rounded-2xl space-y-6 shadow-sm"
           >
             <div class="flex items-center justify-between gap-4">
               <h2 class="text-xl font-semibold text-gray-900">
                 {{ refItem.company || 'New reference' }}
               </h2>
+
               <button
                 @click="save(refItem)"
                 class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
@@ -86,6 +98,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">Company</label>
                 <input v-model="refItem.company" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900" />
               </div>
+
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Manager</label>
                 <input v-model="refItem.Manager" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900" />
@@ -102,13 +115,16 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">Skills (comma-separated)</label>
                 <input v-model="refItem._skillsCsv" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900" />
               </div>
+
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Key points (one per line)</label>
                 <textarea v-model="refItem._keyPointsText" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900"></textarea>
               </div>
             </div>
+
           </div>
         </div>
+
       </div>
     </div>
   </main>
@@ -231,4 +247,3 @@ onMounted(() => {
   if (isAuthenticated.value) refresh()
 })
 </script>
-

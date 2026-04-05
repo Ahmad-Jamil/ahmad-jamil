@@ -26,14 +26,15 @@
         ></div>
 
         <router-link
-          v-for="(route, index) in routes"
-          :key="route.path"
-          :ref="el => { if (el) linkRefs[index] = el }"
-          :to="route.path"
+          v-for="(routeItem, index) in routes"
+          :key="routeItem.path"
+          :ref="setLinkRef(index)"
+          :to="routeItem.path"
           class="relative z-10 px-5 py-2 text-sm font-medium text-gray-600
                  hover:text-gray-900 transition-colors duration-200"
+          active-class="text-gray-900 font-semibold"
         >
-          {{ route.label }}
+          {{ routeItem.label }}
         </router-link>
       </div>
 
@@ -132,17 +133,37 @@ const route = useRoute()
 const isOpen = ref(false)
 const scrolled = ref(false)
 const linkRefs = ref([])
-const activeStyle = ref({})
+
+const setLinkRef = (index) => (instance) => {
+  if (instance) {
+    linkRefs.value[index] = instance
+  }
+}
+
+const activeStyle = ref({ left: '0px', width: '0px' })
+
+const getLinkEl = (instance) => {
+  if (!instance) return null
+  // router-link ref is a component instance; DOM is on $el
+  const el = instance.$el
+  return el instanceof HTMLElement ? el : null
+}
 
 const updateActive = async () => {
   await nextTick()
-  const index = routes.findIndex(r => r.path === route.path)
-  const el = linkRefs.value[index]
+  await nextTick()
+  const index = routes.findIndex((r) => r.path === route.path)
+  if (index < 0) {
+    activeStyle.value = { left: '0px', width: '0px' }
+    return
+  }
+  const instance = linkRefs.value[index]
+  const el = getLinkEl(instance)
   if (!el) return
 
   activeStyle.value = {
-    left: el.offsetLeft + 'px',
-    width: el.offsetWidth + 'px',
+    left: `${el.offsetLeft}px`,
+    width: `${el.offsetWidth}px`,
   }
 }
 
@@ -152,12 +173,18 @@ const handleScroll = () => {
 
 watch(() => route.path, updateActive)
 
+const handleResize = () => {
+  updateActive()
+}
+
 onMounted(() => {
   updateActive()
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('resize', handleResize)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('resize', handleResize)
 })
 </script>
