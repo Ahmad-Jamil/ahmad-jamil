@@ -1,162 +1,185 @@
 <template>
-  <main class="bg-white min-h-screen pt-12 pb-24 px-6 animate-fade-in-up">
-    <div class="max-w-6xl mx-auto space-y-24">
-
-      <!-- Header -->
-      <section class="text-center space-y-6">
-        <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-600 text-sm font-bold tracking-wide">
+  <main class="bg-[#0e0e0e] min-h-screen pt-32 pb-24 px-6 font-['Space_Grotesk'] text-white">
+    <div class="max-w-7xl mx-auto space-y-32">
+      
+      <!-- Header Section -->
+      <section class="text-center space-y-10">
+        <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-[#00FF9C]/10 border border-[#00FF9C]/20 text-[#00FF9C] text-[10px] font-bold uppercase tracking-[0.4em]">
           Curriculum Vitae
         </div>
-        <h1 class="text-5xl md:text-7xl font-black tracking-tight text-gray-900">
-          Professional <span class="text-indigo-600">Resume</span>
+        <h1 class="text-7xl md:text-9xl font-black tracking-tighter text-white leading-none uppercase italic">
+          Professional <br/>
+          <span class="text-[#00FF9C]">Resume.</span>
         </h1>
-        <p class="text-xl text-gray-500 max-w-2xl mx-auto font-medium">
-          A deep dive into my journey as a software engineer, from Nicosia to the world.
+        <p class="text-2xl text-gray-400 max-w-2xl mx-auto font-medium tracking-tight">
+          A deep dive into my journey as a digital architect, engineering scalable systems from Nicosia to the world.
         </p>
-
+        
         <div class="flex justify-center pt-8">
            <button @click="downloadPDF"
-                class="group relative flex items-center gap-4 px-10 py-5 bg-gray-900 text-white font-bold rounded-[24px] hover:bg-indigo-600 transition-all duration-500 shadow-2xl shadow-gray-200">
+                class="group relative flex items-center gap-6 px-12 py-6 bg-[#00FF9C] text-black font-black uppercase tracking-widest text-sm rounded-sm hover:bg-[#05e68d] transition-all duration-500 shadow-[0_0_40px_rgba(0,255,156,0.2)] transform hover:-translate-y-1 active:scale-95">
              <Icon icon="ph:file-pdf-duotone" class="text-2xl" />
              <span>Download Full PDF</span>
-             <div class="absolute -top-3 -right-3 h-8 w-8 bg-indigo-500 rounded-full flex items-center justify-center text-xs border-4 border-white">
-                <Icon icon="ph:arrow-down-bold" />
+             <div class="absolute -top-3 -right-3 h-10 w-10 bg-white rounded-full flex items-center justify-center text-black border-4 border-[#0e0e0e]">
+                <Icon icon="ph:arrow-down-bold" class="text-sm" />
              </div>
           </button>
         </div>
       </section>
 
-      <!-- Grid Layout -->
-      <div class="grid lg:grid-cols-12 gap-12">
-
-        <!-- Sidebar (Contact & Languages) -->
-        <aside class="lg:col-span-4 space-y-10">
-
-          <!-- Contact Card -->
-          <div class="p-10 bg-gray-50 border border-transparent rounded-[40px] space-y-8 hover:bg-white hover:border-indigo-100 hover:shadow-2xl hover:shadow-indigo-50 transition duration-500">
-            <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-4">
-              <div class="h-10 w-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-100">
-                <Icon icon="ph:user-circle-duotone" class="text-white text-xl" />
-              </div>
+      <!-- Main Layout Grid -->
+      <div class="grid lg:grid-cols-12 gap-16">
+        
+        <!-- Left Sidebar: Identity & Linguistics -->
+        <aside class="lg:col-span-4 space-y-12">
+          
+          <!-- Contact Interface -->
+          <div class="p-12 bg-[#131313] border border-white/5 rounded-sm space-y-10 hover:border-[#00FF9C]/30 transition-all duration-700 group">
+            <h2 class="text-[10px] font-black text-[#00FF9C] uppercase tracking-[0.5em] flex items-center gap-4">
+              <span class="h-[1px] w-8 bg-[#00FF9C]"></span>
               Contact
             </h2>
-
-            <div class="space-y-6">
-              <div class="flex items-start gap-4">
-                 <Icon icon="ph:phone-duotone" class="text-2xl text-indigo-600 mt-1" />
+            <div class="space-y-8">
+              <div class="flex items-start gap-6 group/item">
+                 <div class="h-12 w-12 bg-[#0e0e0e] border border-white/5 flex items-center justify-center group-hover/item:border-[#00FF9C]/40 transition-colors">
+                    <Icon icon="ph:phone-duotone" class="text-xl text-white/40 group-hover/item:text-[#00FF9C]" />
+                 </div>
                  <div>
-                   <p class="text-xs font-black text-gray-400 uppercase tracking-widest">Mobile</p>
-                   <p class="text-gray-700 font-bold">{{ resumeObject.phonePrefix }} {{ resumeObject.mobileNumber }}</p>
+                   <p class="text-[10px] font-black text-gray-600 uppercase tracking-widest">Mobile</p>
+                   <p class="text-white font-bold italic tracking-tight">{{ resumeObject.phonePrefix }} {{ resumeObject.mobileNumber }}</p>
                  </div>
               </div>
-
-              <div class="flex items-start gap-4">
-                 <Icon icon="ph:envelope-duotone" class="text-2xl text-indigo-600 mt-1" />
-                 <div>
-                   <p class="text-xs font-black text-gray-400 uppercase tracking-widest">Email</p>
-                   <p class="text-gray-700 font-bold truncate">{{ resumeObject.email }}</p>
+              <div class="flex items-start gap-6 group/item">
+                 <div class="h-12 w-12 bg-[#0e0e0e] border border-white/5 flex items-center justify-center group-hover/item:border-[#00FF9C]/40 transition-colors">
+                    <Icon icon="ph:envelope-duotone" class="text-xl text-white/40 group-hover/item:text-[#00FF9C]" />
+                 </div>
+                 <div class="overflow-hidden">
+                   <p class="text-[10px] font-black text-gray-600 uppercase tracking-widest">Email</p>
+                   <p class="text-white font-bold italic tracking-tight truncate">{{ resumeObject.email }}</p>
                  </div>
               </div>
-
-              <div class="flex items-start gap-4">
-                 <Icon icon="ph:map-pin-duotone" class="text-2xl text-indigo-600 mt-1" />
+              <div class="flex items-start gap-6 group/item">
+                 <div class="h-12 w-12 bg-[#0e0e0e] border border-white/5 flex items-center justify-center group-hover/item:border-[#00FF9C]/40 transition-colors">
+                    <Icon icon="ph:map-pin-duotone" class="text-xl text-white/40 group-hover/item:text-[#00FF9C]" />
+                 </div>
                  <div>
-                   <p class="text-xs font-black text-gray-400 uppercase tracking-widest">Location</p>
-                   <p class="text-gray-700 font-bold">{{ resumeObject.city }}, {{ resumeObject.country }}</p>
+                   <p class="text-[10px] font-black text-gray-600 uppercase tracking-widest">Location</p>
+                   <p class="text-white font-bold italic tracking-tight">{{ resumeObject.city }}, {{ resumeObject.country }}</p>
                  </div>
               </div>
             </div>
           </div>
 
-          <!-- Languages Card -->
-          <div class="p-10 bg-gray-50 border border-transparent rounded-[40px] space-y-8 hover:bg-white hover:border-indigo-100 hover:shadow-2xl hover:shadow-indigo-50 transition duration-500">
-            <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-4">
-               <div class="h-10 w-10 rounded-xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-100">
-                <Icon icon="ph:translate-duotone" class="text-white text-xl" />
-              </div>
+          <!-- Language Modules -->
+          <div class="p-12 bg-[#131313] border border-white/5 rounded-sm space-y-10 hover:border-[#00FF9C]/30 transition-all duration-700">
+            <h2 class="text-[10px] font-black text-[#00FF9C] uppercase tracking-[0.5em] flex items-center gap-4">
+              <span class="h-[1px] w-8 bg-[#00FF9C]"></span>
               Languages
             </h2>
-            <div class="space-y-4">
-              <div v-for="(lang, i) in resumeObject.languages" :key="i" class="space-y-2">
-                <div class="flex justify-between items-center">
-                   <span class="text-gray-900 font-bold">{{ lang.name }}</span>
-                   <span class="text-xs font-black text-indigo-600 uppercase">{{ lang.level }}</span>
+            <div class="space-y-10">
+              <div v-for="(lang, i) in resumeObject.languages" :key="i" class="space-y-4">
+                <div class="flex justify-between items-end">
+                   <span class="text-white font-black uppercase italic tracking-tighter text-xl">{{ lang.name }}</span>
+                   <span class="text-[10px] font-black text-[#00FF9C] uppercase tracking-widest">{{ lang.level }}</span>
                 </div>
-                <div class="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                   <div class="h-full bg-indigo-600 rounded-full" :style="{ width: lang.level === 'Native' ? '100%' : '80%' }"></div>
+                <div class="h-1 w-full bg-white/5 overflow-hidden">
+                   <div class="h-full bg-[#00FF9C] transition-all duration-1000" :style="{ width: lang.level === 'Native' ? '100%' : '80%' }"></div>
                 </div>
               </div>
             </div>
           </div>
         </aside>
 
-        <!-- Main Content -->
-        <div class="lg:col-span-8 space-y-16">
-
-          <!-- Summary -->
-          <section class="p-10 bg-indigo-50/50 rounded-[40px] border border-indigo-100/50">
-            <h2 class="text-3xl font-black text-gray-900 mb-8 tracking-tight">Professional Summary</h2>
-            <div class="text-lg text-gray-700 font-medium leading-relaxed whitespace-pre-line">
+        <!-- Main Workspace: Summary & Logs -->
+        <div class="lg:col-span-8 space-y-24">
+          
+          <!-- Abstract -->
+          <section class="p-12 bg-[#131313] border-l-4 border-[#00FF9C] rounded-sm">
+            <h2 class="text-xs font-black text-gray-500 uppercase tracking-[0.4em] mb-10">Professional Abstract</h2>
+            <div class="text-xl text-gray-300 font-medium leading-relaxed whitespace-pre-line tracking-tight">
               {{ resumeObject.aboutMe }}
             </div>
-      </section>
+          </section>
 
-          <!-- Work Experience -->
-          <section class="space-y-10">
-            <h2 class="text-3xl font-black text-gray-900 tracking-tight">Work Experience</h2>
-            <div class="space-y-8 relative before:absolute before:left-[31px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-100">
+          <!-- System Logs: Experience -->
+          <section class="space-y-16">
+            <div class="space-y-2">
+              <span class="text-[10px] font-black text-[#00FF9C] uppercase tracking-[0.5em]">Work Experience</span>
+              <h2 class="text-5xl font-black text-white uppercase italic tracking-tighter leading-none">Career Modules</h2>
+            </div>
+            <div class="space-y-12 relative border-l border-white/5 pl-12 ml-4">
               <div v-for="(exp, i) in resumeObject.experiences" :key="i"
-                   class="relative pl-20 group">
-                <div class="absolute left-0 top-1.5 h-16 w-16 rounded-2xl bg-white border-2 border-gray-100 flex items-center justify-center z-10 group-hover:border-indigo-600 transition duration-300">
-                   <Icon icon="ph:briefcase-duotone" class="text-2xl text-gray-300 group-hover:text-indigo-600 transition duration-300" />
+                   class="relative group">
+                <!-- Timeline Node -->
+                <div class="absolute -left-[54px] top-2 h-6 w-6 rounded-full bg-[#0e0e0e] border-2 border-white/10 group-hover:border-[#00FF9C] transition duration-500 flex items-center justify-center">
+                   <div class="h-1.5 w-1.5 rounded-full bg-white/20 group-hover:bg-[#00FF9C] transition-colors"></div>
                 </div>
-                <div class="p-10 bg-white border border-gray-100 rounded-[40px] group-hover:border-indigo-100 group-hover:shadow-2xl group-hover:shadow-indigo-50/50 transition duration-300">
-                  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+
+                <div class="p-12 bg-[#131313] border border-white/5 rounded-sm group-hover:border-[#00FF9C]/30 transition-all duration-700">
+                  <div class="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-10">
                     <div>
-                      <h3 class="text-2xl font-bold text-gray-900 group-hover:text-indigo-600 transition">{{ exp.jobTitle }}</h3>
-                      <p class="text-lg font-bold text-gray-400 mt-1 uppercase tracking-wider">{{ exp.companyName }}</p>
+                      <h3 class="text-3xl font-black text-white uppercase italic tracking-tighter group-hover:text-[#00FF9C] transition-colors duration-500">
+                        {{ exp.jobTitle }}
+                      </h3>
+                      <p class="text-[#00FF9C] font-black text-[10px] uppercase tracking-[0.3em] mt-2 opacity-70">
+                        {{ exp.companyName }}
+                      </p>
                     </div>
-                    <div class="px-4 py-1.5 bg-indigo-50 text-indigo-600 text-sm font-black rounded-full whitespace-nowrap">
+                    <div class="px-5 py-2 bg-[#0e0e0e] border border-white/5 text-gray-500 text-[10px] font-black uppercase tracking-widest rounded-full whitespace-nowrap">
                       {{ exp.startDate }} — {{ exp.endDate }}
                     </div>
                   </div>
-                  <p class="text-gray-600 text-lg leading-relaxed font-medium">{{ exp.summary }}</p>
+                  <p class="text-gray-400 text-lg leading-relaxed font-medium tracking-tight">
+                    {{ exp.summary }}
+                  </p>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Education -->
-          <section class="space-y-10">
-            <h2 class="text-3xl font-black text-gray-900 tracking-tight">Education</h2>
-            <div v-for="(edu, i) in resumeObject.education" :key="i"
-                 class="p-10 bg-gray-50 border border-transparent rounded-[40px] hover:bg-white hover:border-indigo-100 transition duration-500">
-              <div class="flex items-start gap-6">
-                <div class="h-16 w-16 rounded-2xl bg-emerald-500 flex items-center justify-center shrink-0">
-                  <Icon icon="ph:graduation-cap-duotone" class="text-3xl text-white" />
-                </div>
-                <div>
-                  <h3 class="text-2xl font-bold text-gray-900">{{ edu.degree }}</h3>
-                  <p class="text-lg font-bold text-gray-400 mt-1 uppercase tracking-wider">{{ edu.university }}</p>
-                  <p class="mt-4 text-emerald-600 font-bold">{{ edu.date }}</p>
+          <!-- Educational Foundations -->
+          <section class="space-y-16">
+            <div class="space-y-2">
+              <span class="text-[10px] font-black text-[#00FF9C] uppercase tracking-[0.5em]">Foundations</span>
+              <h2 class="text-5xl font-black text-white uppercase italic tracking-tighter leading-none">Education</h2>
+            </div>
+            <div class="grid gap-8">
+              <div v-for="(edu, i) in resumeObject.education" :key="i"
+                   class="p-12 bg-[#131313] border border-white/5 rounded-sm hover:border-[#00FF9C]/30 transition-all duration-700 group">
+                <div class="flex items-start gap-10">
+                  <div class="h-20 w-20 bg-[#0e0e0e] border border-white/5 flex items-center justify-center shrink-0 group-hover:border-[#00FF9C]/40 transition-colors">
+                    <Icon icon="ph:graduation-cap-duotone" class="text-4xl text-white/40 group-hover:text-[#00FF9C] transition-colors" />
+                  </div>
+                  <div class="space-y-4">
+                    <h3 class="text-3xl font-black text-white uppercase italic tracking-tighter group-hover:text-[#00FF9C] transition-colors">
+                      {{ edu.degree }}
+                    </h3>
+                    <p class="text-gray-500 font-bold uppercase tracking-widest text-xs">{{ edu.university }}</p>
+                    <div class="inline-block mt-4 text-[#00FF9C] font-black italic text-xl tracking-tighter">
+                      {{ edu.date }}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
 
-           <!-- Skills -->
-          <section class="space-y-10">
-            <h2 class="text-3xl font-black text-gray-900 tracking-tight text-center">Skill Architecture</h2>
+          <!-- Technical Arsenal: Grid -->
+          <section class="space-y-16">
+            <div class="text-center space-y-4">
+              <span class="text-[10px] font-black text-[#00FF9C] uppercase tracking-[0.5em]">Capabilities</span>
+              <h2 class="text-5xl font-black text-white uppercase italic tracking-tighter leading-none">Skill Architecture</h2>
+            </div>
             <div class="grid md:grid-cols-2 gap-8">
               <div v-for="(category, index) in skills" :key="index"
-                   class="p-8 bg-white border border-gray-100 rounded-[32px] hover:shadow-xl transition duration-500">
-                <p class="text-gray-900 font-black uppercase tracking-[0.2em] text-xs mb-6 flex items-center gap-2">
-                   <span class="h-1.5 w-1.5 rounded-full bg-indigo-600"></span>
+                   class="p-10 bg-[#131313] border border-white/5 rounded-sm hover:border-[#00FF9C]/30 transition-all duration-700 group">
+                <p class="text-gray-600 font-black uppercase tracking-[0.3em] text-[10px] mb-8 flex items-center gap-4">
+                   <span class="h-1 w-8 bg-[#00FF9C]"></span>
                    {{ getCategoryName(category) }}
                 </p>
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-3">
                   <span v-for="(skill, skillIndex) in getCategoryItems(category)" :key="skillIndex"
-                        class="px-4 py-2 text-sm font-bold rounded-xl bg-gray-50 text-gray-600 border border-gray-100">
+                        class="px-5 py-3 text-[10px] font-black uppercase tracking-widest bg-[#0e0e0e] text-gray-500 border border-white/5 group-hover:text-white group-hover:border-white/20 transition-all">
                     {{ skill }}
                   </span>
                 </div>
@@ -166,7 +189,6 @@
 
         </div>
       </div>
-
     </div>
   </main>
 </template>

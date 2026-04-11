@@ -1,181 +1,208 @@
 <template>
-  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-4">
-    <div class="w-full max-w-6xl mx-auto px-6 space-y-24">
+  <main class="bg-[#0e0e0e] min-h-screen pt-32 pb-24 px-4 font-['Space_Grotesk']">
+    <div class="w-full max-w-7xl mx-auto px-6 space-y-24">
+      
+      <!-- Authentication Interface -->
+      <div v-if="!isAuthenticated" class="flex justify-center items-center min-h-[70vh]">
+        <div class="w-full max-w-md p-12 bg-[#131313] border border-white/5 rounded-sm shadow-[0_0_80px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-full h-1 bg-[#00FF9C] opacity-50"></div>
+          
+          <div class="text-center mb-10 space-y-4">
+            <div class="inline-flex items-center justify-center h-16 w-16 bg-[#0e0e0e] border border-white/5 rounded-sm mb-4">
+              <Icon icon="ph:shield-check-duotone" class="text-3xl text-[#00FF9C]" />
+            </div>
+            <h3 class="text-3xl font-black text-white uppercase italic tracking-tighter">System Access</h3>
+            <p class="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em]">Encrypted Login Required</p>
+          </div>
 
-      <!-- Authentication Modal -->
-      <div v-if="!isAuthenticated" class="flex justify-center items-center min-h-screen">
-        <div class="w-full max-w-md p-8 bg-white border border-gray-200 rounded-2xl shadow-lg transition duration-300">
-          <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Admin Login</h3>
-
-          <form @submit.prevent="authenticateUser" class="space-y-4">
-            <div>
-              <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
+          <form @submit.prevent="authenticateUser" class="space-y-8">
+            <div class="space-y-2">
+              <label for="username" class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Identity / Username</label>
               <input
                 id="username"
                 v-model="credentials.username"
                 type="text"
-                placeholder="Enter username"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 text-gray-900"
+                placeholder="UID-0000"
+                class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white focus:border-[#00FF9C]/50 focus:ring-1 focus:ring-[#00FF9C]/20 outline-none transition-all placeholder:text-gray-800"
               />
             </div>
-
-            <div>
-              <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+            <div class="space-y-2">
+              <label for="password" class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Access Key / Password</label>
               <input
                 id="password"
                 v-model="credentials.password"
                 type="password"
-                placeholder="Enter password"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 text-gray-900"
+                placeholder="••••••••"
+                class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white focus:border-[#00FF9C]/50 focus:ring-1 focus:ring-[#00FF9C]/20 outline-none transition-all placeholder:text-gray-800"
               />
             </div>
-
-            <div class="flex justify-end">
+            <div class="pt-4">
               <button
                 type="submit"
-                class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition"
+                class="w-full py-5 bg-[#00FF9C] text-black font-black uppercase tracking-[0.2em] text-sm rounded-sm hover:bg-[#05e68d] transition-all transform hover:-translate-y-1 active:scale-95"
               >
-                Login
+                Authorize Access
               </button>
             </div>
           </form>
-
-          <p v-if="authError" class="text-red-500 text-center mt-4">{{ authError }}</p>
+          <p v-if="authError" class="text-[#FF4D4D] text-[10px] font-black text-center mt-8 uppercase tracking-widest animate-pulse">
+            Error: {{ authError }}
+          </p>
         </div>
       </div>
 
       <!-- ADMIN CONTENT -->
       <div v-else class="space-y-24">
-
         <!-- Header -->
         <section class="text-center space-y-6">
-          <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-gray-900">
-            Admin Projects
+           <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-[#00FF9C]/10 border border-[#00FF9C]/20 text-[#00FF9C] text-[10px] font-bold uppercase tracking-[0.4em]">
+            Terminal Admin
+          </div>
+          <h1 class="text-6xl md:text-8xl font-black tracking-tighter text-white leading-none uppercase italic">
+            Admin <br/>
+            <span class="text-[#00FF9C]">Projects.</span>
           </h1>
-
-          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-            Add or update projects stored in MongoDB.
+          <p class="text-2xl text-gray-400 max-w-2xl mx-auto font-medium tracking-tight">
+            Managing the project deployment ledger and MongoDB data modules.
           </p>
         </section>
 
-        <!-- Buttons -->
-        <div class="flex items-center justify-between gap-4">
+        <!-- Global Actions -->
+        <div class="flex items-center justify-between border-b border-white/5 pb-8">
           <button
             @click="addCompany"
-            class="px-5 py-2 rounded-full bg-gray-900 text-white hover:bg-gray-800 transition"
+            class="px-8 py-4 bg-[#00FF9C] text-black rounded-sm font-black uppercase tracking-widest text-xs hover:bg-[#05e68d] transition-all transform hover:-translate-y-1 active:scale-95"
           >
-            Add Company
+            Add New Company
           </button>
-
           <button
             @click="refresh"
-            class="px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
+            class="px-8 py-4 bg-transparent border border-white/10 text-white rounded-sm font-black uppercase tracking-widest text-xs hover:border-[#00FF9C] hover:text-[#00FF9C] transition-all"
           >
-            Refresh
+            Refresh System
           </button>
         </div>
 
-        <p v-if="pageError" class="text-red-600 text-sm">{{ pageError }}</p>
-        <p v-if="pageSuccess" class="text-emerald-600 text-sm">{{ pageSuccess }}</p>
+        <!-- Feedback Messages -->
+        <transition name="fade">
+          <div v-if="pageSuccess" class="p-6 bg-[#00FF9C]/10 border border-[#00FF9C]/30 text-[#00FF9C] font-black uppercase text-[10px] tracking-[0.3em] rounded-sm italic">
+            Success: {{ pageSuccess }}
+          </div>
+        </transition>
+        <transition name="fade">
+          <div v-if="pageError" class="p-6 bg-red-500/10 border border-red-500/30 text-red-500 font-black uppercase text-[10px] tracking-[0.3em] rounded-sm italic">
+            System Error: {{ pageError }}
+          </div>
+        </transition>
 
-        <!-- Companies -->
-        <section class="space-y-24">
+        <!-- Companies Interface -->
+        <section class="space-y-32">
           <div
             v-for="(company, cIdx) in companies"
             :key="company._key"
-            class="space-y-12"
+            class="space-y-16"
           >
-
             <!-- Sticky Company Header -->
             <div
-              class="sticky top-28 z-10 bg-gray-50/80 backdrop-blur-md
-                     py-6 border-b border-gray-200"
+              class="sticky top-24 z-10 bg-[#0e0e0e]/90 backdrop-blur-xl
+                     py-8 border-b border-white/10 flex flex-col md:flex-row items-center justify-between gap-8"
             >
-              <div class="flex items-center justify-between gap-4">
-                <h2 class="text-3xl font-semibold text-gray-900 w-full max-w-md">
-                  <input
-                    v-model="company.company"
-                    type="text"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
-                    placeholder="Company name"
-                  />
-                </h2>
-
-                <div class="flex gap-3">
-                  <button
-                    @click="addProject(cIdx)"
-                    class="px-4 py-2 rounded-lg bg-gray-100 border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
-                  >
-                    Add project
-                  </button>
-
-                  <button
-                    @click="saveCompany(cIdx)"
-                    class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
-                  >
-                    Save company
-                  </button>
-                </div>
+              <div class="w-full max-w-md space-y-2">
+                <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Company / Organization</label>
+                <input
+                  v-model="company.company"
+                  type="text"
+                  class="w-full bg-[#131313] border border-white/5 rounded-sm px-5 py-4 text-white font-black italic tracking-tighter text-3xl focus:border-[#00FF9C]/50 outline-none transition-all"
+                  placeholder="SOURCE_NAME"
+                />
+              </div>
+              <div class="flex gap-4">
+                <button
+                  @click="addProject(cIdx)"
+                  class="px-6 py-3 bg-[#0e0e0e] border border-white/10 text-[#00FF9C] rounded-sm font-black uppercase tracking-widest text-[10px] hover:border-[#00FF9C] transition-all"
+                >
+                  + Add Project Module
+                </button>
+                <button
+                  @click="saveCompany(cIdx)"
+                  class="px-8 py-3 bg-[#00FF9C] text-black rounded-sm font-black uppercase tracking-widest text-[10px] hover:bg-[#05e68d] transition-all"
+                >
+                  Commit Changes
+                </button>
               </div>
             </div>
 
             <!-- Projects Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
               <div
                 v-for="(project, pIdx) in company.projects"
                 :key="project._key"
-                class="p-8 bg-white border border-gray-200
-                       rounded-2xl shadow-sm flex flex-col space-y-6"
+                class="p-10 bg-[#131313] border border-white/5 rounded-sm hover:border-[#00FF9C]/20 transition-all duration-700 flex flex-col space-y-10 group"
               >
-
-                <!-- Header -->
-                <div class="flex items-center justify-between gap-4">
-                  <h3 class="text-xl font-semibold text-gray-900 w-full">
+                <!-- Project Header -->
+                <div class="flex items-start justify-between gap-6">
+                  <div class="w-full space-y-2">
+                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Module Title</label>
                     <input
                       v-model="project.title"
                       type="text"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
-                      placeholder="Project title"
+                      class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white font-black italic tracking-tighter text-2xl focus:border-[#00FF9C]/50 outline-none transition-all"
+                      placeholder="PROJECT_ID"
                     />
-                  </h3>
-
+                  </div>
                   <button
                     @click="removeProject(cIdx, pIdx)"
-                    class="text-sm text-red-600 hover:underline"
+                    class="h-12 w-12 bg-[#0e0e0e] border border-white/5 flex items-center justify-center rounded-sm text-red-500/50 hover:text-red-500 hover:border-red-500/30 transition-all"
                   >
-                    Remove
+                    <Icon icon="ph:trash-duotone" class="text-xl" />
                   </button>
                 </div>
 
                 <!-- Description -->
-                <textarea
-                  v-model="project.description"
-                  rows="5"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
-                  placeholder="Project description"
-                ></textarea>
+                <div class="space-y-2">
+                  <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Functionality / Brief</label>
+                  <textarea
+                    v-model="project.description"
+                    rows="5"
+                    class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-gray-400 font-medium tracking-tight leading-relaxed focus:border-[#00FF9C]/50 outline-none transition-all resize-none"
+                    placeholder="DESCRIBE_MODULE_SCOPE"
+                  ></textarea>
+                </div>
+
+                <!-- NEW: Timeline Fields -->
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Start Date</label>
+                    <input
+                      v-model="project.startDate"
+                      type="date"
+                      class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-[#00FF9C] font-black outline-none focus:border-[#00FF9C]/50 transition-all"
+                    />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">End Date</label>
+                    <input
+                      v-model="project.endDate"
+                      type="date"
+                      class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-[#00FF9C] font-black outline-none focus:border-[#00FF9C]/50 transition-all"
+                    />
+                  </div>
+                </div>
 
                 <!-- Tags -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">
-                    Tags (comma-separated)
-                  </label>
-
+                <div class="space-y-2">
+                  <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Technologies (CSV)</label>
                   <input
                     v-model="project._tagsCsv"
                     type="text"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
-                    placeholder="Vue, Tailwind, Node"
+                    class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white font-bold uppercase tracking-widest text-[10px] focus:border-[#00FF9C]/50 outline-none transition-all"
+                    placeholder="VUE, TAILWIND, MONGODB"
                   />
                 </div>
-
               </div>
-
             </div>
           </div>
         </section>
-
       </div>
     </div>
   </main>
@@ -184,6 +211,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { API_ENDPOINTS } from '@/config/api'
+import { Icon } from '@iconify/vue'
 
 const ADMIN_SESSION_KEY = 'portfolio_admin_authed'
 

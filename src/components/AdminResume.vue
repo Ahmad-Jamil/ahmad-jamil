@@ -140,6 +140,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { API_ENDPOINTS } from '@/config/api'
+import { Icon } from '@iconify/vue'
 
 const ADMIN_SESSION_KEY = 'portfolio_admin_authed'
 
