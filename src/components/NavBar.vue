@@ -1,22 +1,20 @@
 <template>
   <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50">
-    <!-- Navbar Container -->
     <div
-      class="relative flex items-center justify-between px-6 py-3 bg-[#0e0e0e]/60 backdrop-blur-xl rounded-full border border-white/5 transition-all duration-500"
-      :class="{ 'shadow-[0_40px_80px_rgba(0,0,0,0.5)] bg-[#0e0e0e]/80 border-white/10 scale-[0.98]': scrolled }"
+      class="relative flex items-center justify-between px-4 sm:px-6 py-3 rounded-full border bg-white/80 backdrop-blur-xl transition-colors duration-200"
+      :class="scrolled ? 'border-app-border shadow-soft' : 'border-transparent'"
     >
-      <!-- Logo -->
-      <router-link to="/" class="flex items-center group">
-        <span class="text-xl font-bold tracking-tighter text-[#00FF9C] group-hover:scale-105 transition-transform duration-300">
+      <router-link to="/" class="flex items-center gap-2 rounded-full px-2 py-1 focus:outline-none focus:ring-2 focus:ring-app-brand/25">
+        <span class="text-base sm:text-lg font-semibold tracking-tight text-slate-900">
           Ahmad Jamil
         </span>
       </router-link>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex relative items-center bg-white/5 p-1 rounded-full border border-white/5">
+      <div class="hidden md:flex relative items-center bg-app-muted p-1 rounded-full border border-app-border">
         <!-- Active Sliding Background -->
         <div
-          class="absolute top-1 bottom-1 bg-[#00FF9C] rounded-full transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
+          class="absolute top-1 bottom-1 bg-white rounded-full border border-app-border shadow-soft transition-all duration-300 ease-out"
           :style="activeStyle"
         ></div>
 
@@ -25,8 +23,8 @@
           :key="routeItem.path"
           :ref="setLinkRef(index)"
           :to="routeItem.path"
-          class="relative z-10 px-6 py-2 text-xs font-bold uppercase tracking-widest transition-colors duration-300"
-          :class="route.path === routeItem.path ? 'text-black' : 'text-[#adaaaa] hover:text-white'"
+          class="relative z-10 px-5 py-2 text-sm font-medium rounded-full transition-colors"
+          :class="route.path === routeItem.path ? 'text-slate-900' : 'text-slate-600 hover:text-slate-900'"
         >
           {{ routeItem.label }}
         </router-link>
@@ -36,7 +34,7 @@
       <div class="hidden md:flex items-center gap-4">
         <router-link
           to="/contact"
-          class="px-6 py-2.5 text-xs font-black uppercase tracking-widest rounded-full bg-[#00FF9C] text-black hover:bg-[#05e68d] hover:shadow-[0_0_20px_rgba(0,255,156,0.3)] transition-all duration-300 active:scale-95"
+          class="ui-btn-primary rounded-full px-5 py-2.5 text-sm"
         >
           Contact
         </router-link>
@@ -45,7 +43,9 @@
       <!-- Mobile Menu Toggle -->
       <button
         @click="isOpen = !isOpen"
-        class="md:hidden p-2 text-white/70 hover:text-[#00FF9C] transition-colors"
+        class="md:hidden inline-flex items-center justify-center rounded-full p-2 text-slate-700 hover:bg-app-muted focus:outline-none focus:ring-2 focus:ring-app-brand/25"
+        :aria-expanded="isOpen ? 'true' : 'false'"
+        aria-label="Toggle navigation menu"
       >
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path v-if="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -63,15 +63,15 @@
       leave-from-class="opacity-100 translate-y-0 scale-100"
       leave-to-class="opacity-0 -translate-y-10 scale-95"
     >
-      <div v-if="isOpen" class="absolute top-20 left-0 w-full bg-[#0e0e0e]/95 backdrop-blur-2xl border border-white/10 rounded-[2rem] p-8 md:hidden shadow-2xl">
-        <div class="flex flex-col gap-6">
+      <div v-if="isOpen" class="absolute top-20 left-0 w-full bg-white/95 backdrop-blur-2xl border border-app-border rounded-2xl p-6 md:hidden shadow-soft">
+        <div class="flex flex-col gap-3">
           <router-link
             v-for="routeItem in routes"
             :key="routeItem.path"
             :to="routeItem.path"
             @click="isOpen = false"
-            class="text-2xl font-bold uppercase tracking-tighter transition-colors"
-            :class="route.path === routeItem.path ? 'text-[#00FF9C]' : 'text-white/50 hover:text-white'"
+            class="rounded-xl px-4 py-3 text-base font-medium transition-colors"
+            :class="route.path === routeItem.path ? 'bg-app-brand/10 text-app-brand' : 'text-slate-800 hover:bg-app-muted'"
           >
             {{ routeItem.label }}
           </router-link>
@@ -79,9 +79,9 @@
           <router-link
             to="/contact"
             @click="isOpen = false"
-            class="mt-4 w-full py-4 text-center font-black uppercase tracking-widest bg-[#00FF9C] text-black rounded-2xl"
+            class="mt-2 ui-btn-primary w-full rounded-xl py-3"
           >
-            Initiate Contact
+            Contact
           </router-link>
         </div>
       </div>

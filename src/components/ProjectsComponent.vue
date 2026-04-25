@@ -1,42 +1,41 @@
 <template>
-  <main class="bg-[#0e0e0e] min-h-screen pt-32 pb-24 px-6 font-['Space_Grotesk'] text-white">
-    <div class="max-w-7xl mx-auto space-y-32">
+  <div class="space-y-16">
       
       <!-- Header -->
-      <section class="space-y-6 max-w-3xl">
-        <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-[#00FF9C]/10 border border-[#00FF9C]/20 text-[#00FF9C] text-[10px] font-bold uppercase tracking-[0.3em]">
+      <section class="space-y-4 max-w-3xl">
+        <div class="ui-eyebrow">
           Portfolio Artifacts
         </div>
-        <h1 class="text-7xl md:text-8xl font-black tracking-tighter text-white leading-none uppercase italic">
+        <h1 class="ui-h1">
           Selected <br/>
-          <span class="text-[#00FF9C]">Works.</span>
+          <span class="text-app-brand">Works.</span>
         </h1>
-        <p class="text-2xl text-gray-400 font-medium tracking-tight">
+        <p class="ui-lead">
           A collection of enterprise-grade systems and high-performance web ecosystems architected for scale.
         </p>
       </section>
 
       <!-- Projects Section -->
-      <section class="space-y-40">
+      <section class="space-y-20">
         <div
           v-for="company in projects"
           :key="company.company"
-          class="space-y-16"
+          class="space-y-10"
         >
           <!-- Company Header -->
           <div
-            class="sticky top-24 z-10 bg-[#0e0e0e]/80 backdrop-blur-xl
-                   py-8 border-b border-white/5 flex items-end justify-between"
+            class="sticky top-24 z-10 bg-app-bg/90 backdrop-blur-xl
+                   py-6 border-b border-app-border flex items-end justify-between"
           >
             <div class="space-y-1">
-              <span class="text-[10px] font-black text-[#00FF9C] uppercase tracking-[0.4em]">Organization</span>
-              <h2 class="text-5xl font-black text-white uppercase italic tracking-tighter">
+              <span class="text-xs font-medium text-app-textMuted">Organization</span>
+              <h2 class="ui-h2">
                 {{ company.company }}
               </h2>
             </div>
             <div class="hidden md:flex flex-col items-end">
-              <span class="text-[10px] font-black text-gray-600 uppercase tracking-[0.2em]">Deployment Cycle</span>
-              <span class="text-white font-black italic tracking-tighter text-xl">2020 — ACTIVE</span>
+              <span class="text-xs text-slate-500">Deployment Cycle</span>
+              <span class="text-slate-900 font-semibold tracking-tight">2020 — ACTIVE</span>
             </div>
           </div>
 
@@ -45,33 +44,27 @@
             <div
               v-for="project in company.projects"
               :key="project.title"
-              class="group relative p-12 bg-[#131313] border border-white/5
-                     rounded-sm hover:border-[#00FF9C]/30
-                     transition-all duration-700 flex flex-col overflow-hidden"
+              class="group relative ui-card ui-card-hover p-8 sm:p-10 flex flex-col overflow-hidden"
             >
-              <!-- Hover Background Effect -->
-              <div class="absolute -inset-1 bg-gradient-to-br from-[#00FF9C] to-transparent opacity-0 group-hover:opacity-5 blur-2xl transition duration-1000"></div>
-
               <!-- Header -->
-              <div class="relative z-10 flex items-start justify-between mb-12">
+              <div class="relative z-10 flex items-start justify-between mb-8">
                 <div class="space-y-3">
-                  <div class="flex items-center gap-2 text-[#00FF9C]">
-                    <span class="h-[1px] w-8 bg-[#00FF9C]"></span>
-                    <span class="text-[10px] font-bold uppercase tracking-[0.3em]">Enterprise Module</span>
+                  <div class="flex items-center gap-2 text-app-brand">
+                    <span class="h-[2px] w-8 bg-app-brand rounded-full"></span>
+                    <span class="text-xs font-medium text-app-textMuted">Project</span>
                   </div>
-                  <h3 class="text-3xl font-black text-white uppercase italic tracking-tighter group-hover:text-[#00FF9C] transition-colors duration-500">
+                  <h3 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
                     {{ project.title }}
                   </h3>
                 </div>
-                <div class="h-16 w-16 rounded-sm bg-[#0e0e0e] border border-white/5
-                           flex items-center justify-center group-hover:border-[#00FF9C]/40 transition-all duration-500 shadow-2xl">
+                <div class="h-12 w-12 rounded-xl bg-app-muted border border-app-border flex items-center justify-center">
                   <Icon icon="ph:circuitry-duotone"
-                        class="w-8 h-8 text-white/40 group-hover:text-[#00FF9C] transition-colors" />
+                        class="w-6 h-6 text-slate-500" />
                 </div>
               </div>
 
               <!-- Description -->
-              <p class="relative z-10 text-gray-400 leading-relaxed text-lg mb-12 font-medium tracking-tight">
+              <p class="relative z-10 text-slate-600 leading-relaxed mb-8">
                 {{ project.description }}
               </p>
 
@@ -80,9 +73,7 @@
                 <span
                   v-for="(tag, index) in project.tags"
                   :key="index"
-                  class="px-4 py-2 text-[10px] font-black uppercase tracking-widest
-                         bg-[#0e0e0e] text-gray-500
-                         border border-white/5 group-hover:border-[#00FF9C]/20 transition-all duration-500"
+                  class="ui-pill"
                 >
                   {{ tag }}
                 </span>
@@ -93,28 +84,24 @@
       </section>
 
       <!-- CTA -->
-      <section class="relative bg-[#131313] border border-white/5 rounded-sm p-16 md:p-24 text-center space-y-10 overflow-hidden group">
-        <!-- Background Accents -->
-        <div class="absolute top-0 right-0 w-96 h-96 bg-[#00FF9C] opacity-[0.03] blur-[100px] -mr-48 -mt-48 transition-opacity group-hover:opacity-[0.06] duration-1000"></div>
-        
+      <section class="ui-card p-10 sm:p-14 md:p-16 text-center space-y-6">
         <div class="relative z-10 space-y-4">
-          <span class="text-[10px] font-black text-[#00FF9C] uppercase tracking-[0.5em]">System Query</span>
-          <h2 class="text-5xl md:text-7xl font-black text-white uppercase italic tracking-tighter leading-none">
+          <div class="ui-eyebrow mx-auto">System Query</div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Have a project <br/> in mind?
           </h2>
         </div>
-        <p class="relative z-10 text-gray-400 text-xl max-w-xl mx-auto font-medium tracking-tight">
+        <p class="relative z-10 text-slate-600 max-w-xl mx-auto">
           Let's engineer something exceptional. I'm currently accepting inquiries for high-impact architecture roles.
         </p>
-        <div class="relative z-10 pt-6">
-          <router-link to="/contact" class="inline-block px-12 py-6 bg-[#00FF9C] text-black rounded-sm font-black uppercase tracking-[0.2em] text-sm hover:bg-[#05e68d] hover:shadow-[0_0_40px_rgba(0,255,156,0.3)] transition-all transform hover:-translate-y-1 active:scale-95">
-            Initiate Contact
+        <div class="relative z-10 pt-2">
+          <router-link to="/contact" class="ui-btn-primary">
+            Contact
           </router-link>
         </div>
       </section>
 
-    </div>
-  </main>
+  </div>
 </template>
 
 <script setup>

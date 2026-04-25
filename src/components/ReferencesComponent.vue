@@ -1,53 +1,49 @@
 <template>
-  <main class="bg-[#0e0e0e] min-h-screen pt-32 pb-24 px-6 font-['Space_Grotesk'] text-white">
-    <div class="max-w-5xl mx-auto space-y-32">
+  <div class="space-y-16 max-w-5xl mx-auto">
       
       <!-- Header -->
       <section class="text-center space-y-10">
-        <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-[#00FF9C]/10 border border-[#00FF9C]/20 text-[#00FF9C] text-[10px] font-bold uppercase tracking-[0.4em]">
+        <div class="ui-eyebrow mx-auto">
           Endorsements
         </div>
-        <h1 class="text-7xl md:text-9xl font-black tracking-tighter text-white leading-none uppercase italic">
+        <h1 class="ui-h1">
           Professional <br/>
-          <span class="text-[#00FF9C]">References.</span>
+          <span class="text-app-brand">References.</span>
         </h1>
-        <p class="text-2xl text-gray-400 max-w-2xl mx-auto font-medium tracking-tight">
+        <p class="ui-lead max-w-2xl mx-auto">
           System validation from leadership and peers regarding architectural contributions to complex engineering ecosystems.
         </p>
       </section>
 
       <!-- Testimonials -->
-      <section class="space-y-32">
+      <section class="space-y-10">
         <div
           v-for="(reference, index) in references"
           :key="index"
-          class="relative p-12 md:p-16 bg-[#131313] border border-white/5
-                 rounded-sm hover:border-[#00FF9C]/30
-                 transition-all duration-700 group"
+          class="relative ui-card ui-card-hover p-8 sm:p-10 md:p-12 group"
         >
           <!-- Quote Icon Accent -->
-          <div class="absolute -top-8 left-12 h-16 w-16 rounded-sm bg-[#00FF9C]
-                        flex items-center justify-center shadow-[0_0_40px_rgba(0,255,156,0.3)] z-10">
+          <div class="absolute -top-6 left-8 sm:left-10 h-12 w-12 rounded-xl bg-app-brand flex items-center justify-center shadow-brand-glow z-10">
               <Icon icon="ph:quotes-fill"
-                    class="w-8 h-8 text-black" />
+                    class="w-6 h-6 text-white" />
           </div>
 
           <!-- Header -->
-          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-12 mb-16">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-10 mb-8 pt-4">
             <div class="space-y-6">
               <div class="space-y-1">
-                <span class="text-[10px] font-black text-[#00FF9C] uppercase tracking-[0.4em]">Organization</span>
-                <h2 class="text-5xl font-black text-white uppercase italic tracking-tighter">
+                <span class="text-xs text-slate-500">Organization</span>
+                <h2 class="ui-h2">
                   {{ reference.company }}
                 </h2>
               </div>
               <div class="flex items-center gap-6">
-                 <div class="h-14 w-14 bg-[#0e0e0e] border border-white/5 flex items-center justify-center rounded-sm group-hover:border-[#00FF9C]/40 transition-colors">
-                    <Icon icon="ph:user-bold" class="w-6 h-6 text-white/40 group-hover:text-[#00FF9C] transition-colors" />
+                 <div class="h-12 w-12 bg-app-muted border border-app-border flex items-center justify-center rounded-xl">
+                    <Icon icon="ph:user-bold" class="w-6 h-6 text-slate-500" />
                  </div>
                  <div>
-                    <p class="text-[10px] font-black text-gray-600 uppercase tracking-widest">Validated By</p>
-                    <p class="text-white font-black italic tracking-tighter text-xl">{{ reference.Manager }}</p>
+                    <p class="text-xs text-slate-500">Validated By</p>
+                    <p class="text-slate-900 font-semibold tracking-tight text-lg">{{ reference.Manager }}</p>
                  </div>
               </div>
             </div>
@@ -57,9 +53,7 @@
               <span
                 v-for="skill in extractSkills(reference)"
                 :key="skill"
-                class="px-5 py-2.5 text-[10px] font-black uppercase tracking-widest
-                       bg-[#0e0e0e] text-gray-500
-                       border border-white/5 group-hover:border-[#00FF9C]/20 transition-all"
+                class="ui-pill"
               >
                 {{ skill }}
               </span>
@@ -67,27 +61,25 @@
           </div>
 
           <!-- Main Reference Content -->
-          <div class="relative mb-16">
-            <div class="absolute -left-8 top-0 bottom-0 w-1 bg-[#00FF9C] opacity-20 group-hover:opacity-100 transition-opacity"></div>
-            <blockquote class="text-gray-300 leading-relaxed text-2xl font-medium tracking-tight whitespace-pre-line italic">
+          <div class="relative mb-10">
+            <div class="absolute -left-6 top-0 bottom-0 w-1 bg-app-brand/30 rounded-full"></div>
+            <blockquote class="text-slate-700 leading-relaxed text-lg sm:text-xl font-medium whitespace-pre-line italic pl-4">
               "{{ formatReference(reference.reference) }}"
             </blockquote>
           </div>
 
           <!-- Key Architectural Contributions -->
-          <div class="grid md:grid-cols-2 gap-8 pt-16 border-t border-white/5">
+          <div class="grid md:grid-cols-2 gap-6 pt-8 border-t border-app-border">
             <div
               v-for="point in extractKeyPoints(reference)"
               :key="point"
-              class="flex items-start gap-6 p-8
-                     bg-[#0e0e0e] border border-white/5
-                     rounded-sm group-hover:border-[#00FF9C]/10 transition-all"
+              class="flex items-start gap-4 p-5 bg-app-muted border border-app-border rounded-xl"
             >
-              <div class="h-10 w-10 bg-[#131313] border border-white/5 flex items-center justify-center shrink-0">
+              <div class="h-10 w-10 bg-white border border-app-border flex items-center justify-center shrink-0 rounded-xl">
                 <Icon icon="ph:check-circle-duotone"
-                    class="w-6 h-6 text-[#00FF9C]" />
+                    class="w-6 h-6 text-app-accent" />
               </div>
-              <p class="text-gray-400 font-medium text-sm leading-relaxed tracking-tight">
+              <p class="text-slate-600 font-medium text-sm leading-relaxed">
                 {{ point }}
               </p>
             </div>
@@ -97,11 +89,10 @@
 
       <!-- Bottom Status -->
       <section class="text-center py-16">
-        <p class="text-[10px] font-black text-gray-600 uppercase tracking-[0.6em]">End of Endorsements / All Modules Verified</p>
+        <p class="text-xs text-slate-500">End of endorsements</p>
       </section>
 
-    </div>
-  </main>
+  </div>
 </template>
 
 <script setup>

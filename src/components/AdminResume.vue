@@ -1,51 +1,50 @@
 <template>
-  <main class="bg-[#0e0e0e] min-h-screen pt-32 pb-24 px-4 font-['Space_Grotesk'] text-white">
-    <div class="w-full max-w-6xl mx-auto px-6 space-y-24">
+  <div class="space-y-16">
       
       <!-- Authentication Interface -->
       <div v-if="!isAuthenticated" class="flex justify-center items-center min-h-[70vh]">
-        <div class="w-full max-w-md p-12 bg-[#131313] border border-white/5 rounded-sm shadow-[0_0_80px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-          <div class="absolute top-0 left-0 w-full h-1 bg-[#00FF9C] opacity-50"></div>
+        <div class="w-full max-w-md ui-card p-8 sm:p-10 relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-app-brand/60"></div>
           
           <div class="text-center mb-10 space-y-4">
-            <div class="inline-flex items-center justify-center h-16 w-16 bg-[#0e0e0e] border border-white/5 rounded-sm mb-4">
-              <Icon icon="ph:shield-check-duotone" class="text-3xl text-[#00FF9C]" />
+            <div class="inline-flex items-center justify-center h-16 w-16 bg-app-muted border border-app-border rounded-2xl mb-4">
+              <Icon icon="ph:shield-check-duotone" class="text-3xl text-app-brand" />
             </div>
-            <h3 class="text-3xl font-black text-white uppercase italic tracking-tighter">System Access</h3>
-            <p class="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em]">Encrypted Login Required</p>
+            <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Admin access</h3>
+            <p class="text-sm text-slate-600">Login to edit resume content.</p>
           </div>
 
           <form @submit.prevent="authenticateUser" class="space-y-8">
             <div class="space-y-2">
-              <label for="username" class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Identity / Username</label>
+              <label for="username" class="ui-field-label">Username</label>
               <input
                 id="username"
                 v-model="credentials.username"
                 type="text"
                 placeholder="UID-0000"
-                class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white focus:border-[#00FF9C]/50 focus:ring-1 focus:ring-[#00FF9C]/20 outline-none transition-all placeholder:text-gray-800"
+                class="ui-input"
               />
             </div>
             <div class="space-y-2">
-              <label for="password" class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Access Key / Password</label>
+              <label for="password" class="ui-field-label">Password</label>
               <input
                 id="password"
                 v-model="credentials.password"
                 type="password"
                 placeholder="••••••••"
-                class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white focus:border-[#00FF9C]/50 focus:ring-1 focus:ring-[#00FF9C]/20 outline-none transition-all placeholder:text-gray-800"
+                class="ui-input"
               />
             </div>
             <div class="pt-4">
               <button
                 type="submit"
-                class="w-full py-5 bg-[#00FF9C] text-black font-black uppercase tracking-[0.2em] text-sm rounded-sm hover:bg-[#05e68d] transition-all transform hover:-translate-y-1 active:scale-95"
+                class="ui-btn-primary w-full"
               >
-                Authorize Access
+                Sign in
               </button>
             </div>
           </form>
-          <p v-if="authError" class="text-[#FF4D4D] text-[10px] font-black text-center mt-8 uppercase tracking-widest animate-pulse">
+          <p v-if="authError" class="text-red-700 text-sm text-center mt-6">
             Error: {{ authError }}
           </p>
         </div>
@@ -55,31 +54,31 @@
       <div v-else class="space-y-24 w-full">
         <!-- Header -->
         <section class="text-center space-y-6">
-          <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-[#00FF9C]/10 border border-[#00FF9C]/20 text-[#00FF9C] text-[10px] font-bold uppercase tracking-[0.4em]">
+          <div class="ui-eyebrow mx-auto">
             Terminal Admin
           </div>
-          <h1 class="text-6xl md:text-8xl font-black tracking-tighter text-white leading-none uppercase italic">
+          <h1 class="ui-h1">
             Admin <br/>
-            <span class="text-[#00FF9C]">Resume.</span>
+            <span class="text-app-brand">Resume.</span>
           </h1>
-          <p class="text-2xl text-gray-400 max-w-2xl mx-auto font-medium tracking-tight">
+          <p class="ui-lead max-w-2xl mx-auto">
             Syncing the professional curriculum and skill architecture modules.
           </p>
         </section>
 
         <!-- Global Actions -->
-        <div class="flex items-center justify-between border-b border-white/5 pb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-app-border pb-6">
           <div class="flex gap-4">
              <button
               @click="refresh"
-              class="px-8 py-4 bg-transparent border border-white/10 text-white rounded-sm font-black uppercase tracking-widest text-xs hover:border-[#00FF9C] hover:text-[#00FF9C] transition-all"
+              class="ui-btn-ghost"
             >
               Refresh Data
             </button>
           </div>
           <button
             @click="save"
-            class="px-8 py-4 bg-[#00FF9C] text-black rounded-sm font-black uppercase tracking-widest text-xs hover:bg-[#05e68d] transition-all transform hover:-translate-y-1 active:scale-95"
+            class="ui-btn-primary"
           >
             Commit All Changes
           </button>
@@ -87,12 +86,12 @@
 
         <!-- Feedback Modules -->
         <transition name="fade">
-          <div v-if="pageSuccess" class="p-6 bg-[#00FF9C]/10 border border-[#00FF9C]/30 text-[#00FF9C] font-black uppercase text-[10px] tracking-[0.3em] rounded-sm italic">
+          <div v-if="pageSuccess" class="p-4 bg-app-accent/10 border border-app-accent/25 text-slate-900 rounded-lg">
             Success: {{ pageSuccess }}
           </div>
         </transition>
         <transition name="fade">
-          <div v-if="pageError" class="p-6 bg-red-500/10 border border-red-500/30 text-red-500 font-black uppercase text-[10px] tracking-[0.3em] rounded-sm italic">
+          <div v-if="pageError" class="p-4 bg-red-500/10 border border-red-500/25 text-red-700 rounded-lg">
             System Error: {{ pageError }}
           </div>
         </transition>
@@ -101,39 +100,39 @@
         <div class="w-full space-y-16">
           
           <!-- Contact Module -->
-          <div class="p-12 bg-[#131313] border border-white/5 rounded-sm space-y-10 relative overflow-hidden group">
-            <div class="absolute top-0 left-0 w-full h-1 bg-[#00FF9C] opacity-20 group-hover:opacity-40 transition-opacity"></div>
+          <div class="ui-card ui-card-hover p-8 sm:p-10 space-y-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-app-brand/40"></div>
             <h2 class="text-2xl font-black uppercase italic tracking-tighter flex items-center gap-4">
-               <Icon icon="ph:identification-card-duotone" class="text-[#00FF9C]" />
+               <Icon icon="ph:identification-card-duotone" class="text-app-brand" />
                Identification Modules
             </h2>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div class="space-y-2">
-                <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Phone Prefix</label>
-                <input v-model="form.phonePrefix" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                <label class="ui-field-label">Phone Prefix</label>
+                <input v-model="form.phonePrefix" class="ui-input" />
               </div>
               <div class="space-y-2">
-                <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Mobile Number</label>
-                <input v-model="form.mobileNumber" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                <label class="ui-field-label">Mobile Number</label>
+                <input v-model="form.mobileNumber" class="ui-input" />
               </div>
               <div class="space-y-2">
-                <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Email Endpoint</label>
-                <input v-model="form.email" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                <label class="ui-field-label">Email</label>
+                <input v-model="form.email" class="ui-input" />
               </div>
               <div class="space-y-2">
-                <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Country / Geo</label>
-                <input v-model="form.country" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                <label class="ui-field-label">Country</label>
+                <input v-model="form.country" class="ui-input" />
               </div>
               <div class="space-y-2">
-                <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">City / Node</label>
-                <input v-model="form.city" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                <label class="ui-field-label">City</label>
+                <input v-model="form.city" class="ui-input" />
               </div>
             </div>
 
             <div class="space-y-2">
-              <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Professional Abstract / About Me</label>
-              <textarea v-model="form.aboutMe" rows="6" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-gray-400 font-medium tracking-tight leading-relaxed focus:border-[#00FF9C]/50 outline-none transition-all resize-none"></textarea>
+              <label class="ui-field-label">About Me</label>
+              <textarea v-model="form.aboutMe" rows="6" class="ui-textarea"></textarea>
             </div>
           </div>
 
@@ -147,7 +146,7 @@
             </div>
             
             <div class="grid gap-8">
-              <div v-for="(item, i) in form.experiences" :key="item._key" class="p-10 bg-[#131313] border border-white/5 rounded-sm space-y-8 relative group">
+              <div v-for="(item, i) in form.experiences" :key="item._key" class="ui-card ui-card-hover p-6 sm:p-8 space-y-6 relative">
                 <button @click="form.experiences.splice(i, 1)" class="absolute top-6 right-6 text-red-500/30 hover:text-red-500 transition-colors">
                   <Icon icon="ph:trash-duotone" class="text-xl" />
                 </button>
@@ -155,24 +154,24 @@
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div class="space-y-2">
                     <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Job Title</label>
-                    <input v-model="item.jobTitle" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                    <input v-model="item.jobTitle" class="ui-input" />
                   </div>
                   <div class="space-y-2">
                     <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Company</label>
-                    <input v-model="item.companyName" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                    <input v-model="item.companyName" class="ui-input" />
                   </div>
                   <div class="space-y-2">
                     <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Start</label>
-                    <input v-model="item.startDate" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                    <input v-model="item.startDate" class="ui-input" />
                   </div>
                   <div class="space-y-2">
                     <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">End</label>
-                    <input v-model="item.endDate" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                    <input v-model="item.endDate" class="ui-input" />
                   </div>
                 </div>
                 <div class="space-y-2">
                   <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Summary / Accomplishments</label>
-                  <textarea v-model="item.summary" rows="4" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-5 py-4 text-gray-400 font-medium tracking-tight leading-relaxed focus:border-[#00FF9C]/50 outline-none transition-all resize-none"></textarea>
+                  <textarea v-model="item.summary" rows="4" class="ui-textarea"></textarea>
                 </div>
               </div>
             </div>
@@ -190,17 +189,17 @@
                 </button>
               </div>
               <div class="space-y-6">
-                <div v-for="(item, i) in form.skills" :key="item._key" class="p-8 bg-[#131313] border border-white/5 rounded-sm space-y-6 relative group">
+                <div v-for="(item, i) in form.skills" :key="item._key" class="ui-card ui-card-hover p-6 space-y-4 relative">
                   <button @click="form.skills.splice(i, 1)" class="absolute top-4 right-4 text-red-500/30 hover:text-red-500 transition-colors">
                     <Icon icon="ph:x-bold" />
                   </button>
                   <div class="space-y-2">
                     <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Category Label</label>
-                    <input v-model="item.category" placeholder="e.g. BACKEND" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-white font-black italic tracking-tighter focus:border-[#00FF9C]/50 outline-none transition-all" />
+                    <input v-model="item.category" placeholder="e.g. BACKEND" class="ui-input" />
                   </div>
                   <div class="space-y-2">
                     <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Values (CSV)</label>
-                    <input v-model="item._skillsCsv" placeholder="NODE, GO, K8S" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-[#00FF9C] font-bold uppercase tracking-widest text-[10px] focus:border-[#00FF9C]/50 outline-none transition-all" />
+                    <input v-model="item._skillsCsv" placeholder="NODE, GO, K8S" class="ui-input" />
                   </div>
                 </div>
               </div>
@@ -215,15 +214,15 @@
                 </button>
               </div>
               <div class="space-y-6">
-                <div v-for="(item, i) in form.languages" :key="item._key" class="p-8 bg-[#131313] border border-white/5 rounded-sm flex items-center gap-6 relative group">
+                <div v-for="(item, i) in form.languages" :key="item._key" class="ui-card ui-card-hover p-6 flex items-center gap-6 relative">
                    <div class="grid grid-cols-2 gap-6 flex-grow">
                       <div class="space-y-2">
                         <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Identity</label>
-                        <input v-model="item.name" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                        <input v-model="item.name" class="ui-input" />
                       </div>
                       <div class="space-y-2">
                         <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Level</label>
-                        <input v-model="item.level" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-white focus:border-[#00FF9C]/50 outline-none transition-all" />
+                        <input v-model="item.level" class="ui-input" />
                       </div>
                    </div>
                    <button @click="form.languages.splice(i, 1)" class="text-red-500/30 hover:text-red-500 transition-colors mt-4">
@@ -244,14 +243,14 @@
                   Push Education
                 </button>
               </div>
-              <div v-for="(item, i) in form.education" :key="item._key" class="p-8 bg-[#131313] border border-white/5 rounded-sm space-y-4 relative group">
+              <div v-for="(item, i) in form.education" :key="item._key" class="ui-card ui-card-hover p-6 space-y-4 relative">
                 <button @click="form.education.splice(i, 1)" class="absolute top-4 right-4 text-red-500/30 hover:text-red-500 transition-colors">
                   <Icon icon="ph:x-bold" />
                 </button>
-                <input v-model="item.university" placeholder="University" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-white font-bold italic focus:border-[#00FF9C]/50 outline-none transition-all" />
+                <input v-model="item.university" placeholder="University" class="ui-input" />
                 <div class="grid grid-cols-2 gap-4">
-                  <input v-model="item.degree" placeholder="Degree" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-gray-400 text-sm focus:border-[#00FF9C]/50 outline-none transition-all" />
-                  <input v-model="item.date" placeholder="Date" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-gray-400 text-sm focus:border-[#00FF9C]/50 outline-none transition-all" />
+                  <input v-model="item.degree" placeholder="Degree" class="ui-input" />
+                  <input v-model="item.date" placeholder="Date" class="ui-input" />
                 </div>
               </div>
             </div>
@@ -263,12 +262,12 @@
                   New Cert
                 </button>
               </div>
-              <div v-for="(item, i) in form.certificates" :key="item._key" class="p-8 bg-[#131313] border border-white/5 rounded-sm space-y-4 relative group">
+              <div v-for="(item, i) in form.certificates" :key="item._key" class="ui-card ui-card-hover p-6 space-y-4 relative">
                  <button @click="form.certificates.splice(i, 1)" class="absolute top-4 right-4 text-red-500/30 hover:text-red-500 transition-colors">
                     <Icon icon="ph:x-bold" />
                   </button>
-                <input v-model="item.name" placeholder="Certificate Name" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-white font-bold italic focus:border-[#00FF9C]/50 outline-none transition-all" />
-                <input v-model="item.date" placeholder="Date Issued" class="w-full bg-[#0e0e0e] border border-white/5 rounded-sm px-4 py-3 text-gray-400 text-sm focus:border-[#00FF9C]/50 outline-none transition-all" />
+                <input v-model="item.name" placeholder="Certificate Name" class="ui-input" />
+                <input v-model="item.date" placeholder="Date Issued" class="ui-input" />
               </div>
             </div>
           </div>
@@ -279,8 +278,7 @@
            <p class="text-[10px] font-black text-gray-700 uppercase tracking-[0.8em]">Core Resume Module v2.0.4</p>
         </div>
       </div>
-    </div>
-  </main>
+  </div>
 </template>
 
 <script setup>
