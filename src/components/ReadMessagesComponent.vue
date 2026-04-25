@@ -1,71 +1,116 @@
 <template>
-  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
-    <div class="max-w-6xl mx-auto">
+  <div class="space-y-16">
+      
+      <!-- Authentication Interface -->
+      <div v-if="!isAuthenticated" class="flex justify-center items-center min-h-[70vh]">
+        <div class="w-full max-w-md ui-card p-8 sm:p-10 relative overflow-hidden">
+          <!-- Security Accent -->
+          <div class="absolute top-0 left-0 w-full h-1 bg-app-brand/60"></div>
+          
+          <div class="text-center mb-10 space-y-4">
+            <div class="inline-flex items-center justify-center h-16 w-16 bg-app-muted border border-app-border rounded-2xl mb-4">
+              <Icon icon="ph:shield-check-duotone" class="text-3xl text-app-brand" />
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Admin access</h3>
+            <p class="text-sm text-slate-600">Login to view messages.</p>
+          </div>
 
-      <!-- Authentication Modal -->
-      <div v-if="!isAuthenticated" class="flex justify-center items-center min-h-screen">
-        <div class="w-full max-w-md p-8 bg-white border border-gray-200 rounded-2xl shadow-lg transition duration-300">
-          <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Admin Login</h3>
-          <form @submit.prevent="authenticateUser" class="space-y-4">
-            <div>
-              <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
+          <form @submit.prevent="authenticateUser" class="space-y-8">
+            <div class="space-y-2">
+              <label for="username" class="ui-field-label">Username</label>
               <input
                 id="username"
                 v-model="credentials.username"
                 type="text"
-                placeholder="Enter username"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 text-gray-900"
+                placeholder="UID-0000"
+                class="ui-input"
               />
             </div>
-            <div>
-              <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+            <div class="space-y-2">
+              <label for="password" class="ui-field-label">Password</label>
               <input
                 id="password"
                 v-model="credentials.password"
                 type="password"
-                placeholder="Enter password"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 text-gray-900"
+                placeholder="••••••••"
+                class="ui-input"
               />
             </div>
-            <div class="flex justify-end">
+            <div class="pt-4">
               <button
                 type="submit"
-                class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition"
+                class="ui-btn-primary w-full"
               >
-                Login
+                Sign in
               </button>
             </div>
           </form>
-          <p v-if="authError" class="text-red-500 text-center mt-4">{{ authError }}</p>
+          
+          <p v-if="authError" class="text-red-700 text-sm text-center mt-6">
+            Error: {{ authError }}
+          </p>
         </div>
       </div>
 
-      <!-- Messages Section -->
-      <div v-if="isAuthenticated" class="space-y-12">
-        <section class="text-center mb-12 space-y-4">
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Admin Messages</h1>
-          <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-            View and manage messages securely sent by your website visitors.
+      <!-- Secure Messages Dashboard -->
+      <div v-if="isAuthenticated" class="space-y-24">
+        <header class="text-center space-y-6">
+          <div class="ui-eyebrow mx-auto">
+            Terminal Admin
+          </div>
+          <h1 class="ui-h1">
+            Incoming <br/>
+            <span class="text-app-brand">Messages.</span>
+          </h1>
+          <p class="ui-lead max-w-2xl mx-auto">
+            Managing secure communication modules and external visitor inquiries.
           </p>
-        </section>
+        </header>
 
-        <div class="space-y-6">
+        <div class="space-y-8 max-w-4xl mx-auto">
+          <div class="flex items-center justify-between px-2 pb-4 border-b border-app-border">
+             <span class="text-sm text-slate-600">Messages: {{ messages.length }}</span>
+             <span class="text-sm text-app-brand font-medium">Authenticated</span>
+          </div>
+
           <div
             v-for="message in messages"
             :key="message.datetime"
-            class="p-6 bg-white border border-gray-200 rounded-2xl hover:shadow-xl transition duration-300"
+            class="ui-card ui-card-hover p-6 sm:p-8 overflow-hidden"
           >
-            <div class="flex justify-between items-start mb-2">
-              <h2 class="text-lg font-semibold text-gray-900">{{ message.name }}</h2>
-              <span class="text-sm text-gray-500">{{ message.datetime }}</span>
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+              <div class="flex items-center gap-6">
+                 <div class="h-12 w-12 bg-app-muted border border-app-border flex items-center justify-center shrink-0 rounded-xl">
+                    <Icon icon="ph:terminal-window-duotone" class="text-xl text-slate-500" />
+                 </div>
+                 <div>
+                    <p class="text-xs text-slate-500">From</p>
+                    <h2 class="text-lg font-semibold text-slate-900 tracking-tight">{{ message.name }}</h2>
+                 </div>
+              </div>
+              <div class="px-3 py-1.5 bg-app-muted border border-app-border rounded-full">
+                <span class="text-xs text-slate-600">{{ message.datetime }}</span>
+              </div>
             </div>
-            <p class="text-gray-600 leading-relaxed">{{ message.message }}</p>
+
+            <div class="relative z-10 p-5 bg-app-muted border border-app-border rounded-xl">
+               <p class="text-slate-700 leading-relaxed">
+                {{ message.message }}
+              </p>
+            </div>
+            
+            <div class="relative z-10 mt-8 flex justify-end gap-6">
+               <button class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">Archive</button>
+               <button class="text-sm font-medium text-app-brand hover:underline underline-offset-4">Flag</button>
+            </div>
           </div>
         </div>
+        
+        <div class="text-center py-12">
+           <p class="text-sm text-slate-500">End of messages</p>
+        </div>
       </div>
-
-    </div>
-  </main>
+  </div>
 </template>
 
 <script setup>

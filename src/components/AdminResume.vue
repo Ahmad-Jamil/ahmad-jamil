@@ -1,145 +1,290 @@
 <template>
-  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
-    <div class="max-w-6xl w-full mx-auto space-y-24">
-      <div v-if="!isAuthenticated" class="flex justify-center items-center min-h-screen">
-        <div class="w-full max-w-md p-8 bg-white border border-gray-200 rounded-2xl shadow-lg transition duration-300">
-          <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Admin Login</h3>
-          <form @submit.prevent="authenticateUser" class="space-y-4">
-            <div>
-              <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
-              <input id="username" v-model="credentials.username" type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 text-gray-900" />
+  <div class="space-y-16">
+      
+      <!-- Authentication Interface -->
+      <div v-if="!isAuthenticated" class="flex justify-center items-center min-h-[70vh]">
+        <div class="w-full max-w-md ui-card p-8 sm:p-10 relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-app-brand/60"></div>
+          
+          <div class="text-center mb-10 space-y-4">
+            <div class="inline-flex items-center justify-center h-16 w-16 bg-app-muted border border-app-border rounded-2xl mb-4">
+              <Icon icon="ph:shield-check-duotone" class="text-3xl text-app-brand" />
             </div>
-            <div>
-              <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
-              <input id="password" v-model="credentials.password" type="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 text-gray-900" />
+            <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Admin access</h3>
+            <p class="text-sm text-slate-600">Login to edit resume content.</p>
+          </div>
+
+          <form @submit.prevent="authenticateUser" class="space-y-8">
+            <div class="space-y-2">
+              <label for="username" class="ui-field-label">Username</label>
+              <input
+                id="username"
+                v-model="credentials.username"
+                type="text"
+                placeholder="UID-0000"
+                class="ui-input"
+              />
             </div>
-            <div class="flex justify-end">
-              <button type="submit" class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition">Login</button>
+            <div class="space-y-2">
+              <label for="password" class="ui-field-label">Password</label>
+              <input
+                id="password"
+                v-model="credentials.password"
+                type="password"
+                placeholder="••••••••"
+                class="ui-input"
+              />
+            </div>
+            <div class="pt-4">
+              <button
+                type="submit"
+                class="ui-btn-primary w-full"
+              >
+                Sign in
+              </button>
             </div>
           </form>
-          <p v-if="authError" class="text-red-500 text-center mt-4">{{ authError }}</p>
+          <p v-if="authError" class="text-red-700 text-sm text-center mt-6">
+            Error: {{ authError }}
+          </p>
         </div>
       </div>
 
-      <div v-else class="space-y-12 w-full">
+      <!-- ADMIN CONTENT -->
+      <div v-else class="space-y-24 w-full">
+        <!-- Header -->
         <section class="text-center space-y-6">
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Admin Resume</h1>
-          <p class="text-gray-600">Update the resume stored in MongoDB.</p>
+          <div class="ui-eyebrow mx-auto">
+            Terminal Admin
+          </div>
+          <h1 class="ui-h1">
+            Admin <br/>
+            <span class="text-app-brand">Resume.</span>
+          </h1>
+          <p class="ui-lead max-w-2xl mx-auto">
+            Syncing the professional curriculum and skill architecture modules.
+          </p>
         </section>
 
-        <div class="flex items-center justify-between gap-4">
-          <button @click="refresh" class="px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-800 hover:bg-gray-50 transition">Refresh</button>
-          <button @click="save" class="px-5 py-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition">Save resume</button>
+        <!-- Global Actions -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-app-border pb-6">
+          <div class="flex gap-4">
+             <button
+              @click="refresh"
+              class="ui-btn-ghost"
+            >
+              Refresh Data
+            </button>
+          </div>
+          <button
+            @click="save"
+            class="ui-btn-primary"
+          >
+            Commit All Changes
+          </button>
         </div>
 
-        <p v-if="pageError" class="text-red-600 text-sm">{{ pageError }}</p>
-        <p v-if="pageSuccess" class="text-emerald-600 text-sm">{{ pageSuccess }}</p>
+        <!-- Feedback Modules -->
+        <transition name="fade">
+          <div v-if="pageSuccess" class="p-4 bg-app-accent/10 border border-app-accent/25 text-slate-900 rounded-lg">
+            Success: {{ pageSuccess }}
+          </div>
+        </transition>
+        <transition name="fade">
+          <div v-if="pageError" class="p-4 bg-red-500/10 border border-red-500/25 text-red-700 rounded-lg">
+            System Error: {{ pageError }}
+          </div>
+        </transition>
 
-        <div class="w-full p-8 bg-white border border-gray-200 rounded-2xl space-y-8">
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Phone prefix</label>
-              <input v-model="form.phonePrefix" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900" />
+        <!-- Main Form -->
+        <div class="w-full space-y-16">
+          
+          <!-- Contact Module -->
+          <div class="ui-card ui-card-hover p-8 sm:p-10 space-y-8 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-app-brand/40"></div>
+            <h2 class="text-2xl font-black uppercase italic tracking-tighter flex items-center gap-4">
+               <Icon icon="ph:identification-card-duotone" class="text-app-brand" />
+               Identification Modules
+            </h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div class="space-y-2">
+                <label class="ui-field-label">Phone Prefix</label>
+                <input v-model="form.phonePrefix" class="ui-input" />
+              </div>
+              <div class="space-y-2">
+                <label class="ui-field-label">Mobile Number</label>
+                <input v-model="form.mobileNumber" class="ui-input" />
+              </div>
+              <div class="space-y-2">
+                <label class="ui-field-label">Email</label>
+                <input v-model="form.email" class="ui-input" />
+              </div>
+              <div class="space-y-2">
+                <label class="ui-field-label">Country</label>
+                <input v-model="form.country" class="ui-input" />
+              </div>
+              <div class="space-y-2">
+                <label class="ui-field-label">City</label>
+                <input v-model="form.city" class="ui-input" />
+              </div>
             </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Mobile number</label>
-              <input v-model="form.mobileNumber" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <input v-model="form.email" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Country</label>
-              <input v-model="form.country" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">City</label>
-              <input v-model="form.city" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900" />
+
+            <div class="space-y-2">
+              <label class="ui-field-label">About Me</label>
+              <textarea v-model="form.aboutMe" rows="6" class="ui-textarea"></textarea>
             </div>
           </div>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">About me</label>
-            <textarea v-model="form.aboutMe" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900"></textarea>
+          <!-- Experiences Module -->
+          <div class="space-y-8">
+            <div class="flex items-center justify-between">
+              <h2 class="text-3xl font-black uppercase italic tracking-tighter text-[#00FF9C]">Experience Ledger</h2>
+              <button @click="addExperience" class="px-6 py-2 border border-[#00FF9C]/20 text-[#00FF9C] rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-[#00FF9C]/5 transition-all">
+                Push New Experience
+              </button>
+            </div>
+            
+            <div class="grid gap-8">
+              <div v-for="(item, i) in form.experiences" :key="item._key" class="ui-card ui-card-hover p-6 sm:p-8 space-y-6 relative">
+                <button @click="form.experiences.splice(i, 1)" class="absolute top-6 right-6 text-red-500/30 hover:text-red-500 transition-colors">
+                  <Icon icon="ph:trash-duotone" class="text-xl" />
+                </button>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Job Title</label>
+                    <input v-model="item.jobTitle" class="ui-input" />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Company</label>
+                    <input v-model="item.companyName" class="ui-input" />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Start</label>
+                    <input v-model="item.startDate" class="ui-input" />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">End</label>
+                    <input v-model="item.endDate" class="ui-input" />
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Summary / Accomplishments</label>
+                  <textarea v-model="item.summary" rows="4" class="ui-textarea"></textarea>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <section class="space-y-4">
-            <div class="flex items-center justify-between">
-              <h2 class="text-xl font-semibold text-gray-900">Languages</h2>
-              <button @click="addLanguage" class="px-4 py-2 rounded-lg bg-gray-100 border border-gray-200">Add language</button>
-            </div>
-            <div v-for="(item, i) in form.languages" :key="item._key" class="grid md:grid-cols-3 gap-4 p-4 border border-gray-200 rounded-xl">
-              <input v-model="item.name" placeholder="Name" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-              <input v-model="item.level" placeholder="Level" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-              <button @click="form.languages.splice(i, 1)" class="text-red-600 text-sm justify-self-start md:justify-self-end">Remove</button>
-            </div>
-          </section>
-
-          <section class="space-y-4">
-            <div class="flex items-center justify-between">
-              <h2 class="text-xl font-semibold text-gray-900">Experiences</h2>
-              <button @click="addExperience" class="px-4 py-2 rounded-lg bg-gray-100 border border-gray-200">Add experience</button>
-            </div>
-            <div v-for="(item, i) in form.experiences" :key="item._key" class="space-y-3 p-4 border border-gray-200 rounded-xl">
-              <div class="grid md:grid-cols-2 gap-3">
-                <input v-model="item.jobTitle" placeholder="Job title" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-                <input v-model="item.companyName" placeholder="Company name" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-                <input v-model="item.startDate" placeholder="Start date" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-                <input v-model="item.endDate" placeholder="End date" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
+          <!-- Skills & Languages Grid -->
+          <div class="grid lg:grid-cols-2 gap-12">
+            
+            <!-- Skills Module -->
+            <div class="space-y-8">
+               <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-black uppercase italic tracking-tighter text-[#00FF9C]">Skill Nodes</h2>
+                <button @click="addSkillCategory" class="px-4 py-2 border border-[#00FF9C]/20 text-[#00FF9C] rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-[#00FF9C]/5 transition-all">
+                  New Category
+                </button>
               </div>
-              <textarea v-model="item.summary" rows="4" placeholder="Summary" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"></textarea>
-              <button @click="form.experiences.splice(i, 1)" class="text-red-600 text-sm">Remove</button>
-            </div>
-          </section>
-
-          <section class="space-y-4">
-            <div class="flex items-center justify-between">
-              <h2 class="text-xl font-semibold text-gray-900">Education</h2>
-              <button @click="addEducation" class="px-4 py-2 rounded-lg bg-gray-100 border border-gray-200">Add education</button>
-            </div>
-            <div v-for="(item, i) in form.education" :key="item._key" class="grid md:grid-cols-4 gap-3 p-4 border border-gray-200 rounded-xl">
-              <input v-model="item.university" placeholder="University" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-              <input v-model="item.degree" placeholder="Degree" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-              <input v-model="item.date" placeholder="Date" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-              <button @click="form.education.splice(i, 1)" class="text-red-600 text-sm justify-self-start md:justify-self-end">Remove</button>
-            </div>
-          </section>
-
-          <section class="space-y-4">
-            <div class="flex items-center justify-between">
-              <h2 class="text-xl font-semibold text-gray-900">Skills</h2>
-              <button @click="addSkillCategory" class="px-4 py-2 rounded-lg bg-gray-100 border border-gray-200">Add category</button>
-            </div>
-            <div v-for="(item, i) in form.skills" :key="item._key" class="space-y-3 p-4 border border-gray-200 rounded-xl">
-              <div class="flex items-center gap-3">
-                <input v-model="item.category" placeholder="Category (e.g. front_end)" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-                <button @click="form.skills.splice(i, 1)" class="text-red-600 text-sm">Remove</button>
+              <div class="space-y-6">
+                <div v-for="(item, i) in form.skills" :key="item._key" class="ui-card ui-card-hover p-6 space-y-4 relative">
+                  <button @click="form.skills.splice(i, 1)" class="absolute top-4 right-4 text-red-500/30 hover:text-red-500 transition-colors">
+                    <Icon icon="ph:x-bold" />
+                  </button>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Category Label</label>
+                    <input v-model="item.category" placeholder="e.g. BACKEND" class="ui-input" />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Values (CSV)</label>
+                    <input v-model="item._skillsCsv" placeholder="NODE, GO, K8S" class="ui-input" />
+                  </div>
+                </div>
               </div>
-              <input v-model="item._skillsCsv" placeholder="Comma separated skills" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
             </div>
-          </section>
 
-          <section class="space-y-4">
-            <div class="flex items-center justify-between">
-              <h2 class="text-xl font-semibold text-gray-900">Certificates</h2>
-              <button @click="addCertificate" class="px-4 py-2 rounded-lg bg-gray-100 border border-gray-200">Add certificate</button>
+            <!-- Languages Module -->
+            <div class="space-y-8">
+               <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-black uppercase italic tracking-tighter text-[#00FF9C]">Linguistic Arrays</h2>
+                <button @click="addLanguage" class="px-4 py-2 border border-[#00FF9C]/20 text-[#00FF9C] rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-[#00FF9C]/5 transition-all">
+                  Add Language
+                </button>
+              </div>
+              <div class="space-y-6">
+                <div v-for="(item, i) in form.languages" :key="item._key" class="ui-card ui-card-hover p-6 flex items-center gap-6 relative">
+                   <div class="grid grid-cols-2 gap-6 flex-grow">
+                      <div class="space-y-2">
+                        <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Identity</label>
+                        <input v-model="item.name" class="ui-input" />
+                      </div>
+                      <div class="space-y-2">
+                        <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Level</label>
+                        <input v-model="item.level" class="ui-input" />
+                      </div>
+                   </div>
+                   <button @click="form.languages.splice(i, 1)" class="text-red-500/30 hover:text-red-500 transition-colors mt-4">
+                    <Icon icon="ph:trash-duotone" class="text-xl" />
+                  </button>
+                </div>
+              </div>
             </div>
-            <div v-for="(item, i) in form.certificates" :key="item._key" class="grid md:grid-cols-3 gap-3 p-4 border border-gray-200 rounded-xl">
-              <input v-model="item.name" placeholder="Certificate name" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-              <input v-model="item.date" placeholder="Date" class="px-3 py-2 border border-gray-300 rounded-lg text-gray-900" />
-              <button @click="form.certificates.splice(i, 1)" class="text-red-600 text-sm justify-self-start md:justify-self-end">Remove</button>
+
+          </div>
+
+          <!-- Education & Certificates -->
+          <div class="grid lg:grid-cols-2 gap-12">
+            <div class="space-y-8">
+              <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-black uppercase italic tracking-tighter text-[#00FF9C]">Education Logs</h2>
+                <button @click="addEducation" class="px-4 py-2 border border-[#00FF9C]/20 text-[#00FF9C] rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-[#00FF9C]/5 transition-all">
+                  Push Education
+                </button>
+              </div>
+              <div v-for="(item, i) in form.education" :key="item._key" class="ui-card ui-card-hover p-6 space-y-4 relative">
+                <button @click="form.education.splice(i, 1)" class="absolute top-4 right-4 text-red-500/30 hover:text-red-500 transition-colors">
+                  <Icon icon="ph:x-bold" />
+                </button>
+                <input v-model="item.university" placeholder="University" class="ui-input" />
+                <div class="grid grid-cols-2 gap-4">
+                  <input v-model="item.degree" placeholder="Degree" class="ui-input" />
+                  <input v-model="item.date" placeholder="Date" class="ui-input" />
+                </div>
+              </div>
             </div>
-          </section>
+
+            <div class="space-y-8">
+              <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-black uppercase italic tracking-tighter text-[#00FF9C]">Certificates</h2>
+                <button @click="addCertificate" class="px-4 py-2 border border-[#00FF9C]/20 text-[#00FF9C] rounded-sm text-[10px] font-black uppercase tracking-widest hover:bg-[#00FF9C]/5 transition-all">
+                  New Cert
+                </button>
+              </div>
+              <div v-for="(item, i) in form.certificates" :key="item._key" class="ui-card ui-card-hover p-6 space-y-4 relative">
+                 <button @click="form.certificates.splice(i, 1)" class="absolute top-4 right-4 text-red-500/30 hover:text-red-500 transition-colors">
+                    <Icon icon="ph:x-bold" />
+                  </button>
+                <input v-model="item.name" placeholder="Certificate Name" class="ui-input" />
+                <input v-model="item.date" placeholder="Date Issued" class="ui-input" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="text-center py-12">
+           <p class="text-[10px] font-black text-gray-700 uppercase tracking-[0.8em]">Core Resume Module v2.0.4</p>
         </div>
       </div>
-    </div>
-  </main>
+  </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
 import { API_ENDPOINTS } from '@/config/api'
+import { Icon } from '@iconify/vue'
 
 const ADMIN_SESSION_KEY = 'portfolio_admin_authed'
 

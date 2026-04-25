@@ -1,155 +1,215 @@
 <template>
-  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
-    <div class="max-w-6xl mx-auto space-y-24">
-      <!-- Authentication Modal -->
-      <div v-if="!isAuthenticated" class="flex justify-center items-center min-h-screen">
-        <div class="w-full max-w-md p-8 bg-white border border-gray-200 rounded-2xl shadow-lg transition duration-300">
-          <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Admin Login</h3>
-          <form @submit.prevent="authenticateUser" class="space-y-4">
-            <div>
-              <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
+  <div class="space-y-16">
+      
+      <!-- Authentication Interface -->
+      <div v-if="!isAuthenticated" class="flex justify-center items-center min-h-[70vh]">
+        <div class="w-full max-w-md ui-card p-8 sm:p-10 relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-app-brand/60"></div>
+          
+          <div class="text-center mb-10 space-y-4">
+            <div class="inline-flex items-center justify-center h-16 w-16 bg-app-muted border border-app-border rounded-2xl mb-4">
+              <Icon icon="ph:shield-check-duotone" class="text-3xl text-app-brand" />
+            </div>
+            <h3 class="text-2xl font-bold text-slate-900 tracking-tight">Admin access</h3>
+            <p class="text-sm text-slate-600">Login to edit projects.</p>
+          </div>
+
+          <form @submit.prevent="authenticateUser" class="space-y-8">
+            <div class="space-y-2">
+              <label for="username" class="ui-field-label">Username</label>
               <input
                 id="username"
                 v-model="credentials.username"
                 type="text"
-                placeholder="Enter username"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 text-gray-900"
+                placeholder="UID-0000"
+                class="ui-input"
               />
             </div>
-            <div>
-              <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+            <div class="space-y-2">
+              <label for="password" class="ui-field-label">Password</label>
               <input
                 id="password"
                 v-model="credentials.password"
                 type="password"
-                placeholder="Enter password"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 text-gray-900"
+                placeholder="••••••••"
+                class="ui-input"
               />
             </div>
-            <div class="flex justify-end">
+            <div class="pt-4">
               <button
                 type="submit"
-                class="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition"
+                class="ui-btn-primary w-full"
               >
-                Login
+                Sign in
               </button>
             </div>
           </form>
-          <p v-if="authError" class="text-red-500 text-center mt-4">{{ authError }}</p>
+          <p v-if="authError" class="text-red-700 text-sm text-center mt-6">
+            Error: {{ authError }}
+          </p>
         </div>
       </div>
 
-      <div v-else class="space-y-24 w-full">
+      <!-- ADMIN CONTENT -->
+      <div v-else class="space-y-24">
+        <!-- Header -->
         <section class="text-center space-y-6">
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Admin Projects</h1>
-          <p class="text-gray-600">Add or update projects stored in MongoDB.</p>
+           <div class="ui-eyebrow mx-auto">
+            Terminal Admin
+          </div>
+          <h1 class="ui-h1">
+            Admin <br/>
+            <span class="text-app-brand">Projects.</span>
+          </h1>
+          <p class="ui-lead max-w-2xl mx-auto">
+            Managing the project deployment ledger and MongoDB data modules.
+          </p>
         </section>
 
-        <div class="flex items-center justify-between gap-4">
+        <!-- Global Actions -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-app-border pb-6">
           <button
             @click="addCompany"
-            class="px-5 py-2 rounded-full bg-gray-900 text-white hover:bg-gray-800 transition"
+            class="ui-btn-primary"
           >
-            Add Company
+            Add New Company
           </button>
           <button
             @click="refresh"
-            class="px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
+            class="ui-btn-ghost"
           >
-            Refresh
+            Refresh System
           </button>
         </div>
 
-        <p v-if="pageError" class="text-red-600 text-sm">{{ pageError }}</p>
-        <p v-if="pageSuccess" class="text-emerald-600 text-sm">{{ pageSuccess }}</p>
+        <!-- Feedback Messages -->
+        <transition name="fade">
+          <div v-if="pageSuccess" class="p-6 bg-[#00FF9C]/10 border border-[#00FF9C]/30 text-[#00FF9C] font-black uppercase text-[10px] tracking-[0.3em] rounded-sm italic">
+            Success: {{ pageSuccess }}
+          </div>
+        </transition>
+        <transition name="fade">
+          <div v-if="pageError" class="p-6 bg-red-500/10 border border-red-500/30 text-red-500 font-black uppercase text-[10px] tracking-[0.3em] rounded-sm italic">
+            System Error: {{ pageError }}
+          </div>
+        </transition>
 
-        <div class="space-y-10 w-full">
+        <!-- Companies Interface -->
+        <section class="space-y-32">
           <div
             v-for="(company, cIdx) in companies"
             :key="company._key"
-            class="w-full p-8 bg-white border border-gray-200 rounded-2xl"
+            class="space-y-16"
           >
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-              <div class="flex-1">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Company name</label>
+            <!-- Sticky Company Header -->
+            <div
+              class="sticky top-24 z-10 bg-app-bg/90 backdrop-blur-xl
+                     py-6 border-b border-app-border flex flex-col md:flex-row items-center justify-between gap-6"
+            >
+              <div class="w-full max-w-md space-y-2">
+                <label class="ui-field-label">Company</label>
                 <input
                   v-model="company.company"
                   type="text"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-400 outline-none"
+                  class="ui-input text-xl sm:text-2xl font-semibold"
+                  placeholder="SOURCE_NAME"
                 />
               </div>
-              <div class="flex gap-2">
+              <div class="flex gap-4">
                 <button
                   @click="addProject(cIdx)"
-                  class="px-4 py-2 rounded-lg bg-gray-100 border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
+                  class="ui-btn-ghost"
                 >
-                  Add project
+                  + Add Project Module
                 </button>
                 <button
                   @click="saveCompany(cIdx)"
-                  class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
+                  class="ui-btn-primary"
                 >
-                  Save company
+                  Commit Changes
                 </button>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
               <div
                 v-for="(project, pIdx) in company.projects"
                 :key="project._key"
-                class="p-6 bg-gray-50 border border-gray-200 rounded-2xl space-y-3"
+                class="ui-card ui-card-hover p-8 sm:p-10 flex flex-col space-y-8"
               >
-                <div class="flex items-center justify-between gap-4">
-                  <h3 class="font-semibold text-gray-900">Project</h3>
+                <!-- Project Header -->
+                <div class="flex items-start justify-between gap-6">
+                  <div class="w-full space-y-2">
+                    <label class="ui-field-label">Title</label>
+                    <input
+                      v-model="project.title"
+                      type="text"
+                      class="ui-input text-lg font-semibold"
+                      placeholder="PROJECT_ID"
+                    />
+                  </div>
                   <button
                     @click="removeProject(cIdx, pIdx)"
-                    class="text-sm text-red-600 hover:underline"
+                    class="h-11 w-11 bg-app-muted border border-app-border flex items-center justify-center rounded-xl text-red-600 hover:bg-red-50 hover:border-red-200 transition-colors"
                   >
-                    Remove
+                    <Icon icon="ph:trash-duotone" class="text-xl" />
                   </button>
                 </div>
 
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                  <input
-                    v-model="project.title"
-                    type="text"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
-                  />
-                </div>
-
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <!-- Description -->
+                <div class="space-y-2">
+                  <label class="ui-field-label">Description</label>
                   <textarea
                     v-model="project.description"
                     rows="5"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
+                    class="ui-textarea"
+                    placeholder="DESCRIBE_MODULE_SCOPE"
                   ></textarea>
                 </div>
 
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Tags (comma-separated)</label>
+                <!-- NEW: Timeline Fields -->
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="space-y-2">
+                    <label class="ui-field-label">Start Date</label>
+                    <input
+                      v-model="project.startDate"
+                      type="date"
+                      class="ui-input"
+                    />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="ui-field-label">End Date</label>
+                    <input
+                      v-model="project.endDate"
+                      type="date"
+                      class="ui-input"
+                    />
+                  </div>
+                </div>
+
+                <!-- Tags -->
+                <div class="space-y-2">
+                  <label class="ui-field-label">Technologies (CSV)</label>
                   <input
                     v-model="project._tagsCsv"
                     type="text"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900"
-                    placeholder="Vue, Tailwind, Node"
+                    class="ui-input"
+                    placeholder="VUE, TAILWIND, MONGODB"
                   />
                 </div>
               </div>
             </div>
-
           </div>
-        </div>
+        </section>
       </div>
-    </div>
-  </main>
+  </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
 import { API_ENDPOINTS } from '@/config/api'
+import { Icon } from '@iconify/vue'
 
 const ADMIN_SESSION_KEY = 'portfolio_admin_authed'
 
@@ -280,4 +340,3 @@ onMounted(() => {
   if (isAuthenticated.value) refresh()
 })
 </script>
-
