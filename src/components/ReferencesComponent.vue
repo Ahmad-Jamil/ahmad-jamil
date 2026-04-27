@@ -1,93 +1,98 @@
 <template>
-  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
-    <div class="max-w-5xl mx-auto space-y-24">
-
+  <div class="space-y-16 max-w-5xl mx-auto">
+      
       <!-- Header -->
-      <section class="text-center space-y-6">
-        <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-gray-900">
-          Professional References
+      <section class="text-center space-y-10">
+        <div class="ui-eyebrow mx-auto">
+          Endorsements
+        </div>
+        <h1 class="ui-h1">
+          Professional <br/>
+          <span class="text-app-brand">References.</span>
         </h1>
-
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Testimonials from professionals who have worked closely with me
-          across engineering teams and production systems.
+        <p class="ui-lead max-w-2xl mx-auto">
+          System validation from leadership and peers regarding architectural contributions to complex engineering ecosystems.
         </p>
       </section>
 
       <!-- Testimonials -->
-      <section class="space-y-16">
-
+      <section class="space-y-10">
         <div
           v-for="(reference, index) in references"
           :key="index"
-          class="p-10 bg-white border border-gray-200
-                 rounded-3xl shadow-sm hover:shadow-lg
-                 transition duration-300"
+          class="relative ui-card ui-card-hover p-8 sm:p-10 md:p-12 group"
         >
+          <!-- Quote Icon Accent -->
+          <div class="absolute -top-6 left-8 sm:left-10 h-12 w-12 rounded-xl bg-app-brand flex items-center justify-center shadow-brand-glow z-10">
+              <Icon icon="ph:quotes-fill"
+                    class="w-6 h-6 text-white" />
+          </div>
 
           <!-- Header -->
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
-
-            <div>
-              <h2 class="text-2xl font-semibold text-gray-900">
-                {{ reference.company }}
-              </h2>
-
-              <div class="flex items-center gap-2 text-gray-600 mt-2">
-                <Icon icon="mdi:account-tie" class="w-5 h-5" />
-                <span>{{ reference.Manager }}</span>
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-10 mb-8 pt-4">
+            <div class="space-y-6">
+              <div class="space-y-1">
+                <span class="text-xs text-slate-500">Organization</span>
+                <h2 class="ui-h2">
+                  {{ reference.company }}
+                </h2>
+              </div>
+              <div class="flex items-center gap-6">
+                 <div class="h-12 w-12 bg-app-muted border border-app-border flex items-center justify-center rounded-xl">
+                    <Icon icon="ph:user-bold" class="w-6 h-6 text-slate-500" />
+                 </div>
+                 <div>
+                    <p class="text-xs text-slate-500">Validated By</p>
+                    <p class="text-slate-900 font-semibold tracking-tight text-lg">{{ reference.Manager }}</p>
+                 </div>
               </div>
             </div>
 
-            <div class="h-14 w-14 rounded-2xl bg-gray-100
-                        flex items-center justify-center">
-              <Icon icon="mdi:format-quote-close"
-                    class="w-7 h-7 text-gray-500" />
+            <!-- Technical Skills Validated -->
+            <div class="flex flex-wrap gap-3 md:justify-end max-w-sm">
+              <span
+                v-for="skill in extractSkills(reference)"
+                :key="skill"
+                class="ui-pill"
+              >
+                {{ skill }}
+              </span>
             </div>
-
           </div>
 
-          <!-- Skills Highlight -->
-          <div class="flex flex-wrap gap-3 mb-8">
-            <span
-              v-for="skill in extractSkills(reference)"
-              :key="skill"
-              class="px-4 py-1.5 text-sm rounded-full
-                     bg-gray-100 text-gray-700
-                     border border-gray-200"
-            >
-              {{ skill }}
-            </span>
+          <!-- Main Reference Content -->
+          <div class="relative mb-10">
+            <div class="absolute -left-6 top-0 bottom-0 w-1 bg-app-brand/30 rounded-full"></div>
+            <blockquote class="text-slate-700 leading-relaxed text-lg sm:text-xl font-medium whitespace-pre-line italic pl-4">
+              "{{ formatReference(reference.reference) }}"
+            </blockquote>
           </div>
 
-          <!-- Main Reference -->
-          <blockquote class="text-gray-700 leading-relaxed text-lg whitespace-pre-line border-l-4 border-gray-300 pl-6">
-            {{ formatReference(reference.reference) }}
-          </blockquote>
-
-          <!-- Key Points -->
-          <div class="grid md:grid-cols-2 gap-6 mt-10">
+          <!-- Key Architectural Contributions -->
+          <div class="grid md:grid-cols-2 gap-6 pt-8 border-t border-app-border">
             <div
               v-for="point in extractKeyPoints(reference)"
               :key="point"
-              class="flex items-start gap-4 p-5
-                     bg-gray-50 border border-gray-200
-                     rounded-2xl"
+              class="flex items-start gap-4 p-5 bg-app-muted border border-app-border rounded-xl"
             >
-              <Icon icon="mdi:check-circle"
-                    class="w-6 h-6 text-emerald-500 mt-1" />
-              <p class="text-gray-700">
+              <div class="h-10 w-10 bg-white border border-app-border flex items-center justify-center shrink-0 rounded-xl">
+                <Icon icon="ph:check-circle-duotone"
+                    class="w-6 h-6 text-app-accent" />
+              </div>
+              <p class="text-slate-600 font-medium text-sm leading-relaxed">
                 {{ point }}
               </p>
             </div>
           </div>
-
         </div>
-
       </section>
 
-    </div>
-  </main>
+      <!-- Bottom Status -->
+      <section class="text-center py-16">
+        <p class="text-xs text-slate-500">End of endorsements</p>
+      </section>
+
+  </div>
 </template>
 
 <script setup>

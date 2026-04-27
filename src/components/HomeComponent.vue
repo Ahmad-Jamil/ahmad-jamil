@@ -1,184 +1,199 @@
 <template>
-  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
-    <div class="max-w-6xl mx-auto space-y-28">
-
-      <!-- HERO -->
-      <section class="grid lg:grid-cols-2 gap-16 items-center">
-
-        <div class="space-y-8">
-          <div class="space-y-4">
-            <h1 class="text-5xl sm:text-6xl font-bold tracking-tight text-gray-900">
-              Ahmad Jamil
+  <div class="space-y-16">
+      
+      <!-- HERO SECTION -->
+      <section class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-10">
+          <div class="space-y-6">
+            <div class="ui-eyebrow">
+              <span class="w-2 h-2 rounded-full bg-app-accent mr-2"></span>
+              Available for new opportunities
+            </div>
+            <h1 class="ui-h1">
+              Ahmad <br/>
+              <span class="text-app-brand">Jamil</span>
             </h1>
-            <p class="text-xl text-gray-600 font-medium">
-              Software Engineer · Backend Developer
+            <p class="ui-lead text-lg sm:text-xl">
+              Digital Architect specializing in <span class="text-slate-900 font-semibold">high-performance web ecosystems</span> and scalable system design.
             </p>
           </div>
+          
+          <div class="flex flex-wrap gap-6 items-center">
+            <router-link to="/projects" class="ui-btn-primary">
+              View Portfolio
+            </router-link>
+            <router-link to="/contact" class="ui-btn-ghost">
+              Contact Me
+            </router-link>
+          </div>
 
-          <p class="text-lg text-gray-600 leading-relaxed max-w-xl">
-            I build scalable distributed systems and cloud-native microservices,
-            focusing on clean architecture and long-term maintainability.
-          </p>
-
-          <div class="flex gap-10 pt-4">
+          <div class="flex gap-12 pt-8 border-t border-app-border">
             <div>
-              <div class="text-3xl font-bold text-gray-900">
-                {{ years }}+
-              </div>
-              <div class="text-sm text-gray-500">Years Experience</div>
+              <div class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">{{ years }}+</div>
+              <div class="text-xs font-medium text-slate-500 mt-1">Years Experience</div>
             </div>
-
             <div>
-              <div class="text-3xl font-bold text-gray-900">
-                5+
-              </div>
-              <div class="text-sm text-gray-500">Major Projects</div>
+              <div class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">08</div>
+              <div class="text-xs font-medium text-slate-500 mt-1">Active Modules</div>
             </div>
           </div>
         </div>
 
-        <div class="flex justify-center lg:justify-end">
-          <img
-            :src="profileImage"
-            class="w-80 rounded-3xl shadow-xl object-cover"
-            alt="Ahmad"
-          />
+        <div class="relative group">
+          <div class="relative aspect-[4/5] ui-card overflow-hidden rounded-2xl">
+             <img
+              :src="profileImage"
+              class="w-full h-full object-cover"
+              alt="Ahmad Jamil"
+            />
+          </div>
         </div>
-
       </section>
 
       <!-- EXPERIENCE & EDUCATION -->
-      <section class="grid lg:grid-cols-2 gap-16">
-
-        <!-- Work -->
-        <div class="space-y-10">
-          <h2 class="text-3xl font-bold text-gray-900">Work Experience</h2>
-
-          <div
-            v-for="(job, index) in jobs"
-            :key="index"
-            class="p-8 bg-white border border-gray-200 rounded-2xl
-                   hover:shadow-lg transition duration-300"
-          >
-            <h3 class="text-xl font-semibold text-gray-900">
-              {{ job.title }}
-            </h3>
-            <p class="text-gray-600 mt-1">
-              {{ job.company }}
-            </p>
-            <p class="text-sm text-gray-400 mt-2">
-              {{ job.period }}
-            </p>
+      <section class="grid lg:grid-cols-2 gap-12">
+        <!-- Work Experience -->
+        <div class="space-y-8">
+          <div class="space-y-2">
+            <div class="ui-eyebrow">System Logs</div>
+            <h2 class="ui-h2">Work Experience</h2>
+          </div>
+          
+          <div class="space-y-6 relative border-l border-app-border pl-8 ml-2">
+            <div
+              v-for="(job, index) in jobs"
+              :key="index"
+              class="relative group"
+            >
+              <div class="absolute -left-[37px] top-3 h-4 w-4 rounded-full bg-app-bg border-2 border-app-border group-hover:border-slate-300 transition duration-200"></div>
+              <div class="p-6 ui-card ui-card-hover">
+                <div class="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 class="text-lg sm:text-xl font-semibold text-slate-900 tracking-tight">
+                      {{ job.title }}
+                    </h3>
+                    <p class="text-app-brand font-medium text-sm mt-1">
+                      {{ job.company }}
+                    </p>
+                  </div>
+                  <span class="text-xs font-medium text-slate-600 bg-app-muted px-3 py-1 rounded-full">
+                    {{ job.period }}
+                  </span>
+                </div>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                  Pioneered advanced system architectures and led cross-functional teams to deliver high-impact digital solutions.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Education -->
-        <div class="space-y-10">
-          <h2 class="text-3xl font-bold text-gray-900">Education</h2>
-
-          <div
-            class="p-8 bg-white border border-gray-200 rounded-2xl
-                   hover:shadow-lg transition duration-300"
-          >
-            <h3 class="text-xl font-semibold text-gray-900">
-              Frederick University Of Nicosia
+        <div class="space-y-8">
+          <div class="space-y-2">
+            <div class="ui-eyebrow">Foundations</div>
+            <h2 class="ui-h2">Education</h2>
+          </div>
+          
+          <div class="ui-card ui-card-hover p-8">
+             <h3 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Frederick University
             </h3>
-
-            <p class="text-gray-600 mt-1">
+            <p class="text-slate-600 text-base mt-2">
               Bachelor of Computer Science
             </p>
-
-            <p class="text-sm text-gray-400 mt-2">
-              2015 – 2019
-            </p>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- PROGRAMMING LANGUAGES -->
-      <section class="space-y-12">
-        <h2 class="text-3xl font-bold text-gray-900">
-          Programming Languages
-        </h2>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div
-            v-for="lang in programmingLanguages"
-            :key="lang.name"
-            class="p-8 bg-white border border-gray-200 rounded-2xl
-                   text-center hover:shadow-md transition"
-          >
-            <Icon :icon="lang.icon" class="h-12 w-12 mx-auto text-gray-700" />
-            <div class="mt-4 font-medium text-gray-800">
-              {{ lang.name }}
+            <div class="mt-6 pt-6 border-t border-app-border flex items-center justify-between">
+              <span class="text-xs text-slate-500">Degree Obtained</span>
+              <span class="text-app-brand font-semibold">2015 — 2019</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- FRAMEWORKS -->
-      <section class="space-y-12">
-        <h2 class="text-3xl font-bold text-gray-900">
-          Frameworks
-        </h2>
+      <!-- TECH STACK -->
+      <section class="space-y-10">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6">
+          <div class="space-y-2">
+            <div class="ui-eyebrow">Tooling</div>
+            <h2 class="ui-h2">Technical Arsenal</h2>
+          </div>
+          <div class="text-xs text-slate-500 pb-2">
+            Active Modules / 08
+          </div>
+        </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div
-            v-for="framework in frameworks"
-            :key="framework.name"
-            class="p-8 bg-white border border-gray-200 rounded-2xl
-                   text-center hover:shadow-md transition"
-          >
-            <Icon :icon="framework.icon" class="h-12 w-12 mx-auto text-gray-700" />
-            <div class="mt-4 font-medium text-gray-800">
-              {{ framework.name }}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Languages -->
+          <div class="ui-card p-8 space-y-6">
+            <h3 class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+              <span class="h-1 w-8 bg-app-brand rounded-full"></span>
+              Languages
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div v-for="lang in programmingLanguages" :key="lang.name" class="p-4 bg-app-muted border border-app-border rounded-xl flex flex-col items-center gap-3">
+                <Icon :icon="lang.icon" class="h-8 w-8 text-slate-500" />
+                <span class="text-xs font-medium text-slate-700">{{ lang.name }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Frameworks -->
+          <div class="ui-card p-8 space-y-6">
+            <h3 class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+              <span class="h-1 w-8 bg-app-brand rounded-full"></span>
+              Frameworks
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div v-for="fw in frameworks" :key="fw.name" class="p-4 bg-app-muted border border-app-border rounded-xl flex flex-col items-center gap-3">
+                <Icon :icon="fw.icon" class="h-8 w-8 text-slate-500" />
+                <span class="text-xs font-medium text-slate-700">{{ fw.name }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Infrastructure -->
+          <div class="ui-card p-8 space-y-6">
+            <h3 class="text-sm font-semibold text-slate-700 flex items-center gap-3">
+              <span class="h-1 w-8 bg-app-brand rounded-full"></span>
+              Core Infrastructure
+            </h3>
+            <div class="flex flex-wrap gap-3">
+              <div v-for="tech in technologies" :key="tech.name" class="px-4 py-2 bg-app-muted border border-app-border rounded-full flex items-center gap-2">
+                <Icon :icon="tech.icon" class="h-5 w-5 text-slate-500" />
+                <span class="text-xs font-medium text-slate-700">{{ tech.name }}</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- TECHNOLOGIES -->
-      <section class="space-y-12">
-        <h2 class="text-3xl font-bold text-gray-900">
-          Technologies & Tools
-        </h2>
-
-        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6">
-          <div
-            v-for="tech in technologies"
-            :key="tech.name"
-            class="p-6 bg-white border border-gray-200 rounded-xl
-                   text-center hover:shadow-md transition"
-          >
-            <Icon :icon="tech.icon" class="h-8 w-8 mx-auto text-gray-700" />
-            <div class="mt-3 text-sm text-gray-600">
-              {{ tech.name }}
-            </div>
-          </div>
+      <!-- CORE SKILLS -->
+      <section class="space-y-10">
+        <div class="space-y-2">
+          <div class="ui-eyebrow">Capabilities</div>
+          <h2 class="ui-h2">Core Proficiency</h2>
         </div>
-      </section>
-
-      <!-- PROFESSIONAL SKILLS -->
-      <section class="space-y-12">
-        <h2 class="text-3xl font-bold text-gray-900">
-          Professional Skills
-        </h2>
-
-        <div class="flex flex-wrap gap-4">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div
             v-for="skill in skills"
             :key="skill.name"
-            class="px-6 py-3 rounded-full bg-white border border-gray-200
-                   text-gray-700 hover:shadow-sm transition"
+            class="ui-card ui-card-hover p-8 flex flex-col gap-6"
           >
-            {{ skill.name }}
+            <div class="h-12 w-12 bg-app-muted border border-app-border flex items-center justify-center rounded-xl">
+              <Icon :icon="skill.icon" class="h-6 w-6 text-slate-600" />
+            </div>
+            <div class="space-y-4">
+              <span class="text-lg font-semibold text-slate-900 tracking-tight">{{ skill.name }}</span>
+              <div class="h-2 w-full bg-app-muted overflow-hidden rounded-full">
+                <div class="h-full bg-app-brand w-full"></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-    </div>
-  </main>
+  </div>
 </template>
 
 <script setup>

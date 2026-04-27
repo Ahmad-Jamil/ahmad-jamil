@@ -1,87 +1,114 @@
 <template>
-  <main class="bg-gray-50 min-h-screen pt-32 pb-24 px-6">
-    <div class="max-w-6xl mx-auto space-y-24">
-
+  <div class="space-y-16">
+      
       <!-- Header -->
-      <section class="text-center space-y-6">
-        <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-gray-900">
-          My Projects
+      <section class="space-y-4 max-w-3xl">
+        <div class="ui-eyebrow">
+          Portfolio Artifacts
+        </div>
+        <h1 class="ui-h1">
+          Selected <br/>
+          <span class="text-app-brand">Works.</span>
         </h1>
-
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          A selection of systems and platforms I have designed and contributed to
-          across multiple companies.
+        <p class="ui-lead">
+          A collection of enterprise-grade systems and high-performance web ecosystems architected for scale.
         </p>
       </section>
 
-      <!-- Companies -->
-      <section class="space-y-24">
+      <!-- Projects Section -->
+      <section class="space-y-20">
         <div
           v-for="company in projects"
           :key="company.company"
-          class="space-y-12"
+          class="space-y-10"
         >
-
           <!-- Company Header -->
           <div
-            class="sticky top-28 z-10 bg-gray-50/80 backdrop-blur-md
-                   py-6 border-b border-gray-200"
+            class="sticky top-24 z-10 bg-app-bg/90 backdrop-blur-xl
+                   py-6 border-b border-app-border flex items-end justify-between"
           >
-            <h2 class="text-3xl font-semibold text-gray-900">
-              {{ company.company }}
-            </h2>
+            <div class="space-y-1">
+              <span class="text-xs font-medium text-app-textMuted">Organization</span>
+              <h2 class="ui-h2">
+                {{ company.company }}
+              </h2>
+            </div>
           </div>
 
           <!-- Projects Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div
               v-for="project in company.projects"
               :key="project.title"
-              class="p-8 bg-white border border-gray-200
-                     rounded-2xl hover:shadow-xl
-                     transition duration-300 flex flex-col"
+              class="group relative ui-card ui-card-hover p-8 sm:p-10 flex flex-col overflow-hidden"
             >
-
               <!-- Header -->
-              <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-semibold text-gray-900">
-                  {{ project.title }}
-                </h3>
+              <div class="relative z-10 flex items-start justify-between mb-8">
+                <div class="space-y-3">
+                  <div class="flex items-center gap-2 text-app-brand">
+                    <span class="h-[2px] w-8 bg-app-brand rounded-full"></span>
+                    <span class="text-xs font-medium text-app-textMuted">Project</span>
+                  </div>
 
-                <div class="h-10 w-10 rounded-xl bg-gray-100
-                           flex items-center justify-center">
-                  <Icon icon="mdi:rocket-launch"
-                        class="w-5 h-5 text-gray-600" />
+                  <h3 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                    {{ project.title }}
+                  </h3>
+
+                  <!-- ✅ ADDED: Date Range -->
+                  <div
+                    v-if="formatRange(project.startDate, project.endDate)"
+                    class="text-xs text-app-textMuted uppercase tracking-wider"
+                  >
+                    {{ formatRange(project.startDate, project.endDate) }}
+                  </div>
+
+                </div>
+
+                <div class="h-12 w-12 rounded-xl bg-app-muted border border-app-border flex items-center justify-center">
+                  <Icon icon="ph:circuitry-duotone"
+                        class="w-6 h-6 text-slate-500" />
                 </div>
               </div>
 
               <!-- Description -->
-              <p class="text-gray-600 leading-relaxed mb-6">
+              <p class="relative z-10 text-slate-600 leading-relaxed mb-8">
                 {{ project.description }}
               </p>
 
               <!-- Tags -->
-              <div class="flex flex-wrap gap-3 mt-auto">
+              <div class="relative z-10 flex flex-wrap gap-3 mt-auto">
                 <span
                   v-for="(tag, index) in project.tags"
                   :key="index"
-                  class="px-4 py-1.5 text-sm rounded-full
-                         bg-gray-100 text-gray-700
-                         border border-gray-200"
+                  class="ui-pill"
                 >
                   {{ tag }}
                 </span>
               </div>
-
             </div>
-
           </div>
         </div>
       </section>
 
-    </div>
-  </main>
+      <!-- CTA -->
+      <section class="ui-card p-10 sm:p-14 md:p-16 text-center space-y-6">
+        <div class="relative z-10 space-y-4">
+          <div class="ui-eyebrow mx-auto">System Query</div>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Have a project <br/> in mind?
+          </h2>
+        </div>
+        <p class="relative z-10 text-slate-600 max-w-xl mx-auto">
+          Let's engineer something exceptional. I'm currently accepting inquiries for high-impact architecture roles.
+        </p>
+        <div class="relative z-10 pt-2">
+          <router-link to="/contact" class="ui-btn-primary">
+            Contact
+          </router-link>
+        </div>
+      </section>
+
+  </div>
 </template>
 
 <script setup>
@@ -90,6 +117,31 @@ import { API_ENDPOINTS } from '@/config/api'
 import { Icon } from '@iconify/vue'
 
 const projects = ref([])
+
+// ✅ Format single date
+const formatDate = (date) => {
+  if (!date) return null
+  const d = new Date(date)
+
+  if (isNaN(d)) return null
+
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+  })
+}
+
+// ✅ Format date range
+const formatRange = (start, end) => {
+  const s = formatDate(start)
+  const e = formatDate(end)
+
+  if (s && e) return `${s} — ${e}`
+  if (s && !e) return `${s} — Present`
+  if (!s && e) return e
+  return null
+}
 
 const fetchProjects = async () => {
   try {
