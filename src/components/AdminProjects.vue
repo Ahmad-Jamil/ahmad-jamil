@@ -221,18 +221,22 @@ const companies = ref([])
 const pageError = ref('')
 const pageSuccess = ref('')
 
+// Normalize data coming from backend
 const normalizeCompany = (c) => ({
   _id: c?._id,
   _key: c?._id || crypto.randomUUID(),
   company: c?.company || '',
   projects: Array.isArray(c?.projects)
     ? c.projects.map((p) => ({
-      _key: crypto.randomUUID(),
-      title: p?.title || '',
-      description: p?.description || '',
-      tags: Array.isArray(p?.tags) ? p.tags : [],
-      _tagsCsv: Array.isArray(p?.tags) ? p.tags.join(', ') : '',
-    }))
+        _key: crypto.randomUUID(),
+        title: p?.title || '',
+        description: p?.description || '',
+        tags: Array.isArray(p?.tags) ? p.tags : [],
+        _tagsCsv: Array.isArray(p?.tags) ? p.tags.join(', ') : '',
+        // ✅ Fix date format for input[type=date]
+        startDate: p?.startDate ? p.startDate.substring(0, 10) : '',
+        endDate: p?.endDate ? p.endDate.substring(0, 10) : '',
+      }))
     : [],
 })
 
@@ -245,7 +249,10 @@ const authenticateUser = async () => {
     })
 
     if (!response.ok) {
-      authError.value = response.status === 401 ? 'Invalid username or password.' : 'Authentication failed.'
+      authError.value =
+        response.status === 401
+          ? 'Invalid username or password.'
+          : 'Authentication failed.'
       return
     }
 
@@ -287,6 +294,8 @@ const addProject = (cIdx) => {
     description: '',
     tags: [],
     _tagsCsv: '',
+    startDate: '',
+    endDate: '',
   })
 }
 
@@ -299,6 +308,7 @@ const saveCompany = async (cIdx) => {
   pageSuccess.value = ''
 
   const c = companies.value[cIdx]
+
   const payload = {
     _id: c._id || undefined,
     company: (c.company || '').trim(),
@@ -309,6 +319,10 @@ const saveCompany = async (cIdx) => {
         .split(',')
         .map((t) => t.trim())
         .filter(Boolean),
+
+      // ✅ FIX: include dates
+      startDate: p.startDate || null,
+      endDate: p.endDate || null,
     })),
   }
 
@@ -317,17 +331,27 @@ const saveCompany = async (cIdx) => {
     return
   }
 
+  // ✅ Validate date ranges
+  for (const p of payload.projects) {
+    if (p.startDate && p.endDate && p.endDate < p.startDate) {
+      pageError.value = 'End date cannot be before start date.'
+      return
+    }
+  }
+
   try {
     const res = await fetch(API_ENDPOINTS.PROJECTS, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     })
+
     if (!res.ok) {
       const text = await res.text().catch(() => '')
       pageError.value = `Failed to save company. (${res.status}) ${text}`
       return
     }
+
     pageSuccess.value = 'Saved successfully.'
     await refresh()
   } catch (e) {

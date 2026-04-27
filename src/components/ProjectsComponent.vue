@@ -33,10 +33,6 @@
                 {{ company.company }}
               </h2>
             </div>
-            <div class="hidden md:flex flex-col items-end">
-              <span class="text-xs text-slate-500">Deployment Cycle</span>
-              <span class="text-slate-900 font-semibold tracking-tight">2020 — ACTIVE</span>
-            </div>
           </div>
 
           <!-- Projects Grid -->
@@ -53,10 +49,21 @@
                     <span class="h-[2px] w-8 bg-app-brand rounded-full"></span>
                     <span class="text-xs font-medium text-app-textMuted">Project</span>
                   </div>
+
                   <h3 class="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
                     {{ project.title }}
                   </h3>
+
+                  <!-- ✅ ADDED: Date Range -->
+                  <div
+                    v-if="formatRange(project.startDate, project.endDate)"
+                    class="text-xs text-app-textMuted uppercase tracking-wider"
+                  >
+                    {{ formatRange(project.startDate, project.endDate) }}
+                  </div>
+
                 </div>
+
                 <div class="h-12 w-12 rounded-xl bg-app-muted border border-app-border flex items-center justify-center">
                   <Icon icon="ph:circuitry-duotone"
                         class="w-6 h-6 text-slate-500" />
@@ -110,6 +117,31 @@ import { API_ENDPOINTS } from '@/config/api'
 import { Icon } from '@iconify/vue'
 
 const projects = ref([])
+
+// ✅ Format single date
+const formatDate = (date) => {
+  if (!date) return null
+  const d = new Date(date)
+
+  if (isNaN(d)) return null
+
+  return d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+  })
+}
+
+// ✅ Format date range
+const formatRange = (start, end) => {
+  const s = formatDate(start)
+  const e = formatDate(end)
+
+  if (s && e) return `${s} — ${e}`
+  if (s && !e) return `${s} — Present`
+  if (!s && e) return e
+  return null
+}
 
 const fetchProjects = async () => {
   try {
